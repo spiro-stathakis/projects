@@ -7,10 +7,12 @@ use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
-use frontend\assets\AppAsset;
+use frontend\packages\AppAsset;
+use frontend\packages\AppJsAsset;
 use common\widgets\Alert;
 
 AppAsset::register($this);
+AppJsAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>

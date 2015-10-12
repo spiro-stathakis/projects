@@ -1913,12 +1913,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "3f8418691d71b6024adbb2a7add9598af5b0494c"
+                "reference": "89a795226477f66745e8ea10415e769304114920"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/3f8418691d71b6024adbb2a7add9598af5b0494c",
-                "reference": "3f8418691d71b6024adbb2a7add9598af5b0494c",
+                "url": "https://api.github.com/repos/symfony/console/zipball/89a795226477f66745e8ea10415e769304114920",
+                "reference": "89a795226477f66745e8ea10415e769304114920",
                 "shasum": ""
             },
             "require": {
@@ -1961,7 +1961,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2015-10-11 08:29:26"
+            "time": "2015-10-12 10:31:17"
         },
         {
             "name": "symfony/css-selector",
@@ -2071,12 +2071,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
-                "reference": "0be7b94be9dc4c5204dd89665bbd2e409738b3e3"
+                "reference": "41899a21d196332ab23e40f76e1276f2b7aa4d0d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/0be7b94be9dc4c5204dd89665bbd2e409738b3e3",
-                "reference": "0be7b94be9dc4c5204dd89665bbd2e409738b3e3",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/41899a21d196332ab23e40f76e1276f2b7aa4d0d",
+                "reference": "41899a21d196332ab23e40f76e1276f2b7aa4d0d",
                 "shasum": ""
             },
             "require": {
@@ -2120,7 +2120,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2015-10-11 09:12:21"
+            "time": "2015-10-12 10:13:39"
         },
         {
             "name": "symfony/finder",
@@ -2174,12 +2174,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "725887b209844abda9d864de722515d0fc13dd75"
+                "reference": "6941545de416c530d122618e31acfd99081dd712"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/725887b209844abda9d864de722515d0fc13dd75",
-                "reference": "725887b209844abda9d864de722515d0fc13dd75",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/6941545de416c530d122618e31acfd99081dd712",
+                "reference": "6941545de416c530d122618e31acfd99081dd712",
                 "shasum": ""
             },
             "require": {
@@ -2212,7 +2212,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2015-10-11 08:29:26"
+            "time": "2015-10-12 10:20:37"
         },
         {
             "name": "yiisoft/yii2",

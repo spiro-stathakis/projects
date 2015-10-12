@@ -6,7 +6,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use frontend\assets\LoginUiAsset; 
+use frontend\packages\LoginUiAsset; 
 
 LoginUiAsset::register($this); 
 $this->title = 'Login';

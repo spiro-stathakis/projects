@@ -15,8 +15,10 @@ return [
         'gii'=>[
             'class'=>'yii/gii/Module', 
             'allowedIPs'=>['*']
-
-        ]
+        ],
+        'calendar' => [
+            'class' => 'app\modules\calendar\calendar',
+        ],
     ], 
     'components' => [
         'user' => [
