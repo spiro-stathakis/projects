@@ -1,10 +1,11 @@
 <?php
 
 namespace app\modules\calendar\controllers;
-use Yii; 
+use Yii;  
 use common\components\XController;
+//use frontend\modules\calendar\models; 
 use yii\helpers\Json;
-
+use app\modules\calendar\models\CalEvent as Event; 
 class ListController extends XController
 {
     
@@ -15,16 +16,22 @@ class ListController extends XController
 
 	
 	
-	$events = array();
+		$events = array();
 	  //Testing
-	  $Event = new \yii2fullcalendar\models\Event();
+	  $Event = new Event();
 	  $Event->id = 1;
-	  $Event->title = 'Testing';
+	  $Event->title = 'Hello';
 	  $Event->start = date('Y-m-d\Th:m:s\Z');
+	  //$Event->start = time();
+	  $Event->project_id = 1; 
+	  $Event->resource_id = 2; 
 	  $events[] = $Event;
 	 
-	  $Event = new \yii2fullcalendar\models\Event();
+	  $Event = new Event();
 	  $Event->id = 2;
+
+	  $Event->project_id = 2; 
+	  $Event->resource_id = 3; 
 	  $Event->title = 'Testing';
 	  $Event->start = date('Y-m-d\Th:m:s\Z',strtotime('tomorrow 6am'));
 	  $events[] = $Event;
@@ -33,6 +40,7 @@ class ListController extends XController
     	echo Json::encode($events);
  
     	Yii::$app->end();
+    	
 	}
 
 /* ********************************************************************** */ 
