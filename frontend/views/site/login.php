@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         <div class="panel panel-default">
                             <div class="panel-heading">                                
                                 <div class="row-fluid user-row">
-                                    <img src="http://s11.postimg.org/7kzgji28v/logo_sm_2_mr_1.png" class="img-responsive" alt="Conxole Admin"/>
+                                    <img src="/img/cubric-logo-120.png" class="img-responsive" alt="CUBRIC login"/>
                                     Login
                                 </div>
                             </div>
