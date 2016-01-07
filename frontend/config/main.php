@@ -19,6 +19,9 @@ return [
         'calendar' => [
             'class' => 'app\modules\calendar\calendar',
         ],
+        'screening' => [
+            'class' => 'app\modules\screening\screening',
+        ],
     ], 
     'components' => [
         'user' => [
