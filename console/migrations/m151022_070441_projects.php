@@ -11,7 +11,7 @@ class m151022_070441_projects extends XMigration
     
     public function init()
     {
-       $this->tableName = 'projects'; 
+       $this->tableName = '{{%projects}}'; 
       return parent::init(); 
     }
 
