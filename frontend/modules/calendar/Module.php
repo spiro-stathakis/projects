@@ -2,7 +2,7 @@
 
 namespace app\modules\calendar;
 
-class calendar extends \yii\base\Module
+class Module extends \yii\base\Module
 {
     public $controllerNamespace = 'app\modules\calendar\controllers';
 

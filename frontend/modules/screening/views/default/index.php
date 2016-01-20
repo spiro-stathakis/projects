@@ -1,12 +1,12 @@
 <div class="screening-default-index">
-    <h1><?= $this->context->action->uniqueId ?></h1>
+    <h1><?= Yii::t('app', 'Screeing form module'),?></h1>
     <p>
-        This is the view content for action "<?= $this->context->action->id ?>".
-        The action belongs to the controller "<?= get_class($this->context) ?>"
-        in the "<?= $this->context->module->id ?>" module.
+        Your user account is able to create the following screening forms: 
     </p>
     <p>
-        You may customize this page by editing the following file:<br>
-        <code><?= __FILE__ ?></code>
+    
+
+WIDGET HERE ::::: 
+
     </p>
 </div>

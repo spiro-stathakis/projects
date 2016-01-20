@@ -39,13 +39,14 @@ class m160113_164628_screening_form_questions extends XMigration
             );
 
         $this->addForeignKey('fk_screening_form_questions_input_type_id' , $this->tableName,  'input_type_id' , 'ref_input_type' , 'id' , 'NO ACTION' , 'NO ACTION'); 
-        $this->addForeignKey('fk_screening_form_questions_screening_form_id' , $this->tableName,  'screening_form_id' , 'ref_input_type' , 'id' , 'NO ACTION' , 'NO ACTION'); 
+        $this->addForeignKey('fk_screening_form_questions_screening_form_id' , $this->tableName,  'screening_form_id' , 'screening_forms' , 'id' , 'NO ACTION' , 'NO ACTION'); 
         $this->addForeignKey('fk_screening_form_questions_status_id' , $this->tableName,  'status_id' , 'ref_status' , 'id' , 'NO ACTION' , 'NO ACTION'); 
         
 
         $this->insert($this->tableName,['title'=>'Question 1',
                                     'name'=>'Are you pregnant',
                                     'input_type_id'=>6,
+                                    'screening_form_id'=>1,
                                     'default_value'=>3, 
                                     'sort_order'=>100, 
                                     'status_id'=>2, 

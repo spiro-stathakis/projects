@@ -37,9 +37,9 @@ class m150915_100034_ref_status extends XMigration
                     $this->mysqlOptions 
                 );
 
-            $this->insert($this->tableName,['code'=>'null','name'=>'No value','description'=>'No value','sort_order'=>100,'status_id'=>1,'created_at'=>time(),'created_by'=>0 ]); 
-            $this->insert($this->tableName,['code'=>'active','name'=>'Active','description'=>'Active', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>0 ]);
-            $this->insert($this->tableName,['code'=>'inactive','name'=>'Inactive','description'=>'Inactive', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>0 ]);  
+            $this->insert($this->tableName,['code'=>'null','name'=>'No value','description'=>'No value','sort_order'=>100,'status_id'=>1,'created_at'=>time(),'created_by'=>1 ]); 
+            $this->insert($this->tableName,['code'=>'active','name'=>'Active','description'=>'Active', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>1 ]);
+            $this->insert($this->tableName,['code'=>'inactive','name'=>'Inactive','description'=>'Inactive', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>1 ]);  
     
     }
 

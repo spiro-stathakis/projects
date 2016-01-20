@@ -37,9 +37,9 @@ class m150915_110034_ref_auth_type extends XMigration
                     $this->mysqlOptions 
                 );
 
-            $this->insert($this->tableName,['code'=>'null','name'=>'No value','description'=>'No value','sort_order'=>100,'status_id'=>1,'created_at'=>time(),'created_by'=>0 ]); 
-            $this->insert($this->tableName,['code'=>'ldap','name'=>'LDAP','description'=>'LDAP authentication', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>0 ]);
-            $this->insert($this->tableName,['code'=>'db','name'=>'DB','description'=>'Database authentication', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>0 ]);
+            $this->insert($this->tableName,['code'=>'null','name'=>'No value','description'=>'No value','sort_order'=>100,'status_id'=>1,'created_at'=>time(),'created_by'=>1 ]); 
+            $this->insert($this->tableName,['code'=>'ldap','name'=>'LDAP','description'=>'LDAP authentication', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>1]);
+            $this->insert($this->tableName,['code'=>'db','name'=>'DB','description'=>'Database authentication', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>1 ]);
                   
 
     }

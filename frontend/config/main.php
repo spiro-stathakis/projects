@@ -17,10 +17,10 @@ return [
             'allowedIPs'=>['*']
         ],
         'calendar' => [
-            'class' => 'app\modules\calendar\calendar',
+            'class' => 'app\modules\calendar\Module',
         ],
         'screening' => [
-            'class' => 'app\modules\screening\screening',
+            'class' => 'app\modules\screening\Module',
         ],
     ], 
     'components' => [

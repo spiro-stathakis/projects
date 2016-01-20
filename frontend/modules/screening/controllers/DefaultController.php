@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\controllers;
+namespace app\modules\screening\controllers;
 
 use yii\web\Controller;
 
