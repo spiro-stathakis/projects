@@ -3,8 +3,8 @@ namespace common\models;
 
 use Yii;
 use yii\base\Model;
-
-
+use \common\components\Types;
+use \common\models\Users;
 
 /**
  * Login form
@@ -42,10 +42,31 @@ class LoginForm extends Model
      */
     public function validatePassword($attribute, $params)
     {
-        if (!$this->hasErrors()) {
+        if (!$this->hasErrors()) 
+        {
             $user = $this->getUser();
-            if (!$user || !$user->validatePassword($this->password)) {
+            if (! $user)
+            {
                 $this->addError($attribute, 'Incorrect username or password.');
+                return false; 
+            }
+
+            
+
+            if ($user->auth_type_id == Types::$auth_type['ldap']['id'])
+            {
+                    if (!$user->validateLdapPassword($this->password)) 
+                    {
+                            $this->addError($attribute, 'Incorrect username or password.');
+                    }
+
+            }
+            else 
+            {
+                if (!$user->validatePassword($this->password)) 
+                {
+                    $this->addError($attribute, 'Incorrect username or password.');
+                }
             }
         }
     }
@@ -72,9 +93,8 @@ class LoginForm extends Model
     protected function getUser()
     {
         if ($this->_user === null) {
-            $this->_user = User::findByUsername($this->username);
+            $this->_user = UserIdentity::findByUsername($this->username);
         }
-
         return $this->_user;
     }
 }

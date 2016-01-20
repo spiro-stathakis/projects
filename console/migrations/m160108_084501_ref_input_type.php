@@ -42,9 +42,8 @@ class m160108_084501_ref_input_type extends XMigration
             $this->insert($this->tableName,['code'=>'small_text','name'=>'Small text','description'=>'Small text field', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>0 ]);
             $this->insert($this->tableName,['code'=>'med_text','name'=>'Medium text','description'=>'Medium text field', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>0 ]);
             $this->insert($this->tableName,['code'=>'large_text','name'=>'Large text','description'=>'Large text field', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>0 ]);  
-            $this->insert($this->tableName,['code'=>'date','name'=>'Date field','description'=>'Date field', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>0 ]);  
-            $this->insert($this->tableName,['code'=>'radio','name'=>'Radio fields','description'=>'For true / false responses', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>0 ]);  
-  
+            $this->insert($this->tableName,['code'=>'date','name'=>'Date field','description'=>'Date field', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>0 ]); 
+            $this->insert($this->tableName,['code'=>'radio','name'=>'Radio field','description'=>'Radio field for true / false responses', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>0 ]);  
     }
   /* ************************************************************************************** */ 
 

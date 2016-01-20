@@ -2,21 +2,24 @@
 
 use common\components\XMigration;
 
-class m160113_121219_ref_member_type extends XMigration
-{
 
-    /* ************************************************************************************** */ 
+class m150915_110034_ref_auth_type extends XMigration
+{
+    
+
+ /* ************************************************************************************** */ 
 
     public function init()
     {
-       $this->tableName = '{{%ref_member_type}}'; 
+       $this->tableName = '{{%ref_auth_type}}'; 
        return parent::init();  
     }
 
     /* ************************************************************************************** */ 
     public function up()
     {
-        $this->init(); 
+
+            $this->init(); 
             $this->createTable(
                     $this->tableName, 
                     [
@@ -35,18 +38,18 @@ class m160113_121219_ref_member_type extends XMigration
                 );
 
             $this->insert($this->tableName,['code'=>'null','name'=>'No value','description'=>'No value','sort_order'=>100,'status_id'=>1,'created_at'=>time(),'created_by'=>0 ]); 
-            $this->insert($this->tableName,['code'=>'member','name'=>'Member','description'=>'Member', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>0 ]);
-            $this->insert($this->tableName,['code'=>'manager','name'=>'Manager','description'=>'Manager', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>0 ]);
+            $this->insert($this->tableName,['code'=>'ldap','name'=>'LDAP','description'=>'LDAP authentication', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>0 ]);
+            $this->insert($this->tableName,['code'=>'db','name'=>'DB','description'=>'Database authentication', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>0 ]);
                   
+
     }
-     /* ************************************************************************************** */ 
+
     public function down()
     {
         $this->init();
         $this->dropTable($this->tableName); 
-        return true; 
+        return true;
     }
-
 
     /*
     // Use safeUp/safeDown to run migration code within a transaction

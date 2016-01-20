@@ -5,6 +5,12 @@ class Types extends \common\components\XComponent
 {
 
 
+public static $status = [
+			'null'=>['id'=>1,'code'=>'n','name'=>'no value' , 'description'=>'No value'] ,
+			'active'=>['id'=>2,'code'=>'active','name'=>'Active' , 'description'=>'An active piece of information'] ,
+			'inactive'=>['id'=>3,'code'=>'inactive','name'=>'Inactive' , 'description'=>'An inactive piece of information'] ,
+	]; 
+
 	/* ************************************************************************************************************************* */ 
     
 	public static $boolean = [
@@ -14,6 +20,13 @@ class Types extends \common\components\XComponent
 	]; 
 
 	/* ************************************************************************************************************************* */ 
+	public static $auth_type = [
+			'null'=>['id'=>1,'code'=>'null','name'=>'no value' , 'description'=>'No value'] ,
+			'ldap'=>['id'=>2,'code'=>'ldap','name'=>'LDAP' , 'description'=>'LDAP authentication'] ,
+			'db'=>['id'=>3,'code'=>'db','name'=>'Datbase' , 'description'=>'Database authentication'] ,
+	]; 
+
+
     /* ************************************************************************************************************************* */ 
     /* ************************************************************************************************************************* */ 
     /* ************************************************************************************************************************* */ 

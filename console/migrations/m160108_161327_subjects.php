@@ -36,6 +36,7 @@ class m160108_161327_subjects extends XMigration
                         'gp_opt_id'=>$this->integer()->notNull(),
                         'email_opt_id'=>$this->integer()->notNull(),
                         'sex_id'=>$this->integer()->notNull(),
+                        'old_id'=>$this->integer()->notNull(),
                         'sort_order'=> $this->integer()->notNull()->defaultValue(2),
                         'status_id'=>$this->integer()->notNull(),
                         'created_at' => $this->integer()->notNull(),

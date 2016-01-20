@@ -11,13 +11,13 @@ use yii\widgets\ActiveForm;
 <div class="subjects-search">
 
     <?php $form = ActiveForm::begin([
-        'action' => ['index'],
-        'method' => 'get',
+        'action' => ['search'],
+        'method' => 'post',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
+    <?//= $form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'cubric_id') ?>
+    <?//= $form->field($model, 'cubric_id') ?>
 
     <?= $form->field($model, 'first_name') ?>
 

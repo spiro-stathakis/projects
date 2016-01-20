@@ -1,6 +1,6 @@
 <?php
 
-namespace common\controllers;
+namespace frontend\controllers;
 
 use Yii;
 use common\models\Subjects;
@@ -26,6 +26,28 @@ class SubjectsController extends XController
         ];
     }
 
+    
+
+    /* ******************************************************************************************************* */ 
+    public function actionSearch()
+    {
+
+
+        $searchModel = new SubjectsSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('search', [
+            'model' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+
+    }
+    /* ******************************************************************************************************* */ 
+    /* ******************************************************************************************************* */ 
+    /* ******************************************************************************************************* */ 
+    /* ******************************************************************************************************* */ 
+    /* ******************************************************************************************************* */ 
+    
     /**
      * Lists all Subjects models.
      * @return mixed
@@ -33,14 +55,23 @@ class SubjectsController extends XController
     public function actionIndex()
     {
         $searchModel = new SubjectsSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->post());
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
-
+    /* ******************************************************************************************************* */ 
+    
+    /* ******************************************************************************************************* */ 
+    /* ******************************************************************************************************* */ 
+    /* ******************************************************************************************************* */ 
+    /* ******************************************************************************************************* */ 
+    
+    
+    /* ******************************************************************************************************* */ 
+    
     /**
      * Displays a single Subjects model.
      * @param integer $id
@@ -52,7 +83,8 @@ class SubjectsController extends XController
             'model' => $this->findModel($id),
         ]);
     }
-
+    /* ******************************************************************************************************* */ 
+    
     /**
      * Creates a new Subjects model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -70,7 +102,9 @@ class SubjectsController extends XController
             ]);
         }
     }
-
+    
+    /* ******************************************************************************************************* */ 
+    
     /**
      * Updates an existing Subjects model.
      * If update is successful, the browser will be redirected to the 'view' page.

@@ -72,12 +72,10 @@ class SubjectsSearch extends Subjects
             'updated_by' => $this->updated_by,
         ]);
 
-        $query->andFilterWhere(['like', 'cubric_id', $this->cubric_id])
-            ->andFilterWhere(['like', 'first_name', $this->first_name])
-            ->andFilterWhere(['like', 'last_name', $this->last_name])
-            ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'telephone', $this->telephone])
-            ->andFilterWhere(['like', 'address', $this->address]);
+        $query->Where(['=','first_name', $this->first_name])
+            ->andWhere(['=','last_name', $this->last_name])
+            ->andWhere(['=','dob', $this->dob]);
+           
 
         return $dataProvider;
     }

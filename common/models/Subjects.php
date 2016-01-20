@@ -32,6 +32,12 @@ use Yii;
  */
 class Subjects extends \common\components\XActiveRecord
 {
+ 
+
+
+
+   /* ************************************************************************************************************************* */ 
+ 
     /**
      * @inheritdoc
      */
@@ -39,7 +45,8 @@ class Subjects extends \common\components\XActiveRecord
     {
         return 'subjects';
     }
-
+   /* ************************************************************************************************************************* */ 
+ 
     /**
      * @inheritdoc
      */
@@ -57,7 +64,12 @@ class Subjects extends \common\components\XActiveRecord
         ];
     }
 
+    /* ************************************************************************************************************************* */ 
+    public function init()
+    {
 
+        return parent::init();
+    }
     /* ************************************************************************************************************************* */ 
     public function getSexOptions()
     {
@@ -101,9 +113,9 @@ class Subjects extends \common\components\XActiveRecord
             'email' => Yii::t('app', 'Email'),
             'telephone' => Yii::t('app', 'Telephone'),
             'address' => Yii::t('app', 'Address'),
-            'gp_opt_id' => Yii::t('app', 'Gp Opt ID'),
-            'email_opt_id' => Yii::t('app', 'Email Opt ID'),
-            'sex_id' => Yii::t('app', 'Sex ID'),
+            'gp_opt_id' => Yii::t('app', 'GP details available'),
+            'email_opt_id' => Yii::t('app', 'Opt in to emails'),
+            'sex_id' => Yii::t('app', 'Sex'),
             'sort_order' => Yii::t('app', 'Sort Order'),
             'status_id' => Yii::t('app', 'Status ID'),
             'created_at' => Yii::t('app', 'Created At'),
