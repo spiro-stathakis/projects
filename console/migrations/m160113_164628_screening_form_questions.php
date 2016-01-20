@@ -26,6 +26,8 @@ class m160113_164628_screening_form_questions extends XMigration
                     'title'=>$this->string(4096),
                     'name'=>$this->string(4096)->notNull(),
                     'input_type_id' => $this->integer()->notNull(),
+                    'screening_form_id'=>$this->integer()->notNull(),
+                    'default_value'=>$this->integer()->notNull()->defaultValue(1),
                     'sort_order' => $this->integer()->notNull()->defaultValue(100), 
                     'status_id'=>$this->integer()->notNull()->defaultValue(2),
                     'created_at' => $this->integer()->notNull(),
@@ -37,9 +39,14 @@ class m160113_164628_screening_form_questions extends XMigration
             );
 
         $this->addForeignKey('fk_screening_form_questions_input_type_id' , $this->tableName,  'input_type_id' , 'ref_input_type' , 'id' , 'NO ACTION' , 'NO ACTION'); 
+        $this->addForeignKey('fk_screening_form_questions_screening_form_id' , $this->tableName,  'screening_form_id' , 'ref_input_type' , 'id' , 'NO ACTION' , 'NO ACTION'); 
+        $this->addForeignKey('fk_screening_form_questions_status_id' , $this->tableName,  'status_id' , 'ref_status' , 'id' , 'NO ACTION' , 'NO ACTION'); 
+        
+
         $this->insert($this->tableName,['title'=>'Question 1',
                                     'name'=>'Are you pregnant',
                                     'input_type_id'=>6,
+                                    'default_value'=>3, 
                                     'sort_order'=>100, 
                                     'status_id'=>2, 
                                     'created_at'=>time(),
@@ -55,11 +62,16 @@ class m160113_164628_screening_form_questions extends XMigration
   
     public function down()
     {
+
         
         $this->init();
         $this->dropForeignKey('fk_screening_form_questions_input_type_id',$this->tableName); 
+        $this->dropForeignKey('fk_screening_form_questions_screening_form_id',$this->tableName); 
+        $this->dropForeignKey('fk_screening_form_questions_status_id',$this->tableName); 
+        
         $this->dropTable($this->tableName); 
         return true;
+
 
     }
 
