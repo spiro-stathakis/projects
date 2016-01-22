@@ -29,9 +29,12 @@ class SubjectsController extends XController
     
 
     /* ******************************************************************************************************* */ 
-    public function actionSearch()
+    public function actionSearch($screening_form_id)
     {
 
+
+        if (! \Yii::$app->screeningform->isManager($screening_form_id))
+            throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access page.'));
 
         $searchModel = new SubjectsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -39,6 +42,7 @@ class SubjectsController extends XController
         return $this->render('search', [
             'model' => $searchModel,
             'dataProvider' => $dataProvider,
+            'screening_form_id'=> $screening_form_id 
         ]);
 
     }
@@ -57,9 +61,11 @@ class SubjectsController extends XController
         $searchModel = new SubjectsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->post());
 
+        //print_r(Yii::$app->request->post('screening_form_id')); 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'screening_form_id'=>Yii::$app->request->post('screening_form_id')
         ]);
     }
     /* ******************************************************************************************************* */ 

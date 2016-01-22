@@ -7,7 +7,6 @@ use yii\widgets\ActiveForm;
 /* @var $model common\models\SubjectsSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-
 <div class="subjects-search">
 
     <?php $form = ActiveForm::begin([
@@ -24,6 +23,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'last_name') ?>
 
     <?= $form->field($model, 'dob') ?>
+
+    <?= Html::hiddenInput('screening_form_id', $screening_form_id); ?> 
 
     <?php // echo $form->field($model, 'email') ?>
 
@@ -53,6 +54,7 @@ use yii\widgets\ActiveForm;
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton(Yii::t('app', 'Reset'), ['class' => 'btn btn-default']) ?>
     </div>
+
 
     <?php ActiveForm::end(); ?>
 

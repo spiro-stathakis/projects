@@ -22,8 +22,18 @@ return [
         'screening' => [
             'class' => 'app\modules\screening\Module',
         ],
+
     ], 
     'components' => [
+        'collection'=> [
+            'class'=>'common\components\Collection', 
+        ], 
+        'screeningform'=> [
+            'class'=>'common\components\ScreeningForm', 
+        ], 
+        'screeningformquestion' => [
+            'class' => 'common\components\ScreeningFormQuestion', 
+        ],
         'user' => [
             'identityClass' => 'common\models\UserIdentity',
             'enableAutoLogin' => true,

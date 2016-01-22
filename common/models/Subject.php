@@ -30,7 +30,7 @@ use Yii;
  * @property RefSex $sex
  * @property RefStatus $status
  */
-class Subjects extends \common\components\XActiveRecord
+class Subject extends \common\components\XActiveRecord
 {
  
 
@@ -163,6 +163,6 @@ class Subjects extends \common\components\XActiveRecord
      */
     public static function find()
     {
-        return new SubjectsQuery(get_called_class());
+        return new SubjectQuery(get_called_class());
     }
 }

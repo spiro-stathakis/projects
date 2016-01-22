@@ -8,6 +8,8 @@ use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 use \common\components\Types;
 use \common\components\LdapComponent; 
+use \common\behaviours\UserBehaviour; 
+
 /**
  * User model
  *
@@ -40,9 +42,12 @@ class UserIdentity extends ActiveRecord implements IdentityInterface
      */
     public function behaviors()
     {
-        return [
+        $parent = parent::behaviors(); 
+        $child=  [
             TimestampBehavior::className(),
+           
         ];
+        return array_merge($parent, $child); 
     }
 /* ************************************************************************************** */ 
 
@@ -162,8 +167,10 @@ class UserIdentity extends ActiveRecord implements IdentityInterface
     public function validateLdapPassword($password)
     {
         $ldap = new LdapComponent;
-        return $ldap->login($this->user_name, $password);
-        
+        if ($ldap->login($this->user_name, $password))
+            return true; 
+        else
+            return false; 
     }
 /* ************************************************************************************** */ 
 

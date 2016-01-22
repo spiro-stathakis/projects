@@ -8,6 +8,7 @@ namespace common\components;
 //use yii\filters\AccessControl;
 
 
+
 /**
  * Site controller
  */
@@ -16,11 +17,8 @@ abstract class XController extends \yii\web\Controller
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
-        return parent::behaviors();
-    }
 
+    /* ******************************************************************************************************* */ 
     /**
      * @inheritdoc
      */
@@ -35,6 +33,6 @@ abstract class XController extends \yii\web\Controller
 
     }
 
-    
+    /* ******************************************************************************************************* */ 
     
 }

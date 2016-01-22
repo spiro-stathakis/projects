@@ -20,7 +20,10 @@
         "yiisoft/yii2-swiftmailer": "*",
         "codeception/codeception": "*",
         "yiisoft/yii2-gii": "*",
-        "philippfrenzel/yii2fullcalendar":"*"
+        "philippfrenzel/yii2fullcalendar":"*",
+        "adldap/adldap": "5.0.*" , 
+	"edvlerblog/yii2-adldap-module": "v1.0.1",
+        "kartik-v/yii2-detail-view": "@dev"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

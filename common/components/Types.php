@@ -28,8 +28,34 @@ public static $status = [
 
 
     /* ************************************************************************************************************************* */ 
+	public static $member_type = [
+			'null'=>['id'=>1,'code'=>'null','name'=>'no value' , 'description'=>'No value'] ,
+			'member'=>['id'=>2,'code'=>'member','name'=>'Member' , 'description'=>'Membership of a collection'] ,
+			'manager'=>['id'=>3,'code'=>'manager','name'=>'Manager' , 'description'=>'Manager of a collection'] ,
+	]; 
+    
+
     /* ************************************************************************************************************************* */ 
+    public static $collection_type = [
+			'null'=>['id'=>1,'code'=>'null','name'=>'no value' , 'description'=>'No value'] ,
+			'training'=>['id'=>2,'code'=>'training','name'=>'Training' , 'description'=>'A training based collection'] ,
+			
+	]; 
+
+
     /* ************************************************************************************************************************* */ 
+	public static $input_type = [
+			'null'=>['id'=>1,'code'=>'null','name'=>'no value' , 'description'=>'No value'] ,
+			'small_text'=>['id'=>2,'code'=>'small_text','name'=>'Small text' , 'description'=>'Small text field'] ,
+			'med_text'=>['id'=>2,'code'=>'med_text','name'=>'Medium text' , 'description'=>'Medium text field'] ,
+			'large_text'=>['id'=>2,'code'=>'large_text','name'=>'Large text' , 'description'=>'Large text field'] ,
+			'date'=>['id'=>2,'code'=>'date','name'=>'Date' , 'description'=>'Date field'] ,
+			'radio'=>['id'=>2,'code'=>'radio','name'=>'Radio field' , 'description'=>'Radio field'] ,
+			'text_agreement'=>['id'=>2,'code'=>'text_agreement','name'=>'Text agreement' , 'description'=>'Text agreement field'] ,
+			'file'=>['id'=>2,'code'=>'file','name'=>'File upload' , 'description'=>'File upload'] ,
+			
+	]; 
+
     /* ************************************************************************************************************************* */ 
     /* ************************************************************************************************************************* */ 
     /* ************************************************************************************************************************* */ 
