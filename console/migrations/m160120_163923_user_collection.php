@@ -3,14 +3,14 @@
 
 use common\components\XMigration;
 
-class m160120_163923_user_collections extends XMigration
+class m160120_163923_user_collection extends XMigration
 {
 
      /* ************************************************************************************** */ 
 
     public function init()
     {
-       $this->tableName = '{{%user_collections}}'; 
+       $this->tableName = '{{%user_collection}}'; 
        return parent::init();  
     }
 
@@ -39,10 +39,10 @@ class m160120_163923_user_collections extends XMigration
                 $this->mysqlOptions 
             );
 
-        $this->addForeignKey('fk_user_collections_status_id' , $this->tableName,  'status_id' , 'ref_status' , 'id' , 'NO ACTION' , 'NO ACTION'); 
-        $this->addForeignKey('fk_user_collections_collection_id' , $this->tableName,  'collection_id' , 'collections' , 'id' , 'NO ACTION' , 'NO ACTION'); 
-        $this->addForeignKey('fk_user_collections_user_id' , $this->tableName,  'user_id' , 'users' , 'id' , 'NO ACTION' , 'NO ACTION'); 
-        $this->addForeignKey('fk_user_collections_member_type_id' , $this->tableName,  'member_type_id' , 'ref_member_type' , 'id' , 'NO ACTION' , 'NO ACTION'); 
+        $this->addForeignKey('fk_user_collection_status_id' , $this->tableName,  'status_id' , 'ref_status' , 'id' , 'NO ACTION' , 'NO ACTION'); 
+        $this->addForeignKey('fk_user_collection_collection_id' , $this->tableName,  'collection_id' , 'collection' , 'id' , 'NO ACTION' , 'NO ACTION'); 
+        $this->addForeignKey('fk_user_collection_user_id' , $this->tableName,  'user_id' , 'users' , 'id' , 'NO ACTION' , 'NO ACTION'); 
+        $this->addForeignKey('fk_user_collection_member_type_id' , $this->tableName,  'member_type_id' , 'ref_member_type' , 'id' , 'NO ACTION' , 'NO ACTION'); 
                     
         $this->insert($this->tableName,['collection_id'=>1,
                                     'user_id'=>44,
@@ -67,10 +67,10 @@ class m160120_163923_user_collections extends XMigration
         
 
         $this->init();
-        $this->dropForeignKey('fk_user_collections_status_id',$this->tableName); 
-        $this->dropForeignKey('fk_user_collections_collection_id',$this->tableName);
-        $this->dropForeignKey('fk_user_collections_user_id',$this->tableName);
-        $this->dropForeignKey('fk_user_collections_member_type_id',$this->tableName);
+        $this->dropForeignKey('fk_user_collection_status_id',$this->tableName); 
+        $this->dropForeignKey('fk_user_collection_collection_id',$this->tableName);
+        $this->dropForeignKey('fk_user_collection_user_id',$this->tableName);
+        $this->dropForeignKey('fk_user_collection_member_type_id',$this->tableName);
         
         $this->dropTable($this->tableName); 
         return true;

@@ -57,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ], 
                            'urlCreator' => function ($action, $model, $key, $index) {
                                if ($action === 'screen') {
-                                    $url = Url::to(['/screening/default/create', 'screening_form_id'=>1 , 'subject_id'=>$model->id]); // your own url generation logic
+                                    $url = Url::to(['/screening/default/create', 'screening_form_id'=>1 , 'subject'=>$model->hash]); // your own url generation logic
                                     return $url;
                                 }
                             }    

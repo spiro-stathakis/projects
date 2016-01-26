@@ -31,8 +31,11 @@ return [
         'screeningform'=> [
             'class'=>'common\components\ScreeningForm', 
         ], 
-        'screeningformquestion' => [
-            'class' => 'common\components\ScreeningFormQuestion', 
+        'screeningquestion' => [
+            'class' => 'common\components\ScreeningQuestion', 
+        ],
+        'screeningresponse' => [
+            'class' => 'common\components\ScreeningResponse', 
         ],
         'user' => [
             'identityClass' => 'common\models\UserIdentity',

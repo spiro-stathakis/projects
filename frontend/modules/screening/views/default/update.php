@@ -1,7 +1,8 @@
 <?php
-use yii\helpers\Html;
+//use yii\helpers\Html;
 use kartik\detail\DetailView; 
-use yii\bootstrap\Carousel; 
+use yii\bootstrap\Html;
+use yii\helpers\Url; 
 
 ?> 
 <?= DetailView::widget([
@@ -37,16 +38,26 @@ use yii\bootstrap\Carousel;
 ?> 
 
 
-<?php foreach ($screening_questions as $ques): ?> 
+<?php echo Html::beginForm(Url::to(['default/subsign', 'hash'=>$hash]),'post'); ?> 
 
+<?php foreach ($screening_questions as $ques): ?> 
+		<fieldset> 
 		<?php if (strlen($ques['caption'])> 0):?> 
-			<br /> 
-			<h4><?php echo $ques['caption']; ?></h4> 
+			
+			<legend><?php echo $ques['caption']; ?></legend> 
 
 		<?php endif; ?>  
-		<ul> 
-		<li> <?php echo $ques['content']; ?></li>
-		</ul> 
+		<ul style='list-style-type:none'> 
+		 <?php echo sprintf('<li>%s. %s</li>', $count , $ques['content']); ?>
+		 <?php echo  \yii::$app->screeningresponse->renderHtmlInput($ques['input_type_id'],$ques); ?> 
 
-		 
-<?php endforeach; ?> 
+		</ul>
+
+		 <?php $count++; ?> 
+		 </fieldset>
+<?php endforeach; ?>
+
+
+
+<?php echo Html::submitButton(); ?> 
+<?php echo Html::endForm(); ?> 

@@ -45,7 +45,8 @@ class m160108_084501_ref_input_type extends XMigration
             $this->insert($this->tableName,['code'=>'date','name'=>'Date field','description'=>'Date field', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>1 ]); 
             $this->insert($this->tableName,['code'=>'radio','name'=>'Radio field','description'=>'Radio field for true / false responses', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>1 ]);  
             $this->insert($this->tableName,['code'=>'text_agreement','name'=>'Text agreement','description'=>'Text agreement', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>1 ]);  
-            $this->insert($this->tableName,['code'=>'file','name'=>'File','description'=>'File upload', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>1 ]);  
+            $this->insert($this->tableName,['code'=>'image_overlay','name'=>'Image overlay','description'=>'An image that imposes user provided overlay data', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>1 ]);  
+            $this->insert($this->tableName,['code'=>'text_area','name'=>'Text area','description'=>'Text area', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>1 ]);  
 
     }
   /* ************************************************************************************** */ 

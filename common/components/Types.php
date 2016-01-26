@@ -15,8 +15,8 @@ public static $status = [
     
 	public static $boolean = [
 			'null'=>['id'=>1,'code'=>'n','name'=>'no value' , 'description'=>'No value'] ,
-			'true'=>['id'=>2,'code'=>'true','name'=>'True' , 'description'=>'Truthy'] ,
-			'false'=>['id'=>3,'code'=>'false','name'=>'False' , 'description'=>'Falsey'] ,
+			'true'=>['id'=>2,'code'=>'true','name'=>'True' , 'description'=>'Yes'] ,
+			'false'=>['id'=>3,'code'=>'false','name'=>'False' , 'description'=>'No'] ,
 	]; 
 
 	/* ************************************************************************************************************************* */ 
@@ -47,16 +47,25 @@ public static $status = [
 	public static $input_type = [
 			'null'=>['id'=>1,'code'=>'null','name'=>'no value' , 'description'=>'No value'] ,
 			'small_text'=>['id'=>2,'code'=>'small_text','name'=>'Small text' , 'description'=>'Small text field'] ,
-			'med_text'=>['id'=>2,'code'=>'med_text','name'=>'Medium text' , 'description'=>'Medium text field'] ,
-			'large_text'=>['id'=>2,'code'=>'large_text','name'=>'Large text' , 'description'=>'Large text field'] ,
-			'date'=>['id'=>2,'code'=>'date','name'=>'Date' , 'description'=>'Date field'] ,
-			'radio'=>['id'=>2,'code'=>'radio','name'=>'Radio field' , 'description'=>'Radio field'] ,
-			'text_agreement'=>['id'=>2,'code'=>'text_agreement','name'=>'Text agreement' , 'description'=>'Text agreement field'] ,
-			'file'=>['id'=>2,'code'=>'file','name'=>'File upload' , 'description'=>'File upload'] ,
+			'med_text'=>['id'=>3,'code'=>'med_text','name'=>'Medium text' , 'description'=>'Medium text field'] ,
+			'large_text'=>['id'=>4,'code'=>'large_text','name'=>'Large text' , 'description'=>'Large text field'] ,
+			'date'=>['id'=>5,'code'=>'date','name'=>'Date' , 'description'=>'Date field'] ,
+			'radio'=>['id'=>6,'code'=>'radio','name'=>'Radio field' , 'description'=>'Radio field'] ,
+			'text_agreement'=>['id'=>7,'code'=>'text_agreement','name'=>'Text agreement' , 'description'=>'Text agreement field'] ,
+			'image_overlay'=>['id'=>8,'code'=>'image_overlay','name'=>'Image overlay' , 'description'=>'File upload'] ,
+			'text_area'=>['id'=>9,'code'=>'text_area','name'=>'Text area' , 'description'=>'Text area'] ,
 			
 	]; 
 
     /* ************************************************************************************************************************* */ 
+    public static $progress = [
+    		'null'=>['id'=>1,'code'=>'null','name'=>'no value' , 'description'=>'No value'] ,
+			'in_progress'=>['id'=>2,'code'=>'in_progress','name'=>'In progress' , 'description'=>'Small text field'] ,
+			'stage_1_complete'=>['id'=>3,'code'=>'stage_1_complete','name'=>'Stage 1 complete' , 'description'=>'Stage 1 complete'] ,
+			'stage_2_complete'=>['id'=>4,'code'=>'stage_2_complete','name'=>'Stage 2 complete' , 'description'=>'Stage 2 complete'] ,
+			'published'=>['id'=>5,'code'=>'published','name'=>'Published' , 'description'=>'Published'] ,
+			
+    ];
     /* ************************************************************************************************************************* */ 
     /* ************************************************************************************************************************* */ 
     

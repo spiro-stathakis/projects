@@ -3,8 +3,8 @@
 namespace app\modules\screening\controllers;
 
 use Yii;
-use common\models\Subjects;
-use common\models\SubjectsSearch;
+use common\models\Subject;
+use common\models\SubjectSearch;
 use common\components\XController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * SubjectsController implements the CRUD actions for Subjects model.
  */
-class SubjectsController extends XController
+class SubjectController extends XController
 {
     public function behaviors()
     {
@@ -36,7 +36,7 @@ class SubjectsController extends XController
         if (! \Yii::$app->screeningform->isManager($screening_form_id))
             throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access page.'));
 
-        $searchModel = new SubjectsSearch();
+        $searchModel = new SubjectSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('search', [
@@ -58,7 +58,7 @@ class SubjectsController extends XController
      */
     public function actionIndex()
     {
-        $searchModel = new SubjectsSearch();
+        $searchModel = new SubjectSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->post());
 
         //print_r(Yii::$app->request->post('screening_form_id')); 
@@ -98,7 +98,7 @@ class SubjectsController extends XController
      */
     public function actionCreate()
     {
-        $model = new Subjects();
+        $model = new Subject();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -152,10 +152,12 @@ class SubjectsController extends XController
      */
     protected function findModel($id)
     {
-        if (($model = Subjects::findOne($id)) !== null) {
+        if (($model = Subject::findOne($id)) !== null) {
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+
+    
 }

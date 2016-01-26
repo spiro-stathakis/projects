@@ -1,5 +1,5 @@
 <?php
-
+ 
 use common\components\XMigration;
 
 
@@ -41,8 +41,8 @@ class m150915_114548_users extends XMigration
         $this->addForeignKey('fk_users_status_id' , 'users' , 'status_id' , 'ref_status' , 'id' , 'NO ACTION' , 'NO ACTION'); 
         $this->addForeignKey('fk_users_auth_type_id' , 'users' , 'auth_type_id' , 'ref_auth_type' , 'id' , 'NO ACTION' , 'NO ACTION'); 
 
-
-
+        $this->execute('CALL sp_import_users();')  ;
+        
     }
 
     public function down()

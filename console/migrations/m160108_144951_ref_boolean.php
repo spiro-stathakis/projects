@@ -38,8 +38,8 @@ class m160108_144951_ref_boolean extends XMigration
             $this->addForeignKey('fk_ref_boolean_status_id' , $this->tableName , 'status_id' , 'ref_status' , 'id' , 'NO ACTION' , 'NO ACTION'); 
             
             $this->insert($this->tableName,['code'=>'null','name'=>'No value','description'=>'No value','sort_order'=>100,'status_id'=>1,'created_at'=>time(),'created_by'=>0 ]); 
-            $this->insert($this->tableName,['code'=>'true','name'=>'True','description'=>'Thruthy', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>0]);
-            $this->insert($this->tableName,['code'=>'false','name'=>'False','description'=>'Falsey', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>0 ]);
+            $this->insert($this->tableName,['code'=>'true','name'=>'True','description'=>'Yes', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>0]);
+            $this->insert($this->tableName,['code'=>'false','name'=>'False','description'=>'No', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>0 ]);
             
     }
     /* ************************************************************************************** */ 

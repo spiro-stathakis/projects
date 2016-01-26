@@ -17,7 +17,7 @@ BEGIN
 	DECLARE l_dob DATE; 
 	DECLARE l_gp_option INT UNSIGNED DEFAULT 0; 
 	DECLARE l_email_option INT UNSIGNED DEFAULT 0; 
-
+	DECLARE l_subject_hash VARCHAR(32); 
 
 	DECLARE l_status_active INT UNSIGNED DEFAULT 2; 
 	DECLARE l_count INT UNSIGNED DEFAULT 0; 
@@ -36,7 +36,7 @@ BEGIN
 			FETCH subject_csr INTO l_subject_id,l_subject_username,
 			l_subject_firstname, l_subject_lastname,l_subject_email,
 			l_subject_telephone, l_dob,l_gp_option,l_email_option;
-			SET l_count = (SELECT COUNT(id) FROM projects.subjects WHERE old_id=l_subject_id);
+			SET l_count = (SELECT COUNT(id) FROM projects.subject WHERE old_id=l_subject_id);
 			
 			IF l_gp_option = 4 THEN 
 				SET l_gp_option = 1; 
@@ -46,15 +46,16 @@ BEGIN
 				SET l_email_option = 1; 
 			END IF; 
 			
-			
+			SET l_subject_hash = (SELECT(MD5(CONCAT(l_subject_firstname,l_subject_username)))); 
 			IF l_count = 0 THEN 
-					INSERT INTO projects.subjects 
+					INSERT INTO projects.subject
 					(
 						cubric_id,
 						first_name,
 						last_name,
 						dob,
 						email,
+						hash, 
 						telephone,
 						address,
 						gp_opt_id,
@@ -70,6 +71,7 @@ BEGIN
 						l_subject_lastname,
 						l_dob,
 						l_subject_email,
+						l_subject_hash, 
 						l_subject_telephone,
 						'',
 						l_gp_option,

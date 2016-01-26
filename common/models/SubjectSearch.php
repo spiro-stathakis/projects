@@ -5,12 +5,12 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Subjects;
+use common\models\Subject;
 
 /**
  * SubjectsSearch represents the model behind the search form about `common\models\Subjects`.
  */
-class SubjectsSearch extends Subjects
+class SubjectSearch extends Subject
 {
     /**
      * @inheritdoc
@@ -41,7 +41,7 @@ class SubjectsSearch extends Subjects
      */
     public function search($params)
     {
-        $query = Subjects::find();
+        $query = Subject::find();
 
         // add conditions that should always apply here
 

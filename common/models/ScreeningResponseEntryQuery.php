@@ -3,11 +3,11 @@
 namespace common\models;
 
 /**
- * This is the ActiveQuery class for [[Subject]].
+ * This is the ActiveQuery class for [[ScreeningFormResponse]].
  *
- * @see Subject
+ * @see ScreeningFormResponse
  */
-class SubjectQuery extends \yii\db\ActiveQuery
+class ScreeningResponseEntryQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
@@ -17,7 +17,7 @@ class SubjectQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return Subject[]|array
+     * @return ScreeningFormResponse[]|array
      */
     public function all($db = null)
     {
@@ -26,7 +26,7 @@ class SubjectQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return Subject|array|null
+     * @return ScreeningFormResponse|array|null
      */
     public function one($db = null)
     {

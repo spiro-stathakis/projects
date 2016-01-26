@@ -5,7 +5,7 @@ namespace common\models;
 use Yii;
 
 /**
- * This is the model class for table "screening_forms".
+ * This is the model class for table "screening_form".
  *
  * @property integer $id
  * @property string $name
@@ -19,10 +19,10 @@ use Yii;
  * @property integer $created_by
  * @property integer $updated_by
  *
- * @property ScreeningFormAnswers[] $screeningFormAnswers
- * @property ScreeningFormQuestions[] $screeningFormQuestions
- * @property Collections $collection
+ * @property ScreeningEntry[] $screeningEntries
+ * @property Collection $collection
  * @property RefStatus $status
+ * @property ScreeningQuestion[] $screeningQuestions
  */
 class ScreeningForm extends \common\components\XActiveRecord
 {
@@ -31,7 +31,7 @@ class ScreeningForm extends \common\components\XActiveRecord
      */
     public static function tableName()
     {
-        return 'screening_forms';
+        return 'screening_form';
     }
 
     /**
@@ -44,7 +44,7 @@ class ScreeningForm extends \common\components\XActiveRecord
             [['collection_id', 'sort_order', 'status_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['title', 'description'], 'string', 'max' => 4096],
-            [['collection_id'], 'exist', 'skipOnError' => true, 'targetClass' => Collections::className(), 'targetAttribute' => ['collection_id' => 'id']],
+            [['collection_id'], 'exist', 'skipOnError' => true, 'targetClass' => Collection::className(), 'targetAttribute' => ['collection_id' => 'id']],
             [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => RefStatus::className(), 'targetAttribute' => ['status_id' => 'id']],
         ];
     }
@@ -72,17 +72,9 @@ class ScreeningForm extends \common\components\XActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getScreeningFormAnswers()
+    public function getScreeningEntries()
     {
-        return $this->hasMany(ScreeningFormAnswers::className(), ['screening_form_id' => 'id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getScreeningFormQuestions()
-    {
-        return $this->hasMany(ScreeningFormQuestions::className(), ['screening_form_id' => 'id']);
+        return $this->hasMany(ScreeningEntry::className(), ['screening_form_id' => 'id']);
     }
 
     /**
@@ -90,7 +82,7 @@ class ScreeningForm extends \common\components\XActiveRecord
      */
     public function getCollection()
     {
-        return $this->hasOne(Collections::className(), ['id' => 'collection_id']);
+        return $this->hasOne(Collection::className(), ['id' => 'collection_id']);
     }
 
     /**
@@ -99,6 +91,14 @@ class ScreeningForm extends \common\components\XActiveRecord
     public function getStatus()
     {
         return $this->hasOne(RefStatus::className(), ['id' => 'status_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getScreeningQuestions()
+    {
+        return $this->hasMany(ScreeningQuestion::className(), ['screening_form_id' => 'id']);
     }
 
     /**

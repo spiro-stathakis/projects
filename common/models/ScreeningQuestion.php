@@ -8,8 +8,8 @@ use Yii;
  * This is the model class for table "screening_form_questions".
  *
  * @property integer $id
- * @property string $title
- * @property string $name
+ * @property string $caption
+ * @property string $content
  * @property integer $input_type_id
  * @property integer $screening_form_id
  * @property integer $default_value
@@ -25,14 +25,14 @@ use Yii;
  * @property RefInputType $inputType
  * @property ScreeningForms $screeningForm
  */
-class ScreeningFormQuestion extends \common\components\XActiveRecord
+class ScreeningQuestion extends \common\components\XActiveRecord
 {
     /**
      * @inheritdoc
      */
-    public static function tableName()
+    public static function tablecontent()
     {
-        return 'screening_form_questions';
+        return 'screening_question';
     }
 
     /**
@@ -41,12 +41,12 @@ class ScreeningFormQuestion extends \common\components\XActiveRecord
     public function rules()
     {
         return [
-            [['name', 'input_type_id', 'screening_form_id', 'created_at', 'created_by'], 'required'],
-            [['input_type_id', 'screening_form_id', 'default_value', 'sort_order', 'status_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['title', 'name'], 'string', 'max' => 4096],
-            [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => RefStatus::className(), 'targetAttribute' => ['status_id' => 'id']],
-            [['input_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => RefInputType::className(), 'targetAttribute' => ['input_type_id' => 'id']],
-            [['screening_form_id'], 'exist', 'skipOnError' => true, 'targetClass' => ScreeningForm::className(), 'targetAttribute' => ['screening_form_id' => 'id']],
+            [['content', 'input_type_id', 'screening_form_id', 'created_at', 'created_by'], 'required'],
+            [['input_type_id', 'screening_form_id','tristate_option_id',  'sort_order', 'status_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['caption', 'content'], 'string', 'max' => 4096],
+            [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => RefStatus::classcontent(), 'targetAttribute' => ['status_id' => 'id']],
+            [['input_type_id'], 'exist', 'skipOnError' => true, 'targetClass' => RefInputType::classcontent(), 'targetAttribute' => ['input_type_id' => 'id']],
+            [['screening_form_id'], 'exist', 'skipOnError' => true, 'targetClass' => ScreeningForm::classcontent(), 'targetAttribute' => ['screening_form_id' => 'id']],
         ];
     }
 
@@ -57,8 +57,8 @@ class ScreeningFormQuestion extends \common\components\XActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'title' => Yii::t('app', 'Title'),
-            'name' => Yii::t('app', 'Name'),
+            'caption' => Yii::t('app', 'caption'),
+            'content' => Yii::t('app', 'content'),
             'input_type_id' => Yii::t('app', 'Input Type ID'),
             'screening_form_id' => Yii::t('app', 'Screening Form ID'),
             'default_value' => Yii::t('app', 'Default Value'),
@@ -76,7 +76,7 @@ class ScreeningFormQuestion extends \common\components\XActiveRecord
      */
     public function getScreeningFormAnswer()
     {
-        return $this->hasMany(ScreeningFormAnswers::className(), ['screening_form_question_id' => 'id']);
+        return $this->hasMany(ScreeningFormAnswers::classcontent(), ['screening_form_question_id' => 'id']);
     }
 
     /**
@@ -84,7 +84,7 @@ class ScreeningFormQuestion extends \common\components\XActiveRecord
      */
     public function getStatus()
     {
-        return $this->hasOne(RefStatus::className(), ['id' => 'status_id']);
+        return $this->hasOne(RefStatus::classcontent(), ['id' => 'status_id']);
     }
 
     /**
@@ -92,7 +92,7 @@ class ScreeningFormQuestion extends \common\components\XActiveRecord
      */
     public function getInputType()
     {
-        return $this->hasOne(RefInputType::className(), ['id' => 'input_type_id']);
+        return $this->hasOne(RefInputType::classcontent(), ['id' => 'input_type_id']);
     }
 
     /**
@@ -100,7 +100,7 @@ class ScreeningFormQuestion extends \common\components\XActiveRecord
      */
     public function getScreeningForm()
     {
-        return $this->hasOne(ScreeningForm::className(), ['id' => 'screening_form_id']);
+        return $this->hasOne(ScreeningForm::classcontent(), ['id' => 'screening_form_id']);
     }
 
     /**
@@ -109,6 +109,6 @@ class ScreeningFormQuestion extends \common\components\XActiveRecord
      */
     public static function find()
     {
-        return new ScreeningFormQuestionQuery(get_called_class());
+        return new ScreeningQuestionQuery(get_called_class());
     }
 }

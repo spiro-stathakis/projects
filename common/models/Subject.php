@@ -1,23 +1,25 @@
 <?php
 
 namespace common\models;
-use common\components\Types; 
+
 use Yii;
 
 /**
- * This is the model class for table "subjects".
+ * This is the model class for table "subject".
  *
  * @property integer $id
  * @property string $cubric_id
  * @property string $first_name
  * @property string $last_name
  * @property string $dob
+ * @property string $hash
  * @property string $email
  * @property string $telephone
  * @property string $address
  * @property integer $gp_opt_id
  * @property integer $email_opt_id
  * @property integer $sex_id
+ * @property integer $old_id
  * @property integer $sort_order
  * @property integer $status_id
  * @property integer $created_at
@@ -25,80 +27,42 @@ use Yii;
  * @property integer $created_by
  * @property integer $updated_by
  *
+ * @property ScreeningEntry[] $screeningEntries
+ * @property ScreeningResponse[] $screeningResponses
+ * @property RefSex $sex
  * @property RefBoolean $emailOpt
  * @property RefBoolean $gpOpt
- * @property RefSex $sex
  * @property RefStatus $status
  */
 class Subject extends \common\components\XActiveRecord
 {
- 
-
-
-
-   /* ************************************************************************************************************************* */ 
- 
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'subjects';
+        return 'subject';
     }
-   /* ************************************************************************************************************************* */ 
- 
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['cubric_id', 'first_name', 'last_name', 'dob', 'gp_opt_id', 'email_opt_id', 'sex_id', 'status_id', 'created_at', 'created_by'], 'required'],
+            [['cubric_id', 'first_name', 'last_name', 'dob', 'hash', 'gp_opt_id', 'email_opt_id', 'sex_id', 'old_id', 'status_id', 'created_at', 'created_by'], 'required'],
             [['dob'], 'safe'],
-            [['gp_opt_id', 'email_opt_id', 'sex_id', 'sort_order', 'status_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['gp_opt_id', 'email_opt_id', 'sex_id', 'old_id', 'sort_order', 'status_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['cubric_id', 'first_name', 'last_name', 'email', 'telephone', 'address'], 'string', 'max' => 255],
+            [['hash'], 'string', 'max' => 32],
+            [['hash'], 'unique'],
+            [['sex_id'], 'exist', 'skipOnError' => true, 'targetClass' => RefSex::className(), 'targetAttribute' => ['sex_id' => 'id']],
             [['email_opt_id'], 'exist', 'skipOnError' => true, 'targetClass' => RefBoolean::className(), 'targetAttribute' => ['email_opt_id' => 'id']],
             [['gp_opt_id'], 'exist', 'skipOnError' => true, 'targetClass' => RefBoolean::className(), 'targetAttribute' => ['gp_opt_id' => 'id']],
-            [['sex_id'], 'exist', 'skipOnError' => true, 'targetClass' => RefSex::className(), 'targetAttribute' => ['sex_id' => 'id']],
             [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => RefStatus::className(), 'targetAttribute' => ['status_id' => 'id']],
         ];
     }
 
-    /* ************************************************************************************************************************* */ 
-    public function init()
-    {
-
-        return parent::init();
-    }
-    /* ************************************************************************************************************************* */ 
-    public function getSexOptions()
-    {
-        return [
-                Types::$sex['n']['id']=>Types::$sex['n']['name'], 
-                Types::$sex['f']['id']=>Types::$sex['f']['name'], 
-                Types::$sex['m']['id']=>Types::$sex['m']['name'], 
-        ]; 
-
-    }
-    /* ************************************************************************************************************************* */ 
-     public function getBooleanOptions()
-    {
-        return [
-                Types::$boolean['true']['id']=>Types::$boolean['true']['code'], 
-                Types::$boolean['false']['id']=>Types::$boolean['false']['code'], 
-        ]; 
-
-    }
-
-
-
-    /* ************************************************************************************************************************* */ 
-    /* ************************************************************************************************************************* */ 
-    /* ************************************************************************************************************************* */ 
-    /* ************************************************************************************************************************* */ 
-    /* ************************************************************************************************************************* */ 
-    /* ************************************************************************************************************************* */ 
-    
     /**
      * @inheritdoc
      */
@@ -110,12 +74,14 @@ class Subject extends \common\components\XActiveRecord
             'first_name' => Yii::t('app', 'First Name'),
             'last_name' => Yii::t('app', 'Last Name'),
             'dob' => Yii::t('app', 'Dob'),
+            'hash' => Yii::t('app', 'Hash'),
             'email' => Yii::t('app', 'Email'),
             'telephone' => Yii::t('app', 'Telephone'),
             'address' => Yii::t('app', 'Address'),
-            'gp_opt_id' => Yii::t('app', 'GP details available'),
-            'email_opt_id' => Yii::t('app', 'Opt in to emails'),
-            'sex_id' => Yii::t('app', 'Sex'),
+            'gp_opt_id' => Yii::t('app', 'Gp Opt ID'),
+            'email_opt_id' => Yii::t('app', 'Email Opt ID'),
+            'sex_id' => Yii::t('app', 'Sex ID'),
+            'old_id' => Yii::t('app', 'Old ID'),
             'sort_order' => Yii::t('app', 'Sort Order'),
             'status_id' => Yii::t('app', 'Status ID'),
             'created_at' => Yii::t('app', 'Created At'),
@@ -123,6 +89,30 @@ class Subject extends \common\components\XActiveRecord
             'created_by' => Yii::t('app', 'Created By'),
             'updated_by' => Yii::t('app', 'Updated By'),
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getScreeningEntries()
+    {
+        return $this->hasMany(ScreeningEntry::className(), ['subject_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getScreeningResponses()
+    {
+        return $this->hasMany(ScreeningResponse::className(), ['subject_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSex()
+    {
+        return $this->hasOne(RefSex::className(), ['id' => 'sex_id']);
     }
 
     /**
@@ -144,14 +134,6 @@ class Subject extends \common\components\XActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSex()
-    {
-        return $this->hasOne(RefSex::className(), ['id' => 'sex_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getStatus()
     {
         return $this->hasOne(RefStatus::className(), ['id' => 'status_id']);
@@ -159,7 +141,7 @@ class Subject extends \common\components\XActiveRecord
 
     /**
      * @inheritdoc
-     * @return SubjectsQuery the active query used by this AR class.
+     * @return SubjectQuery the active query used by this AR class.
      */
     public static function find()
     {

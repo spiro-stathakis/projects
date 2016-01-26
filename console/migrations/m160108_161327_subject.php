@@ -3,7 +3,7 @@
 use common\components\XMigration;
 
 
-class m160108_161327_subjects extends XMigration
+class m160108_161327_subject extends XMigration
 {
    
 
@@ -12,7 +12,7 @@ class m160108_161327_subjects extends XMigration
     
     public function init()
     {
-       $this->tableName = '{{%subjects}}'; 
+       $this->tableName = '{{%subject}}'; 
       return parent::init(); 
     }
 
@@ -30,6 +30,7 @@ class m160108_161327_subjects extends XMigration
                         'first_name'=>$this->string(255)->notNull(),
                         'last_name'=>$this->string(255)->notNull(),
                         'dob'=>$this->date('%d/%m/%Y')->notNull(),
+                        'hash'=>$this->string(255)->notNull()->unique(), 
                         'email'=>$this->string(255),
                         'telephone'=>$this->string(255),
                         'address'=>$this->string(255),
@@ -50,7 +51,8 @@ class m160108_161327_subjects extends XMigration
             $this->addForeignKey('fk_subjects_gp_opt_id' , $this->tableName,  'gp_opt_id' , 'ref_boolean' , 'id' , 'NO ACTION' , 'NO ACTION'); 
             $this->addForeignKey('fk_subjects_email_opt_id' , $this->tableName,  'email_opt_id' , 'ref_boolean' , 'id' , 'NO ACTION' , 'NO ACTION'); 
             $this->addForeignKey('fk_subjects_sex_id_id' , $this->tableName,  'sex_id' , 'ref_sex' , 'id' , 'NO ACTION' , 'NO ACTION'); 
-            
+             $this->execute('CALL sp_import_subjects();')  ;
+        
             
     
     }

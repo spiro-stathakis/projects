@@ -25,10 +25,10 @@ class ScreeningForm extends Object
     					'uc.member_type_id', 
     					'rmt.name as member_type_name', 
     					'uc.expiry'])
-    				->from('screening_forms s')
-                    ->join('LEFT JOIN','collections c' , 's.collection_id=c.id')
+    				->from('screening_form s')
+                    ->join('LEFT JOIN','collection c' , 's.collection_id=c.id')
     				->join('LEFT JOIN','ref_collection_type rct', 'c.collection_type_id=rct.id')
-    				->join('LEFT JOIN','user_collections uc', 'uc.collection_id=c.id')
+    				->join('LEFT JOIN','user_collection uc', 'uc.collection_id=c.id')
                     ->join('LEFT JOIN','ref_member_type rmt', 'uc.member_type_id=rmt.id')
     				->where('uc.status_id=:status_active AND uc.user_id=:user_id AND uc.expiry > UNIX_TIMESTAMP()')
     				->addParams([':status_active'=>Types::$status['active']['id'], 
