@@ -10,6 +10,15 @@ $.app = {
     
     init:function () 
     {
+         if ($.app.page !== undefined) 
+        {       
+    
+            // Flag, to check if the page javascript component of the app has been loaded. 
+            // the bootcode for this resides in //layouts/_javascript.php
+            // Spi April 25  20014      
+            if (!$.app.page.delayed) // Flag, in case you don't need to load file on start
+                $.app.page.init.call($.app.page);
+        }
     },
     /* ********************************************************** */
 

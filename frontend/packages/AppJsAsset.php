@@ -23,5 +23,6 @@ class AppJsAsset extends AssetBundle
     ];
     public $depends = [
         'frontend\packages\AppAsset',
+        'yii\web\JqueryAsset'
     ];
 }

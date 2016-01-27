@@ -19,6 +19,14 @@ abstract class XController extends \yii\web\Controller
      */
 
     /* ******************************************************************************************************* */ 
+    public function init()
+    {
+
+
+        \yii::$app->jsconfig->addData('g', \yii::$app->user->isGuest); 
+        return parent::init(); 
+    }
+    /* ******************************************************************************************************* */ 
     /**
      * @inheritdoc
      */

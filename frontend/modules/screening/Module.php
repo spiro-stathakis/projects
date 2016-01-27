@@ -2,7 +2,7 @@
 
 namespace app\modules\screening;
 
-class Module extends \yii\base\Module
+class Module extends \common\components\XModule
 {
     public $controllerNamespace = 'app\modules\screening\controllers';
 

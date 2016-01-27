@@ -1,35 +1,84 @@
-var wrapper = document.getElementById("signature-pad"),
-    clearButton = wrapper.querySelector("[data-action=clear]"),
-    saveButton = wrapper.querySelector("[data-action=save]"),
-    canvas = wrapper.querySelector("canvas"),
-    signaturePad;
 
-// Adjust canvas coordinate space taking into account pixel ratio,
-// to make it look crisp on mobile devices.
-// This also causes canvas to be cleared.
-function resizeCanvas() {
-    // When zoomed out to less than 100%, for some very strange reason,
-    // some browsers report devicePixelRatio as less than 1
-    // and only part of the canvas is cleared then.
-    var ratio =  Math.max(window.devicePixelRatio || 1, 1);
-    canvas.width = canvas.offsetWidth * ratio;
-    canvas.height = canvas.offsetHeight * ratio;
-    canvas.getContext("2d").scale(ratio, ratio);
+
+function signaturePad() {
 }
 
-window.onresize = resizeCanvas;
-resizeCanvas();
+signaturePad.prototype = {   
+    wrapper: document.getElementById("signature-pad"),
+    clearButton: '',
+    saveButton:'',
+    canvas:'',
+    signaturePad:'', 
+    signee:'participant',
+    init:function () { 
+            
+            
+            this.clearButton=this.wrapper.querySelector("[data-action=clear]");
+            this.saveButton=$.app.page.wrapper.querySelector("[data-action=save]");
+            this.canvas=$.app.page.wrapper.querySelector("canvas");
+            
 
-var signaturePad = new SignaturePad(canvas);
+            window.onresize = $.app.page.resizeCanvas;
+                $.app.page.resizeCanvas();
+                $.app.page.signaturePad = new SignaturePad(this.canvas);
+                $.app.page.clearButton.addEventListener("click", function (event) {
+                $.app.page.signaturePad.clear();
+            });
 
-clearButton.addEventListener("click", function (event) {
-    signaturePad.clear();
-});
+           this.saveButton.addEventListener("click", function (event) {
+                if ($.app.page.signaturePad.isEmpty()) {
+                    alert("Please provide signature first.");
+                } else {
+                    //window.open(signaturePad.toDataURL());
+                  return  $.app.page.saveSignature();  
+                }
+            });
 
-saveButton.addEventListener("click", function (event) {
-    if (signaturePad.isEmpty()) {
-        alert("Please provide signature first.");
-    } else {
-        window.open(signaturePad.toDataURL());
+
+         
+    }, 
+    resizeCanvas:function()
+    {
+
+            var ratio =  Math.max(window.devicePixelRatio || 1, 1);
+            $.app.page.canvas.width = $.app.page.canvas.offsetWidth * ratio;
+            $.app.page.canvas.height = $.app.page.canvas.offsetHeight * ratio;
+            $.app.page.canvas.getContext("2d").scale(ratio, ratio);
+    }, 
+    saveSignature:function()
+    {
+
+
+        document.getElementById('signature-text').innerHTML = '<h4>Researcher signature. Please stay within box boundary</h4>';
+        if (this.signee=='participant')
+        {
+            alert('Thank you - Please return device to the researcher.'); 
+            this.signee = 'researcher';
+            $.app.page.signaturePad.clear(); 
+        }else{
+                alert($.app.page.signee); 
+
+        }
+         return true; 
+       
+       
     }
-});
+
+
+
+
+}; 
+
+
+
+
+   
+$.app.page = new signaturePad();
+ 
+
+
+
+
+
+
+

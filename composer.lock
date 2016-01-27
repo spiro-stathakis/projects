@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "90e8a435b06d87e11ee64146c8f55c54",
-    "content-hash": "ffeeebdb9e6919f044b1411729899388",
+    "hash": "a602c1835feead4848b1c0c157576144",
+    "content-hash": "bdc9e6cb48b0f7e875245b7cf49e1965",
     "packages": [
         {
             "name": "adldap/adldap",
@@ -239,16 +239,16 @@
         },
         {
             "name": "bower-asset/jquery.inputmask",
-            "version": "3.2.5",
+            "version": "3.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RobinHerbots/jquery.inputmask.git",
-                "reference": "d08264a678865849c808359d126e3bddb9ec87a6"
+                "reference": "7963205cb506bfbf5cc4a3b92d1892e0aa131eb2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RobinHerbots/jquery.inputmask/zipball/d08264a678865849c808359d126e3bddb9ec87a6",
-                "reference": "d08264a678865849c808359d126e3bddb9ec87a6",
+                "url": "https://api.github.com/repos/RobinHerbots/jquery.inputmask/zipball/7963205cb506bfbf5cc4a3b92d1892e0aa131eb2",
+                "reference": "7963205cb506bfbf5cc4a3b92d1892e0aa131eb2",
                 "shasum": ""
             },
             "require": {
@@ -478,12 +478,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/Codeception.git",
-                "reference": "c656475d35a2d81f44fda036cfa2ffaa0a2d7ab0"
+                "reference": "8ab258d7538ac428a4f6e21be47dd63bff3b5d13"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/c656475d35a2d81f44fda036cfa2ffaa0a2d7ab0",
-                "reference": "c656475d35a2d81f44fda036cfa2ffaa0a2d7ab0",
+                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/8ab258d7538ac428a4f6e21be47dd63bff3b5d13",
+                "reference": "8ab258d7538ac428a4f6e21be47dd63bff3b5d13",
                 "shasum": ""
             },
             "require": {
@@ -550,7 +550,7 @@
                 "functional testing",
                 "unit testing"
             ],
-            "time": "2016-01-10 17:15:01"
+            "time": "2016-01-27 02:05:51"
         },
         {
             "name": "doctrine/instantiator",
@@ -743,12 +743,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "5741733ee5a7f1ebe19c7c5449271a6705d3a433"
+                "reference": "1ddfa56770c17cec9db9bc350c474608224c3ee8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/5741733ee5a7f1ebe19c7c5449271a6705d3a433",
-                "reference": "5741733ee5a7f1ebe19c7c5449271a6705d3a433",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/1ddfa56770c17cec9db9bc350c474608224c3ee8",
+                "reference": "1ddfa56770c17cec9db9bc350c474608224c3ee8",
                 "shasum": ""
             },
             "require": {
@@ -797,7 +797,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2016-01-22 22:54:08"
+            "time": "2016-01-25 18:48:00"
         },
         {
             "name": "guzzlehttp/promises",
@@ -914,12 +914,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-detail-view.git",
-                "reference": "8e53b9ae843cc21934ffb1e6c6963bbce18402f2"
+                "reference": "17a6589113a5b8b7eb963d739ebd94809b3a4a50"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-detail-view/zipball/8e53b9ae843cc21934ffb1e6c6963bbce18402f2",
-                "reference": "8e53b9ae843cc21934ffb1e6c6963bbce18402f2",
+                "url": "https://api.github.com/repos/kartik-v/yii2-detail-view/zipball/17a6589113a5b8b7eb963d739ebd94809b3a4a50",
+                "reference": "17a6589113a5b8b7eb963d739ebd94809b3a4a50",
                 "shasum": ""
             },
             "require": {
@@ -954,7 +954,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2016-01-18 13:09:15"
+            "time": "2016-01-24 19:18:15"
         },
         {
             "name": "kartik-v/yii2-helpers",
@@ -2197,12 +2197,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "1710486b6038c47b252630b0f4c220faf90e7f96"
+                "reference": "00bedebdf3ddb1b5399dc015c8e1a456282f44d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/1710486b6038c47b252630b0f4c220faf90e7f96",
-                "reference": "1710486b6038c47b252630b0f4c220faf90e7f96",
+                "url": "https://api.github.com/repos/symfony/console/zipball/00bedebdf3ddb1b5399dc015c8e1a456282f44d4",
+                "reference": "00bedebdf3ddb1b5399dc015c8e1a456282f44d4",
                 "shasum": ""
             },
             "require": {
@@ -2249,7 +2249,7 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2016-01-21 10:01:50"
+            "time": "2016-01-27 11:22:49"
         },
         {
             "name": "symfony/css-selector",
@@ -2475,12 +2475,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "d7f01c96a4dde264682cf36c28e62086c77a09d4"
+                "reference": "1289d16209491b584839022f29257ad859b8532d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/d7f01c96a4dde264682cf36c28e62086c77a09d4",
-                "reference": "d7f01c96a4dde264682cf36c28e62086c77a09d4",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/1289d16209491b584839022f29257ad859b8532d",
+                "reference": "1289d16209491b584839022f29257ad859b8532d",
                 "shasum": ""
             },
             "require": {
@@ -2492,7 +2492,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "1.1-dev"
                 }
             },
             "autoload": {
@@ -2526,7 +2526,7 @@
                 "portable",
                 "shim"
             ],
-            "time": "2016-01-13 07:16:33"
+            "time": "2016-01-20 09:13:37"
         },
         {
             "name": "symfony/yaml",
@@ -2583,12 +2583,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "e4359f68b70caede1e09ecefb56e9435f7d140af"
+                "reference": "c1c502ff2b792fac5470356373e243b77d2a36c7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/e4359f68b70caede1e09ecefb56e9435f7d140af",
-                "reference": "e4359f68b70caede1e09ecefb56e9435f7d140af",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/c1c502ff2b792fac5470356373e243b77d2a36c7",
+                "reference": "c1c502ff2b792fac5470356373e243b77d2a36c7",
                 "shasum": ""
             },
             "require": {
@@ -2669,7 +2669,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2016-01-23 08:43:29"
+            "time": "2016-01-26 17:20:14"
         },
         {
             "name": "yiisoft/yii2-bootstrap",
@@ -2677,12 +2677,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-bootstrap.git",
-                "reference": "7de7d5d63d655c0c69764f80f2dfc549e9b1d9f0"
+                "reference": "ef941bc83ea63326e44769b922476dc1035ea551"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/7de7d5d63d655c0c69764f80f2dfc549e9b1d9f0",
-                "reference": "7de7d5d63d655c0c69764f80f2dfc549e9b1d9f0",
+                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/ef941bc83ea63326e44769b922476dc1035ea551",
+                "reference": "ef941bc83ea63326e44769b922476dc1035ea551",
                 "shasum": ""
             },
             "require": {
@@ -2719,7 +2719,7 @@
                 "bootstrap",
                 "yii2"
             ],
-            "time": "2015-12-19 19:45:57"
+            "time": "2016-01-24 17:03:09"
         },
         {
             "name": "yiisoft/yii2-composer",
@@ -2929,12 +2929,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fzaninotto/Faker.git",
-                "reference": "de2ed3bbe68254efeff68db60092fc8ed5298055"
+                "reference": "1039b239eaf5ea865ded8e403dc707da6a629474"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/de2ed3bbe68254efeff68db60092fc8ed5298055",
-                "reference": "de2ed3bbe68254efeff68db60092fc8ed5298055",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/1039b239eaf5ea865ded8e403dc707da6a629474",
+                "reference": "1039b239eaf5ea865ded8e403dc707da6a629474",
                 "shasum": ""
             },
             "require": {
@@ -2971,7 +2971,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2016-01-08 14:16:18"
+            "time": "2016-01-27 08:28:58"
         },
         {
             "name": "yiisoft/yii2-codeception",

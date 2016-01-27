@@ -24,7 +24,8 @@
         "adldap/adldap": "5.0.*" , 
 	"edvlerblog/yii2-adldap-module": "v1.0.1",
         "kartik-v/yii2-detail-view": "@dev",
-        "kartik-v/yii2-widget-switchinput": "*"
+        "kartik-v/yii2-widget-switchinput": "*",
+        "yiisoft/yii2-jui": "^2.0"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

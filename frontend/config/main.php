@@ -31,6 +31,9 @@ return [
         'screeningform'=> [
             'class'=>'common\components\ScreeningForm', 
         ], 
+        'jsconfig'=> [
+            'class'=>'common\components\JsConfig', 
+        ], 
         'screeningquestion' => [
             'class' => 'common\components\ScreeningQuestion', 
         ],

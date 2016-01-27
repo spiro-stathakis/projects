@@ -13,6 +13,8 @@ use common\widgets\Alert;
 
 AppAsset::register($this);
 AppJsAsset::register($this);
+$this->registerJs(" $.app.mc = ". Yii::$app->jsconfig->data. ";", \yii\web\View::POS_END, 'my-options');
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>

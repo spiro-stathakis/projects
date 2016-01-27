@@ -36,7 +36,7 @@ class m160113_110900_ref_collection_type extends XMigration
                 );
 
             $this->insert($this->tableName,['code'=>'null','name'=>'No value','description'=>'No value','sort_order'=>100,'status_id'=>1,'created_at'=>time(),'created_by'=>1 ]); 
-            $this->insert($this->tableName,['code'=>'training','name'=>'Training','description'=>'Trained in an area', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>1 ]);
+            $this->insert($this->tableName,['code'=>'cubric','name'=>'CUBRIC','description'=>'CUBRIC collection', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>1 ]);
             
     }
 
