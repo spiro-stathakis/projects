@@ -13,12 +13,12 @@ BEGIN
 
 
 	DECLARE l_study_id INT UNSIGNED DEFAULT 0; 
-	DECLARE l_user_id INT UNSIGNED DEFAULT 0; 
-	DECALRE l_csa_id INT UNSIGNED DEFAULT 0; 
+	DECLARE l_csa_id INT UNSIGNED DEFAULT 0; 
+	DECLARE l_pi_id INT UNSIGNED DEFAULT 0; 
 	DECLARE l_wefo_id INT UNSIGNED DEFAULT 0; 
 	DECLARE l_study_name INT UNSIGNED DEFAULT 0; 
 	DECLARE l_study_code VARCHAR(255) DEFAULT ''; 
-	DECALRE l_ethics_number VARCHAR(255) DEFAULT ''; 
+	DECLARE l_ethics_number VARCHAR(255) DEFAULT ''; 
 	DECLARE l_funding_number VARCHAR(255) DEFAULT '';
 	DECLARE l_funding_code VARCHAR(255) DEFAULT '';
 	DECLARE l_mri_time INT; 
@@ -50,7 +50,7 @@ BEGIN
 	OPEN project_csr; 
 		project_loop: REPEAT
 			FETCH project_csr INTO
-				l_study_id,l_user_id,l_csa_id,l_wefo_id,l_project_status_id,
+				l_study_id,l_pi_id,l_csa_id,l_wefo_id,l_project_status_id,
 				l_study_code,l_study_name, l_ethics_number,l_funding_number,
 				l_funding_code,l_mri_time , l_meg_time, l_application_received ,
 				l_cog_approval,l_presentation,l_ethics_approval,l_risk_assessment,
@@ -84,7 +84,7 @@ BEGIN
 						wefo_id, 
 						study_name, 
 						study_code, 
-						funding_source, 
+						funding_number, 
 						funding_code, 
 						app_received, 
 						cog_approval, 
@@ -96,6 +96,8 @@ BEGIN
 						mri_time, 
 						meg_time, 
 						old_id, 
+						project_status_id, 
+						status_id, 
 						created_at,
 						created_by 
 					) VALUES (
@@ -104,9 +106,9 @@ BEGIN
 						l_wefo_id, 
 						l_study_name, 
 						l_study_code, 
-						l_funding_source, 
+						l_funding_number, 
 						l_funding_code, 
-						l_app_received, 
+						l_application_received, 
 						l_cog_approval, 
 						l_presentation, 
 						l_ethics_approval, 
@@ -115,20 +117,21 @@ BEGIN
 						l_rules_procedure, 
 						l_mri_time, 
 						l_meg_time, 
-						l_old_id, 
-						l_created_at,
+						l_study_id, 
+						l_project_status_id, 
+						l_status_active,
+						l_create_date,
 						l_created_by 
 
 					);
 			END IF; 
 		UNTIL no_rows
 				
-	END REPEAT user_loop; 
-	CLOSE user_csr; 
+	END REPEAT project_loop; 
+	CLOSE project_csr; 
 
 	
-	UPDATE projects.users SET auth_type_id=3 WHERE CHAR_LENGTH(password_hash) > 0; 
-
+	
 	
 	
 END ;;
