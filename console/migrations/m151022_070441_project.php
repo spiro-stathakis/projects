@@ -3,7 +3,7 @@
 use common\components\XMigration;
 
 
-class m151022_070441_projects extends XMigration
+class m151022_070441_project extends XMigration
 {
     
     /* ************************************************************************************** */ 
@@ -11,7 +11,7 @@ class m151022_070441_projects extends XMigration
     
     public function init()
     {
-       $this->tableName = '{{%projects}}'; 
+       $this->tableName = '{{%project}}'; 
       return parent::init(); 
     }
 
@@ -25,7 +25,11 @@ class m151022_070441_projects extends XMigration
                     $this->tableName, 
                     [
                         'id'=>$this->primaryKey(),
+                        'csa_id'=>$this->integer()->notNull(),
+                        'pi_id'=>$this->integer()->notNull(),
+                        'wefo_id'=>$this->integer()->notNull(), 
                         'study_name'=>$this->string(255)->notNull(),
+                        'study_code'=>$this->string(255)->notNull(),
                         'funding_source'=>$this->string(255)->notNull(),
                         'funding_code'=>$this->string(255)->notNull(),
                         'app_received'=>$this->integer()->notNull(),
@@ -38,7 +42,7 @@ class m151022_070441_projects extends XMigration
                         'mri_time'=>$this->integer()->notNull(),
                         'meg_time'=>$this->integer()->notNull(),
                         'project_code'=>$this->string(255)->notNull(),
-                        'old_study_id'=>$this->integer()->notNull(),
+                        'old_id'=>$this->integer()->notNull(),
                         'project_status_id'=>$this->integer()->notNull(),
                         'sort_order'=> $this->integer()->notNull()->defaultValue(2),
                         'status_id'=>$this->integer()->notNull(),
@@ -49,9 +53,13 @@ class m151022_070441_projects extends XMigration
                     ], 
                     $this->mysqlOptions 
                 );
-            $this->addForeignKey('fk_projects_status_id' , $this->tableName,  'status_id' , 'ref_status' , 'id' , 'NO ACTION' , 'NO ACTION'); 
-            $this->addForeignKey('fk_projects_project_status_id' , $this->tableName,  'project_status_id' , 'ref_project_status' , 'id' , 'NO ACTION' , 'NO ACTION'); 
+            $this->addForeignKey('fk_project_status_id' , $this->tableName,  'status_id' , 'ref_status' , 'id' , 'NO ACTION' , 'NO ACTION'); 
+            $this->addForeignKey('fk_project_project_status_id' , $this->tableName,  'project_status_id' , 'ref_project_status' , 'id' , 'NO ACTION' , 'NO ACTION'); 
+            $this->addForeignKey('fk_project_project_csa_id' , $this->tableName,  'csa_id' , 'user' , 'id' , 'NO ACTION' , 'NO ACTION'); 
+            $this->addForeignKey('fk_project_project_pi_id' , $this->tableName,  'pi_id' , 'user' , 'id' , 'NO ACTION' , 'NO ACTION'); 
+            $this->addForeignKey('fk_project_project_wefo_id' , $this->tableName,  'wefo_id' , 'ref_wefo' , 'id' , 'NO ACTION' , 'NO ACTION'); 
             
+             
             
     
     }
@@ -59,8 +67,11 @@ class m151022_070441_projects extends XMigration
     public function down()
     {
         $this->init();
-        $this->dropForeignKey('fk_projects_status_id',$this->tableName); 
-        $this->dropForeignKey('fk_projects_project_status_id',$this->tableName); 
+        $this->dropForeignKey('fk_project_status_id',$this->tableName); 
+        $this->dropForeignKey('fk_project_project_status_id',$this->tableName); 
+        $this->dropForeignKey('fk_project_project_csa_id',$this->tableName); 
+        $this->dropForeignKey('fk_project_project_pi_id',$this->tableName); 
+        $this->dropForeignKey('fk_project_project_wefo_id',$this->tableName); 
         $this->dropTable($this->tableName); 
 
 

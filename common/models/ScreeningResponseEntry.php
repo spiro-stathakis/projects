@@ -3,7 +3,7 @@
 namespace common\models;
 
 use Yii;
-
+use common\components\Types; 
 /**
  * This is the model class for table "screening_form_response_entry".
  *
@@ -37,7 +37,25 @@ class ScreeningEntry extends \common\components\XActiveRecord
     {
         return 'screening_entry';
     }
-
+ public function init() 
+   { 
+           if ($this->isNewRecord) 
+           { 
+               $this->progress_id = Types::$progress['in_progress']['id'];  
+               $this->contraindication_id = Types::$boolean['null']['id'];  
+           } 
+       return parent::init();  
+   } 
+    /* ******************************************************************************************************* */  
+        /* ******************************************************************************************************* */  
+            
+       public function beforeValidate() 
+       { 
+           if ($this->isNewRecord) 
+               $this->hash = Yii::$app->security->generateRandomString();  
+    
+           return parent::beforeValidate();  
+       } 
     /**
      * @inheritdoc
      */

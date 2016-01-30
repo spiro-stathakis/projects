@@ -41,12 +41,12 @@ BEGIN
 			l_firstname, l_lastname,l_email,
 			l_password,
 			l_telephone, l_regdate;
-			SET l_count = (SELECT COUNT(id) FROM projects.users WHERE old_id=l_userid);
+			SET l_count = (SELECT COUNT(id) FROM projects.user WHERE old_id=l_userid);
 			
 			
 			
 			IF l_count = 0 THEN 
-					INSERT INTO projects.users 
+					INSERT INTO projects.user 
 					(
 						auth_type_id,
 						user_name,
@@ -84,7 +84,7 @@ BEGIN
 	CLOSE user_csr; 
 
 	
-	UPDATE projects.users SET auth_type_id=3 WHERE CHAR_LENGTH(password_hash) > 0; 
+	UPDATE projects.user SET auth_type_id=3 WHERE CHAR_LENGTH(password_hash) > 0; 
 
 	
 	

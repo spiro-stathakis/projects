@@ -9,7 +9,8 @@ signaturePad.prototype = {
     saveButton:'',
     canvas:'',
     signaturePad:'', 
-    signee:'participant',
+    signee:'subject',
+    hash:'', 
     init:function () { 
             
             
@@ -49,16 +50,28 @@ signaturePad.prototype = {
     {
 
 
-        document.getElementById('signature-text').innerHTML = '<h4>Researcher signature. Please stay within box boundary</h4>';
-        if (this.signee=='participant')
+        var data = {}; 
+        data.signature = this.signaturePad.toDataURL();
+        data.signee = this.signee; 
+        data.hash = this.hash;
+        $.ajax({
+              type: "POST",
+              url: $.app.mc.signatureUri,
+              data: data,
+              success: function(){},
+              dataType: 'json'
+        });
+        
+
+        if (this.signee=='subject')
         {
             alert('Thank you - Please return device to the researcher.'); 
+            document.getElementById('signature-text').innerHTML = '<h4>Researcher signature. Please stay within box boundary</h4>';
             this.signee = 'researcher';
             $.app.page.signaturePad.clear(); 
-        }else{
-                alert($.app.page.signee); 
+        }else
+          ;//  window.location = $.app.mc.redirectUri;
 
-        }
          return true; 
        
        

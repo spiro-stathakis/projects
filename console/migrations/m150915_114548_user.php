@@ -3,7 +3,7 @@
 use common\components\XMigration;
 
 
-class m150915_114548_users extends XMigration
+class m150915_114548_user extends XMigration
 {
 
     
@@ -12,7 +12,7 @@ class m150915_114548_users extends XMigration
 
     public function init()
     {
-       $this->tableName = '{{%users}}'; 
+       $this->tableName = '{{%user}}'; 
        return parent::init(); 
     }
 /* ************************************************************************************** */ 
@@ -38,8 +38,8 @@ class m150915_114548_users extends XMigration
             'updated_by' => $this->integer(),
         ], $mysqlOptions);
         //$this->renameColumn('user', 'status', 'status_id'); 
-        $this->addForeignKey('fk_users_status_id' , 'users' , 'status_id' , 'ref_status' , 'id' , 'NO ACTION' , 'NO ACTION'); 
-        $this->addForeignKey('fk_users_auth_type_id' , 'users' , 'auth_type_id' , 'ref_auth_type' , 'id' , 'NO ACTION' , 'NO ACTION'); 
+        $this->addForeignKey('fk_users_status_id' , 'user' , 'status_id' , 'ref_status' , 'id' , 'NO ACTION' , 'NO ACTION'); 
+        $this->addForeignKey('fk_users_auth_type_id' , 'user' , 'auth_type_id' , 'ref_auth_type' , 'id' , 'NO ACTION' , 'NO ACTION'); 
 
         $this->execute('CALL sp_import_users();')  ;
         
@@ -49,8 +49,8 @@ class m150915_114548_users extends XMigration
     {
 
         $this->init(); 
-        $this->dropForeignKey('fk_users_status_id' ,'users'); 
-        $this->dropForeignKey('fk_users_auth_type_id' ,'users'); 
+        $this->dropForeignKey('fk_users_status_id' ,'user'); 
+        $this->dropForeignKey('fk_users_auth_type_id' ,'user'); 
         $this->dropTable($this->tableName);
         //$this->renameColumn('user', 'status_id' , 'status');  
         

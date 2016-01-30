@@ -25,7 +25,8 @@
 	"edvlerblog/yii2-adldap-module": "v1.0.1",
         "kartik-v/yii2-detail-view": "@dev",
         "kartik-v/yii2-widget-switchinput": "*",
-        "yiisoft/yii2-jui": "^2.0"
+        "yiisoft/yii2-jui": "^2.0",
+        "setasign/fpdi-fpdf": "1.6.1"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

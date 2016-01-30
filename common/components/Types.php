@@ -38,8 +38,9 @@ public static $status = [
     /* ************************************************************************************************************************* */ 
     public static $collection_type = [
 			'null'=>['id'=>1,'code'=>'null','name'=>'no value' , 'description'=>'No value'] ,
-			'training'=>['id'=>2,'code'=>'training','name'=>'Training' , 'description'=>'A training based collection'] ,
-			
+			'resource'=>['id'=>2,'code'=>'resource','name'=>'Resource' , 'description'=>'A collection for a resource at CUBRIC (ie. a scanner)'] ,
+			'project'=>['id'=>2,'code'=>'project','name'=>'Project' , 'description'=>'A collection for a project at CUBRIC (ie. a researcher study)'] ,
+				
 	]; 
 
 
@@ -61,9 +62,7 @@ public static $status = [
     public static $progress = [
     		'null'=>['id'=>1,'code'=>'null','name'=>'no value' , 'description'=>'No value'] ,
 			'in_progress'=>['id'=>2,'code'=>'in_progress','name'=>'In progress' , 'description'=>'Small text field'] ,
-			'stage_1_complete'=>['id'=>3,'code'=>'stage_1_complete','name'=>'Stage 1 complete' , 'description'=>'Stage 1 complete'] ,
-			'stage_2_complete'=>['id'=>4,'code'=>'stage_2_complete','name'=>'Stage 2 complete' , 'description'=>'Stage 2 complete'] ,
-			'published'=>['id'=>5,'code'=>'published','name'=>'Published' , 'description'=>'Published'] ,
+			'published'=>['id'=>3,'code'=>'published','name'=>'Published' , 'description'=>'Published'] ,
 			
     ];
     /* ************************************************************************************************************************* */ 

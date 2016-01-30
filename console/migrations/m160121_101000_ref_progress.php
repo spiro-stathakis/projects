@@ -40,8 +40,6 @@ class m160121_101000_ref_progress extends XMigration
         
             $this->insert($this->tableName,['code'=>'null','name'=>'No value','description'=>'No value','sort_order'=>100,'status_id'=>1,'created_at'=>time(),'created_by'=>1 ]); 
             $this->insert($this->tableName,['code'=>'in_progress','name'=>'In progress','description'=>'In progress', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>1 ]);
-            $this->insert($this->tableName,['code'=>'stage_1_complete','name'=>'Stage 1 complete','description'=>'Stage 1 complete', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>1 ]);
-            $this->insert($this->tableName,['code'=>'stage_2_complete','name'=>'Stage 2 complete','description'=>'Stage 2 complete', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>1 ]);
             $this->insert($this->tableName,['code'=>'published','name'=>'Published','description'=>'Published', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>1 ]);
                                     
 

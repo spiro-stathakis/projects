@@ -25,28 +25,69 @@ class DefaultController extends XController
                                     ['actions' => ['index'], 'allow' => true, 'roles' => ['@'],], 
                                     ['actions' => ['create'], 'allow' => true, 'roles' => ['@'],],
                                     ['actions' => ['update'], 'allow' => true, 'roles' => ['@'],], 
-                                    ['actions' => ['active'], 'allow' => true, 'roles' => ['@'],], 
-                                    ['actions' => ['subsign'], 'allow' => true, 'roles' => ['@'],], 
+                                   // ['actions' => ['active'], 'allow' => true, 'roles' => ['@'],], 
+                                    ['actions' => ['signature'], 'allow' => true, 'roles' => ['@'],],
+                                    ['actions' => ['ajaxsign'], 'allow' => true, 'roles' => ['@'],], 
+                                    ['actions' => ['confirm'], 'allow' => true, 'roles' => ['@'],],
+                                     ['actions' => ['pdf'], 'allow' => true, 'roles' => ['@'],], 
                                 ],
                         ],
         ];
         
     }
 
-    /* ************************************************************************************************************************* */ 
-    public function actionSubsign($hash)
-    {
 
-        return $this->render('subsign'); 
+    /* ************************************************************************************************************************* */ 
+    public function actionAjaxsign($hash)
+    {
+         $arr = []; 
+         $signature = ''; 
+
+         $screening_entry_model = ScreeningEntry::findOne(['hash'=>$hash]);
+         if ($screening_entry_model === null)
+             throw new \yii\web\HttpException(404, yii::t('app', 'Page cannot be found.'));
+
+          if (! \Yii::$app->screeningform->isManager($screening_entry_model->screening_form_id))
+            throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access page.'));
+
+        $arr = explode(",", Yii::$app->request->post('signature')); 
+        $signature = $arr[1]; 
+
+        if (Yii::$app->request->post('signee') == 'subject')
+        {
+            $screening_entry_model->subject_signature = $signature;
+            $screening_entry_model->save(); 
+        }
+        
+        if (Yii::$app->request->post('signee') == 'researcher')
+        {
+                $screening_entry_model->researcher_signature =$signature;
+                $screening_entry_model->progress_id = Types::$progress['published']['id']; 
+                $screening_entry_model->save(); 
+                $this->_generatePdf($hash); 
+        }
+
+        
+        
     }    
 
     /* ************************************************************************************************************************* */ 
-    public function actionActive()
+    public function actionConfirm($hash)
     {
-            $subjects = Yii::$app->session->get('subjects'); 
-            print_r($subjects); 
+
 
     }
+    /* ************************************************************************************************************************* */ 
+    public function actionSignature($hash)
+    {
+        \yii::$app->jsconfig->addData('signatureUri', \yii\helpers\Url::to(['ajaxsign' , 'hash'=>$hash])); 
+        \yii::$app->jsconfig->addData('redirectUri', \yii\helpers\Url::to(['confirm' , 'hash'=>$hash])); 
+        \yii::$app->jsconfig->addData('hash', $hash); 
+        return $this->render('signature' , ['hash'=>$hash]); 
+    }    
+
+    /* ************************************************************************************************************************* */ 
+    
     /* ************************************************************************************************************************* */ 
     
     public function actionIndex()
@@ -132,9 +173,38 @@ class DefaultController extends XController
 
 
     /* ******************************************************************************************************* */ 
+    private function _generatePdf()
+    {
+     
+
+
+    }
     /* ******************************************************************************************************* */ 
-    
-     /* ******************************************************************************************************* */ 
+    public function actionPdf()
+    {
+        require_once(\yii::$app->basePath . "/../vendor/setasign/fpdf/fpdf.php");
+        require_once(\yii::$app->basePath . "/../vendor/setasign/fpdi/fpdi.php");
+       //class_exists('TCPDF', true); // trigger Composers autoloader to load the TCPDF class
+        $pdf = new \FPDI();
+        // add a page
+        $pdf->AddPage();
+        // set the source file
+        $pdf->setSourceFile(\yii::$app->basePath . "/../letterhead.pdf");
+        // import page 1
+        $tplIdx = $pdf->importPage(1);
+        // use the imported page and place it at point 10,10 with a width of 100 mm
+        $pdf->useTemplate($tplIdx, 10, 10, 100);
+
+        // now write some text above the imported page
+        $pdf->SetFont('Helvetica');
+        $pdf->SetTextColor(255, 0, 0);
+        $pdf->SetXY(30, 30);
+        $pdf->Write(0, 'This is just a simple text');
+
+        $pdf->Output();
+
+    }
+    /* ******************************************************************************************************* */
     private function _initScreeningForm($screening_form_id, $subject_model)
     {
         $questions =  \yii::$app->screeningquestion->getQuestions($screening_form_id);

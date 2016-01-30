@@ -41,7 +41,7 @@ class m160120_163923_user_collection extends XMigration
 
         $this->addForeignKey('fk_user_collection_status_id' , $this->tableName,  'status_id' , 'ref_status' , 'id' , 'NO ACTION' , 'NO ACTION'); 
         $this->addForeignKey('fk_user_collection_collection_id' , $this->tableName,  'collection_id' , 'collection' , 'id' , 'NO ACTION' , 'NO ACTION'); 
-        $this->addForeignKey('fk_user_collection_user_id' , $this->tableName,  'user_id' , 'users' , 'id' , 'NO ACTION' , 'NO ACTION'); 
+        $this->addForeignKey('fk_user_collection_user_id' , $this->tableName,  'user_id' , 'user' , 'id' , 'NO ACTION' , 'NO ACTION'); 
         $this->addForeignKey('fk_user_collection_member_type_id' , $this->tableName,  'member_type_id' , 'ref_member_type' , 'id' , 'NO ACTION' , 'NO ACTION'); 
                     
         $this->insert($this->tableName,['collection_id'=>1,

@@ -41,10 +41,11 @@ class m151022_065739_ref_project_status extends XMigration
                 );
             $this->addForeignKey('fk_ref_project_status_id' , $this->tableName , 'status_id' , 'ref_status' , 'id' , 'NO ACTION' , 'NO ACTION'); 
             
-            $this->insert($this->tableName,['code'=>'null','name'=>'No value','description'=>'No value','sort_order'=>100,'status_id'=>1,'created_at'=>time(),'created_by'=>0 ]); 
-            $this->insert($this->tableName,['code'=>'data_collection','name'=>'data_collection', 'description'=>'Project is in data collection stage', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>0 ]);
-            $this->insert($this->tableName,['code'=>'data_analysis','name'=>'data_analysis','description'=>'Project is in data analysis stage', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>0 ]);
-            $this->insert($this->tableName,['code'=>'project_concluded','name'=>'project_concluded','description'=>'Project is concluded', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>0 ]);  
+            $this->insert($this->tableName,['code'=>'null','name'=>'No value','description'=>'No value','sort_order'=>100,'status_id'=>1,'created_at'=>time(),'created_by'=>1 ]); 
+            $this->insert($this->tableName,['code'=>'in_progress','name'=>'in_progress', 'description'=>'Project is in progress', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>1 ]);
+            $this->insert($this->tableName,['code'=>'complete','name'=>'complete','description'=>'Project is complete', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>1 ]);
+            $this->insert($this->tableName,['code'=>'withdrawn','name'=>'withdrawn','description'=>'Project is withdrawn', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>1 ]); 
+            $this->insert($this->tableName,['code'=>'dormant','name'=>'dormant','description'=>'Project is dormant', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>1 ]);  
     }
     /* ************************************************************************************** */ 
 

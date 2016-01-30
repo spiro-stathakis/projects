@@ -37,7 +37,9 @@ class m160113_121219_ref_member_type extends XMigration
             $this->insert($this->tableName,['code'=>'null','name'=>'No value','description'=>'No value','sort_order'=>100,'status_id'=>1,'created_at'=>time(),'created_by'=>0 ]); 
             $this->insert($this->tableName,['code'=>'member','name'=>'Member','description'=>'Member', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>0 ]);
             $this->insert($this->tableName,['code'=>'manager','name'=>'Manager','description'=>'Manager', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>0 ]);
-                  
+            $this->insert($this->tableName,['code'=>'collab','name'=>'Collaborator','description'=>'Collaborator', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>0 ]);
+            $this->insert($this->tableName,['code'=>'assoc','name'=>'Associate','description'=>'Associate', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>0 ]);
+                   
     }
      /* ************************************************************************************** */ 
     public function down()

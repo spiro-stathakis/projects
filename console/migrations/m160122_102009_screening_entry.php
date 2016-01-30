@@ -23,11 +23,12 @@ class m160122_102009_screening_entry extends XMigration
                     'screening_form_id' => $this->integer()->notNull(),
                     'subject_id'=> $this->integer()->notNull(),
                     'researcher_id'=>$this->integer()->notNull(),
-                    'hash'=>$this->string(255)->notNull(), 
+                    'project_id'=>$this->integer()->notNull(), 
                     'progress_id'=>$this->integer()->notNull(),
                     'contraindication_id'=>$this->integer()->notNull(),
-                    'subject_signature'=>$this->string(255), 
-                    'researcher_signature'=>$this->string(255),
+                    'hash'=>$this->string(255)->notNull(), 
+                    'subject_signature'=>$this->text(), 
+                    'researcher_signature'=>$this->text(),
                     'time_in'=>$this->integer(), 
                     'time_out'=>$this->integer(), 
                     'sort_order' => $this->integer()->notNull()->defaultValue(100), 
@@ -42,10 +43,10 @@ class m160122_102009_screening_entry extends XMigration
 
         $this->addForeignKey('fk_screening_entry_screening_form_id' , $this->tableName,  'screening_form_id' , 'screening_form' , 'id' , 'NO ACTION' , 'NO ACTION'); 
         $this->addForeignKey('fk_screening_entry_subject_id' , $this->tableName,  'subject_id' , 'subject' , 'id' , 'NO ACTION' , 'NO ACTION'); 
-        $this->addForeignKey('fk_screening_entry_researcher_id' , $this->tableName,  'researcher_id' , 'users' , 'id' , 'NO ACTION' , 'NO ACTION'); 
+        $this->addForeignKey('fk_screening_entry_project_id' , $this->tableName,  'project_id' , 'project' , 'id' , 'NO ACTION' , 'NO ACTION'); 
+        $this->addForeignKey('fk_screening_entry_researcher_id' , $this->tableName,  'researcher_id' , 'user' , 'id' , 'NO ACTION' , 'NO ACTION'); 
         $this->addForeignKey('fk_screening_entry_progress_id' , $this->tableName,  'progress_id' , 'ref_progress' , 'id' , 'NO ACTION' , 'NO ACTION'); 
         $this->addForeignKey('fk_screening_entry_contraindication_id' , $this->tableName,  'contraindication_id' , 'ref_boolean' , 'id' , 'NO ACTION' , 'NO ACTION'); 
-        
         $this->addForeignKey('fk_screening_entry_status_id' , $this->tableName,  'status_id' , 'ref_status' , 'id' , 'NO ACTION' , 'NO ACTION'); 
         
 
@@ -60,6 +61,7 @@ class m160122_102009_screening_entry extends XMigration
         $this->init();
         $this->dropForeignKey('fk_screening_entry_screening_form_id',$this->tableName); 
         $this->dropForeignKey('fk_screening_entry_subject_id',$this->tableName); 
+        $this->dropForeignKey('fk_screening_entry_project_id',$this->tableName); 
         $this->dropForeignKey('fk_screening_entry_researcher_id',$this->tableName); 
         $this->dropForeignKey('fk_screening_entry_progress_id',$this->tableName); 
         $this->dropForeignKey('fk_screening_entry_contraindication_id',$this->tableName); 
