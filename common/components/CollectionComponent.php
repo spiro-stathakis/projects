@@ -4,7 +4,7 @@ use Yii;
 use yii\base\Object;
 
 
-class Collection extends Object
+class CollectionComponent extends Object
 {
 
 	private $_collectionMembership; 

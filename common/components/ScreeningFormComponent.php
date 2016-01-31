@@ -4,7 +4,7 @@ use Yii;
 use yii\base\Object;
 
 
-class ScreeningForm extends Object
+class ScreeningFormComponent extends Object
 {
 
 	private $_data; 

@@ -5,7 +5,7 @@ use yii\base\Object;
 use common\components\Types; 
 use yii\bootstrap\Html;
 
-class ScreeningResponse extends Object
+class ScreeningResponseComponent extends Object
 {
 
 	private $_data; 

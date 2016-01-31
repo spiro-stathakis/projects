@@ -28,8 +28,8 @@ class m151022_070441_project extends XMigration
                         'csa_id'=>$this->integer()->notNull(),
                         'pi_id'=>$this->integer()->notNull(),
                         'wefo_id'=>$this->integer()->notNull(), 
-                        'study_name'=>$this->string(255)->notNull(),
-                        'study_code'=>$this->string(255)->notNull(),
+                        'name'=>$this->string(255)->notNull(),
+                        'code'=>$this->string(255)->notNull(),
                         'funding_number'=>$this->string(255)->notNull(),
                         'funding_code'=>$this->string(255)->notNull(),
                         'app_received'=>$this->integer()->notNull(),
@@ -41,7 +41,6 @@ class m151022_070441_project extends XMigration
                         'rules_procedure'=>$this->integer()->notNull(),
                         'mri_time'=>$this->integer()->notNull(),
                         'meg_time'=>$this->integer()->notNull(),
-                        'project_code'=>$this->string(255)->notNull(),
                         'old_id'=>$this->integer()->notNull(),
                         'project_status_id'=>$this->integer()->notNull(),
                         'sort_order'=> $this->integer()->notNull()->defaultValue(100),
@@ -58,7 +57,7 @@ class m151022_070441_project extends XMigration
             $this->addForeignKey('fk_project_project_csa_id' , $this->tableName,  'csa_id' , 'user' , 'id' , 'NO ACTION' , 'NO ACTION'); 
             $this->addForeignKey('fk_project_project_pi_id' , $this->tableName,  'pi_id' , 'user' , 'id' , 'NO ACTION' , 'NO ACTION'); 
             $this->addForeignKey('fk_project_project_wefo_id' , $this->tableName,  'wefo_id' , 'ref_wefo' , 'id' , 'NO ACTION' , 'NO ACTION'); 
-            
+            $this->execute('CALL sp_import_projects();')  ;
              
             
     

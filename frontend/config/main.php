@@ -26,19 +26,23 @@ return [
     ], 
     'components' => [
         'collection'=> [
-            'class'=>'common\components\Collection', 
+            'class'=>'common\components\CollectionComponent', 
+        ],
+        'project'=> [
+            'class'=>'common\components\ProjectComponent', 
         ], 
+         
         'screeningform'=> [
-            'class'=>'common\components\ScreeningForm', 
+            'class'=>'common\components\ScreeningFormComponent', 
         ], 
         'jsconfig'=> [
             'class'=>'common\components\JsConfig', 
         ], 
         'screeningquestion' => [
-            'class' => 'common\components\ScreeningQuestion', 
+            'class' => 'common\components\ScreeningQuestionComponent', 
         ],
         'screeningresponse' => [
-            'class' => 'common\components\ScreeningResponse', 
+            'class' => 'common\components\ScreeningResponseComponent', 
         ],
         'user' => [
             'identityClass' => 'common\models\UserIdentity',

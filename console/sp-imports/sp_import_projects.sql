@@ -16,7 +16,7 @@ BEGIN
 	DECLARE l_csa_id INT UNSIGNED DEFAULT 0; 
 	DECLARE l_pi_id INT UNSIGNED DEFAULT 0; 
 	DECLARE l_wefo_id INT UNSIGNED DEFAULT 0; 
-	DECLARE l_study_name INT UNSIGNED DEFAULT 0; 
+	DECLARE l_study_name VARCHAR(255) DEFAULT ''; 
 	DECLARE l_study_code VARCHAR(255) DEFAULT ''; 
 	DECLARE l_ethics_number VARCHAR(255) DEFAULT ''; 
 	DECLARE l_funding_number VARCHAR(255) DEFAULT '';
@@ -33,6 +33,9 @@ BEGIN
 	DECLARE l_create_date INT; 
 	DECLARE l_project_status_id INT; 
 	
+	DECLARE l_new_project_id INT; 
+	DECLARE l_collection_manager INT DEFAULT 2; 
+	DECLARE l_collection_member INT DEFAULT 3; 
 
 
 	
@@ -79,57 +82,35 @@ BEGIN
 
 					INSERT INTO projects.project 
 					(
-						csa_id,
-						pi_id,
-						wefo_id, 
-						study_name, 
-						study_code, 
-						funding_number, 
-						funding_code, 
-						app_received, 
-						cog_approval, 
-						presentation, 
-						ethics_approval, 
-						ethics_number, 
-						risk_assessment, 
-						rules_procedure, 
-						mri_time, 
-						meg_time, 
-						old_id, 
-						project_status_id, 
-						status_id, 
-						created_at,
-						created_by 
+						csa_id,pi_id,wefo_id,name,code, 
+						funding_number,funding_code,app_received, 
+						cog_approval,presentation,ethics_approval, 
+						ethics_number,risk_assessment,rules_procedure, 
+						mri_time,meg_time,old_id,project_status_id, 
+						status_id,created_at,created_by 
 					) VALUES (
-						l_csa_id,
-						l_pi_id,
-						l_wefo_id, 
-						l_study_name, 
-						l_study_code, 
-						l_funding_number, 
-						l_funding_code, 
-						l_application_received, 
-						l_cog_approval, 
-						l_presentation, 
-						l_ethics_approval, 
-						l_ethics_number, 
-						l_risk_assessment, 
-						l_rules_procedure, 
-						l_mri_time, 
-						l_meg_time, 
-						l_study_id, 
-						l_project_status_id, 
-						l_status_active,
-						l_create_date,
-						l_created_by 
-
+						l_csa_id,l_pi_id,l_wefo_id,l_study_name, 
+						l_study_code,l_funding_number,l_funding_code, 
+						l_application_received, l_cog_approval, 
+						l_presentation,l_ethics_approval,l_ethics_number, 
+						l_risk_assessment,l_rules_procedure,l_mri_time, 
+						l_meg_time,l_study_id,l_project_status_id, 
+						l_status_active,l_create_date,l_created_by 
 					);
+
+					SET l_new_project_id = LAST_INSERT_ID(); 
+
+
+					
+
 			END IF; 
+					
 		UNTIL no_rows
 				
 	END REPEAT project_loop; 
 	CLOSE project_csr; 
-
+	
+	UPDATE projects.project SET code=old_id; 
 	
 	
 	
