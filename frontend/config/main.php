@@ -25,9 +25,12 @@ return [
 
     ], 
     'components' => [
+
+       
         'collection'=> [
             'class'=>'common\components\CollectionComponent', 
         ],
+
         'project'=> [
             'class'=>'common\components\ProjectComponent', 
         ], 

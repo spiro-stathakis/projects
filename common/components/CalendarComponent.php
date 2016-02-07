@@ -1,17 +1,17 @@
+
 <?php 
 namespace common\components; 
 use Yii; 
 use yii\base\Object;
 
 
-class ScreeningFormComponent extends Object
+class CalendarComponent extends Object
 {
 
-	public $screening_form_id; 
-    public $project_id; 
+	
 
-    private $_myScreeningForms; 
-    private $_allScreeningForms; 
+    private $_myCalendars; 
+    private $_myCalendarCollections; 
     
 	
 	/* ******************************************************************************************************* */ 
@@ -65,13 +65,13 @@ class ScreeningFormComponent extends Object
 
 	}
 	/* ******************************************************************************************************* */ 
-    public function  getMyScreeningForms()
+    public function  getMyCalendars()
 	{
 
-        if ($this->_myScreeningForms == null) 
-            $this->_myScreeningForms = $this->_getMyScreeningForms(); 
+        if ($this->_myCalendars == null) 
+            $this->_myCalendars = $this->_getMyCalendars(); 
 
-        return $this->_myScreeningForms; 
+        return $this->_myCalendars; 
     }
 	/* ******************************************************************************************************* */ 
     
@@ -96,10 +96,17 @@ class ScreeningFormComponent extends Object
 
     }
     /* ******************************************************************************************************* */ 
-    private function _getMyScreeningForms()
+    private function _getMyCalendars()
     {
             $this->_myScreeningForms   = (new \yii\db\Query())
                     ->select([
+                    	'cal.id as calendar_id', 'c.id as collection_id', 
+                    	'cal.title as calendar_title',
+                    	'c.name  as collection_name',
+                    	'' 
+
+                    	from calendar cal inner join collection c on cal.collection_id=c.id right join collection_collection cc on cc.parent_collection_id = c.id right join user_collection uc on cc.child_collection_id=uc.collection_id where cal.title is not null and uc.user_id=44 and uc.member_type_id=3
+
                         's.id as screening_form_id' , 's.name as screening_form_name', 
                         's.title as screening_form_title' , 's.description as screening_form_description',
                         'c.id as collection_id','c.name as collection_name' , 'c.description as collection_description',

@@ -38,7 +38,7 @@ class m160108_161327_subject extends XMigration
                         'email_opt_id'=>$this->integer()->notNull(),
                         'sex_id'=>$this->integer()->notNull(),
                         'old_id'=>$this->integer()->notNull(),
-                        'sort_order'=> $this->integer()->notNull()->defaultValue(2),
+                        'sort_order'=> $this->integer()->notNull()->defaultValue(100),
                         'status_id'=>$this->integer()->notNull(),
                         'created_at' => $this->integer()->notNull(),
                         'updated_at' => $this->integer(),
@@ -51,7 +51,7 @@ class m160108_161327_subject extends XMigration
             $this->addForeignKey('fk_subjects_gp_opt_id' , $this->tableName,  'gp_opt_id' , 'ref_boolean' , 'id' , 'NO ACTION' , 'NO ACTION'); 
             $this->addForeignKey('fk_subjects_email_opt_id' , $this->tableName,  'email_opt_id' , 'ref_boolean' , 'id' , 'NO ACTION' , 'NO ACTION'); 
             $this->addForeignKey('fk_subjects_sex_id_id' , $this->tableName,  'sex_id' , 'ref_sex' , 'id' , 'NO ACTION' , 'NO ACTION'); 
-             $this->execute('CALL sp_import_subjects();')  ;
+            
         
             
     

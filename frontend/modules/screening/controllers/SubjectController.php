@@ -29,20 +29,24 @@ class SubjectController extends XController
     
 
     /* ******************************************************************************************************* */ 
-    public function actionSearch($screening_form_id)
+    public function actionSearch($screening_form_id, $project_id)
     {
 
 
-        if (! \Yii::$app->screeningform->isManager($screening_form_id))
-            throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access page.'));
+        if (! \Yii::$app->project->isMember($project_id))
+             throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access page.'));
 
+        if (! \Yii::$app->screeningform->isManager($screening_form_id))
+             throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access page.'));
+        
         $searchModel = new SubjectSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('search', [
             'model' => $searchModel,
             'dataProvider' => $dataProvider,
-            'screening_form_id'=> $screening_form_id 
+            'screening_form_id'=> $screening_form_id, 
+            'project_id'=>$project_id 
         ]);
 
     }
@@ -61,11 +65,11 @@ class SubjectController extends XController
         $searchModel = new SubjectSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->post());
 
-        //print_r(Yii::$app->request->post('screening_form_id')); 
+        Yii::$app->screeningform->screening_form_id = Yii::$app->request->post('screening_form_id'); 
+        Yii::$app->screeningform->project_id = Yii::$app->request->post('project_id'); 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'screening_form_id'=>Yii::$app->request->post('screening_form_id')
         ]);
     }
     /* ******************************************************************************************************* */ 
@@ -129,7 +133,8 @@ class SubjectController extends XController
             ]);
         }
     }
-
+ /* ******************************************************************************************************* */ 
+   
     /**
      * Deletes an existing Subjects model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
@@ -142,7 +147,8 @@ class SubjectController extends XController
 
         return $this->redirect(['index']);
     }
-
+ /* ******************************************************************************************************* */ 
+   
     /**
      * Finds the Subjects model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

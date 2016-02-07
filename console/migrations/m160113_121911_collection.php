@@ -30,7 +30,7 @@ class m160113_121911_collection extends XMigration
                     'membership_duration'=> $this->integer()->notNull()->defaultValue(5256000),
                     'member_count' => $this->integer()->notNull()->defaultValue(0),
                     'manager_count'=>$this->integer()->notNull()->defaultValue(0),
-                    'sort_order'=> $this->integer()->notNull()->defaultValue(2),
+                    'sort_order'=> $this->integer()->notNull()->defaultValue(100),
                     'status_id'=>$this->integer()->notNull()->defaultValue(2),
                     'created_at' => $this->integer()->notNull(),
                     'updated_at' => $this->integer(),
@@ -43,8 +43,8 @@ class m160113_121911_collection extends XMigration
         $this->addForeignKey('fk_collection_status_id' , $this->tableName,  'status_id' , 'ref_status' , 'id' , 'NO ACTION' , 'NO ACTION'); 
         $this->addForeignKey('fk_collection_type_id' , $this->tableName,  'collection_type_id' , 'ref_collection_type' , 'id' , 'NO ACTION' , 'NO ACTION'); 
                    
-        $this->insert($this->tableName,['name'=>'MRI operators',
-                                    'description'=>'Collection of MRI operators',
+        $this->insert($this->tableName,['name'=>'MRI lab',
+                                    'description'=>'A collection of resources that are managed through the MRI lab',
                                     'collection_type_id'=>2,
                                     'membership_duration'=>365,
                                     'member_count'=>0,
@@ -53,10 +53,36 @@ class m160113_121911_collection extends XMigration
                                     'status_id'=>2, 
                                     'created_at'=>time(),
                                     'updated_at'=>0, 
-                                    'created_by'=>0, 
+                                    'created_by'=>1, 
                                     'updated_by'=>0,  
                                 ]); 
-              
+         
+         $this->insert($this->tableName,['name'=>'Park place',
+                                    'description'=>'A collection of resources that belong to the Park place site',
+                                    'collection_type_id'=>2,
+                                    'membership_duration'=>365,
+                                    'member_count'=>0,
+                                    'manager_count'=>0, 
+                                    'sort_order'=>100, 
+                                    'status_id'=>2, 
+                                    'created_at'=>time(),
+                                    'updated_at'=>0, 
+                                    'created_by'=>1, 
+                                    'updated_by'=>0,  
+                                ]);       
+        $this->insert($this->tableName,['name'=>'cubric-int',
+                                    'description'=>'CUBRIC group that maps directly to cubric-int within LDAP',
+                                    'collection_type_id'=>4,
+                                    'membership_duration'=>365,
+                                    'member_count'=>0,
+                                    'manager_count'=>0, 
+                                    'sort_order'=>100, 
+                                    'status_id'=>2, 
+                                    'created_at'=>time(),
+                                    'updated_at'=>0, 
+                                    'created_by'=>1, 
+                                    'updated_by'=>0,  
+                                ]); 
 
     }
     /* ************************************************************************************** */

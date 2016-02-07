@@ -28,7 +28,7 @@ use Yii;
  * @property RefAuthType $auth
  * @property RefStatus $status
  */
-class Users extends \common\components\XActiveRecord
+class User extends \common\components\XActiveRecord
 {
     
    
@@ -37,7 +37,7 @@ class Users extends \common\components\XActiveRecord
      */
     public static function tableName()
     {
-        return 'users';
+        return 'user';
     }
 
     /**

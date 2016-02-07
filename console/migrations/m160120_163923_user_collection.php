@@ -29,7 +29,7 @@ class m160120_163923_user_collection extends XMigration
                     'user_id'=>$this->integer()->notNull(),
                     'member_type_id'=>$this->integer()->notNull(),
                     'expiry'=>$this->integer()->notNull()->defaultValue(0), 
-                    'sort_order'=> $this->integer()->notNull()->defaultValue(2),
+                    'sort_order'=> $this->integer()->notNull()->defaultValue(100),
                     'status_id'=>$this->integer()->notNull()->defaultValue(2),
                     'created_at' => $this->integer()->notNull(),
                     'updated_at' => $this->integer(),
@@ -46,7 +46,7 @@ class m160120_163923_user_collection extends XMigration
                     
         $this->insert($this->tableName,['collection_id'=>1,
                                     'user_id'=>44,
-                                    'member_type_id'=>3,
+                                    'member_type_id'=>2,
                                     'expiry'=>(time() + (365 * 86400)),
                                     'sort_order'=>100, 
                                     'status_id'=>2, 

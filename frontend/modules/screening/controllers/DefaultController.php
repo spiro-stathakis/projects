@@ -14,6 +14,7 @@ class DefaultController extends XController
 {
 	
 
+ public $defaultAction = 'form';
     /* ************************************************************************************************************************* */ 
    
      public function behaviors()
@@ -22,7 +23,9 @@ class DefaultController extends XController
                 'access' => [
                         'class' => AccessControl::className(),
                         'rules' => [
-                                    ['actions' => ['index'], 'allow' => true, 'roles' => ['@'],], 
+                                    ['actions' => ['form'], 'allow' => true, 'roles' => ['@'],], 
+                                    ['actions' => ['project'], 'allow' => true, 'roles' => ['@'],], 
+                                    
                                     ['actions' => ['create'], 'allow' => true, 'roles' => ['@'],],
                                     ['actions' => ['update'], 'allow' => true, 'roles' => ['@'],], 
                                    // ['actions' => ['active'], 'allow' => true, 'roles' => ['@'],], 
@@ -38,6 +41,9 @@ class DefaultController extends XController
 
 
     /* ************************************************************************************************************************* */ 
+    public function actionTimeU
+    /* ************************************************************************************************************************* */ 
+    
     public function actionAjaxsign($hash)
     {
          $arr = []; 
@@ -55,6 +61,7 @@ class DefaultController extends XController
 
         if (Yii::$app->request->post('signee') == 'subject')
         {
+
             $screening_entry_model->subject_signature = $signature;
             $screening_entry_model->save(); 
         }
@@ -70,6 +77,7 @@ class DefaultController extends XController
         
         
     }    
+
 
     /* ************************************************************************************************************************* */ 
     public function actionConfirm($hash)
@@ -87,23 +95,36 @@ class DefaultController extends XController
     }    
 
     /* ************************************************************************************************************************* */ 
+      public function actionProject($screening_form_id)
+    {
+       if (! \Yii::$app->screeningform->isManager($screening_form_id))
+             throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access page.'));
+         
+       return $this->render('project', ['projectList'=>$this->_projectList(),'screening_form_id'=>$screening_form_id]);
+
+
+    }
+    /* ************************************************************************************************************************* */ 
     
     /* ************************************************************************************************************************* */ 
     
-    public function actionIndex()
+    public function actionForm()
     {
 
-    	return $this->render('index', ['screeningList'=>$this->_buildScreeningList()] );
+    	return $this->render('form', ['screeningList'=>$this->_screeningList()] );
     }
 
 	/* ************************************************************************************************************************* */ 
     
-	public function actionCreate($screening_form_id,$subject)
+	public function actionCreate($project_id,$screening_form_id,$subject)
 	{
 
 
 
          
+         if (! \Yii::$app->project->isMember($project_id))
+            throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access page.'));
+
 		 if (! \Yii::$app->screeningform->isManager($screening_form_id))
             throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access page.'));
 
@@ -123,7 +144,7 @@ class DefaultController extends XController
         if ($subject_model === null)
             throw new \yii\web\HttpException(404, yii::t('app', 'Cannot locate this subject.'));
 
-        $screening_entry_model = $this->_initScreeningForm($screening_form_id, $subject_model); 
+        $screening_entry_model = $this->_initScreeningForm($project_id,$screening_form_id,$subject_model); 
         
         $this->redirect(['update' , 'hash'=>$screening_entry_model->hash]);
          
@@ -154,36 +175,42 @@ class DefaultController extends XController
     
     /* ************************************************************************************************************************* */ 
     /* PRIVATE FUNCTIONS */ 
-	/* ************************************************************************************************************************* */ 
-    private function _buildScreeningList()
+	
+    /* ************************************************************************************************************************* */ 
+    private function _projectList()
+    {
+        
+        return \Yii::$app->project->allProjects;
+
+    }
+    /* ************************************************************************************************************************* */ 
+    private function _screeningList()
     {
     	$return = []; 
-    	foreach (\Yii::$app->screeningform->allManagment as $screeningForm) 
+    	foreach (\Yii::$app->screeningform->myScreeningForms as $screeningForm) 
     		$return[$screeningForm['collection_name']][] = [
     									'screening_form_name'=>$screeningForm['screening_form_name'], 
 										'screening_form_id'=>$screeningForm['screening_form_id'], 
-
-
-    									] ;
+                                    ];
     	
     	return $return; 
-
-
     }
 
 
     /* ******************************************************************************************************* */ 
-    private function _generatePdf()
+    private function _generatePdf($hash)
     {
-     
+         $screening_entry_model = ScreeningEntry::findOne(['hash'=>$hash]);
+
+        require_once(\yii::$app->basePath . "/../vendor/setasign/fpdf/fpdf.php");
+        require_once(\yii::$app->basePath . "/../vendor/setasign/fpdi/fpdi.php");
 
 
     }
     /* ******************************************************************************************************* */ 
     public function actionPdf()
     {
-        require_once(\yii::$app->basePath . "/../vendor/setasign/fpdf/fpdf.php");
-        require_once(\yii::$app->basePath . "/../vendor/setasign/fpdi/fpdi.php");
+        
        //class_exists('TCPDF', true); // trigger Composers autoloader to load the TCPDF class
         $pdf = new \FPDI();
         // add a page
@@ -205,11 +232,12 @@ class DefaultController extends XController
 
     }
     /* ******************************************************************************************************* */
-    private function _initScreeningForm($screening_form_id, $subject_model)
+    private function _initScreeningForm($project_id, $screening_form_id, $subject_model)
     {
         $questions =  \yii::$app->screeningquestion->getQuestions($screening_form_id);
         $screening_entry_model = new \common\models\ScreeningEntry(); 
         $screening_entry_model->screening_form_id = $screening_form_id; 
+        $screening_entry_model->project_id = $project_id; 
         $screening_entry_model->subject_id = $subject_model->id; 
         $screening_entry_model->researcher_id = \Yii::$app->user->identity->id ;
         

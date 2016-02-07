@@ -39,6 +39,10 @@ class Subject extends \common\components\XActiveRecord
     /**
      * @inheritdoc
      */
+    
+    public $screening_form_id; 
+    public $project_id; 
+
     public static function tableName()
     {
         return 'subject';
@@ -51,7 +55,7 @@ class Subject extends \common\components\XActiveRecord
     {
         return [
             [['cubric_id', 'first_name', 'last_name', 'dob', 'hash', 'gp_opt_id', 'email_opt_id', 'sex_id', 'old_id', 'status_id', 'created_at', 'created_by'], 'required'],
-            [['dob'], 'safe'],
+            [['dob','screening_form_id','project_id'], 'safe'],
             [['gp_opt_id', 'email_opt_id', 'sex_id', 'old_id', 'sort_order', 'status_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['cubric_id', 'first_name', 'last_name', 'email', 'telephone', 'address'], 'string', 'max' => 255],
             [['hash'], 'string', 'max' => 32],

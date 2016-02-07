@@ -62,7 +62,9 @@ class m160113_151026_screening_form extends XMigration
         $this->dropTable($this->tableName); 
         return true;
     }
-
+    /* ************************************************************************************** */
+    /* ************************************************************************************** */
+    
     /*
     // Use safeUp/safeDown to run migration code within a transaction
     public function safeUp()

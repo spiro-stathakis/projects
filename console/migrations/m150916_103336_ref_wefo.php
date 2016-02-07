@@ -30,7 +30,7 @@ class m150916_103336_ref_wefo extends XMigration
                         'code'=>$this->string(255)->notNull(),
                         'name'=>$this->string(255)->notNull(),
                         'description'=>$this->string(255)->notNull(),
-                        'sort_order'=> $this->integer()->notNull()->defaultValue(2),
+                        'sort_order'=> $this->integer()->notNull()->defaultValue(100),
                         'status_id'=>$this->integer()->notNull(),
                         'created_at' => $this->integer()->notNull(),
                         'updated_at' => $this->integer(),
@@ -41,10 +41,10 @@ class m150916_103336_ref_wefo extends XMigration
                 );
             $this->addForeignKey('fk_ref_wefo_type_status_id' , $this->tableName , 'status_id' , 'ref_status' , 'id' , 'NO ACTION' , 'NO ACTION'); 
             
-            $this->insert($this->tableName,['code'=>'null','name'=>'No value','description'=>'No value','sort_order'=>100,'status_id'=>1,'created_at'=>time(),'created_by'=>0 ]); 
-            $this->insert($this->tableName,['code'=>'internal_research','name'=>'Internal research','description'=>'Internal University funded research - non economic', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>0 ]);
-            $this->insert($this->tableName,['code'=>'external_research','name'=>'External research','description'=>'External grant funded research - non economic', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>0 ]);
-            $this->insert($this->tableName,['code'=>'external_commercial_research','name'=>'External research','description'=>'External [contracts/service/consultancy] funded research - economic', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>0 ]);  
+            $this->insert($this->tableName,['code'=>'null','name'=>'No value','description'=>'No value','sort_order'=>100,'status_id'=>1,'created_at'=>time(),'created_by'=>1 ]); 
+            $this->insert($this->tableName,['code'=>'internal_research','name'=>'Internal research','description'=>'Internal University funded research - non economic', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>1 ]);
+            $this->insert($this->tableName,['code'=>'external_research','name'=>'External research','description'=>'External grant funded research - non economic', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>1 ]);
+            $this->insert($this->tableName,['code'=>'external_commercial_research','name'=>'External research','description'=>'External [contracts/service/consultancy] funded research - economic', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>1 ]);  
     }
     /* ************************************************************************************** */ 
 

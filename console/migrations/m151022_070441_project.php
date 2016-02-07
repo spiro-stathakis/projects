@@ -57,8 +57,7 @@ class m151022_070441_project extends XMigration
             $this->addForeignKey('fk_project_project_csa_id' , $this->tableName,  'csa_id' , 'user' , 'id' , 'NO ACTION' , 'NO ACTION'); 
             $this->addForeignKey('fk_project_project_pi_id' , $this->tableName,  'pi_id' , 'user' , 'id' , 'NO ACTION' , 'NO ACTION'); 
             $this->addForeignKey('fk_project_project_wefo_id' , $this->tableName,  'wefo_id' , 'ref_wefo' , 'id' , 'NO ACTION' , 'NO ACTION'); 
-            $this->execute('CALL sp_import_projects();')  ;
-             
+          
             
     
     }

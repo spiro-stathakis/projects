@@ -27,7 +27,7 @@ class m150915_100034_ref_status extends XMigration
                         'code'=>$this->string(255)->notNull(),
                         'name'=>$this->string(255)->notNull(),
                         'description'=>$this->string(255)->notNull(),
-                        'sort_order'=> $this->integer()->notNull()->defaultValue(2),
+                        'sort_order'=> $this->integer()->notNull()->defaultValue(100),
                         'status_id'=>$this->integer()->notNull(),
                         'created_at' => $this->integer()->notNull(),
                         'updated_at' => $this->integer(),

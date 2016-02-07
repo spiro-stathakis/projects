@@ -9,6 +9,7 @@ namespace common\components;
 
 use yii\behaviors\TimestampBehavior; 
 use yii\behaviors\BlameableBehavior; 
+
 /**
  * Site controller
  */

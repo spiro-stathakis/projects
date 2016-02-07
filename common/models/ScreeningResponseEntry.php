@@ -62,7 +62,7 @@ class ScreeningEntry extends \common\components\XActiveRecord
     public function rules()
     {
         return [
-            [['screening_form_id', 'subject_id', 'researcher_id', 'progress_id', 'contraindication_id', 'created_at', 'created_by'], 'required'],
+            [['screening_form_id', 'subject_id', 'researcher_id', 'progress_id', 'contraindication_id'], 'required'],
             [['screening_form_id', 'subject_id', 'researcher_id', 'progress_id', 'contraindication_id', 'sort_order', 'status_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => RefStatus::className(), 'targetAttribute' => ['status_id' => 'id']],
             [['contraindication_id'], 'exist', 'skipOnError' => true, 'targetClass' => RefBoolean::className(), 'targetAttribute' => ['contraindication_id' => 'id']],

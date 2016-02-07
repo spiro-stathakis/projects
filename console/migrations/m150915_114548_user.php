@@ -41,7 +41,7 @@ class m150915_114548_user extends XMigration
         $this->addForeignKey('fk_users_status_id' , 'user' , 'status_id' , 'ref_status' , 'id' , 'NO ACTION' , 'NO ACTION'); 
         $this->addForeignKey('fk_users_auth_type_id' , 'user' , 'auth_type_id' , 'ref_auth_type' , 'id' , 'NO ACTION' , 'NO ACTION'); 
 
-        $this->execute('CALL sp_import_users();')  ;
+       $this->execute('CALL sp_import_users();');
         
     }
 

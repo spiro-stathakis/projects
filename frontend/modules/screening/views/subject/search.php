@@ -25,6 +25,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'dob') ?>
 
     <?= Html::hiddenInput('screening_form_id', $screening_form_id); ?> 
+    <?= Html::hiddenInput('project_id', $project_id); ?> 
 
     <?php // echo $form->field($model, 'email') ?>
 

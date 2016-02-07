@@ -24,7 +24,7 @@ class m160113_121219_ref_member_type extends XMigration
                         'code'=>$this->string(255)->notNull(),
                         'name'=>$this->string(255)->notNull(),
                         'description'=>$this->string(255)->notNull(),
-                        'sort_order'=> $this->integer()->notNull()->defaultValue(2),
+                        'sort_order'=> $this->integer()->notNull()->defaultValue(100),
                         'status_id'=>$this->integer()->notNull(),
                         'created_at' => $this->integer()->notNull(),
                         'updated_at' => $this->integer(),
@@ -34,11 +34,11 @@ class m160113_121219_ref_member_type extends XMigration
                     $this->mysqlOptions 
                 );
 
-            $this->insert($this->tableName,['code'=>'null','name'=>'No value','description'=>'No value','sort_order'=>100,'status_id'=>1,'created_at'=>time(),'created_by'=>0 ]); 
-            $this->insert($this->tableName,['code'=>'member','name'=>'Member','description'=>'Member', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>0 ]);
-            $this->insert($this->tableName,['code'=>'manager','name'=>'Manager','description'=>'Manager', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>0 ]);
-            $this->insert($this->tableName,['code'=>'collab','name'=>'Collaborator','description'=>'Collaborator', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>0 ]);
-            $this->insert($this->tableName,['code'=>'assoc','name'=>'Associate','description'=>'Associate', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>0 ]);
+            $this->insert($this->tableName,['code'=>'null','name'=>'No value','description'=>'No value','sort_order'=>100,'status_id'=>1,'created_at'=>time(),'created_by'=>1 ]); 
+            $this->insert($this->tableName,['code'=>'manager','name'=>'Manager','description'=>'Manager', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>1 ]);
+            $this->insert($this->tableName,['code'=>'member','name'=>'Member','description'=>'Member', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>1]);
+            $this->insert($this->tableName,['code'=>'collab','name'=>'Collaborator','description'=>'Collaborator', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>1 ]);
+            $this->insert($this->tableName,['code'=>'assoc','name'=>'Associate','description'=>'Associate', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>1 ]);
                    
     }
      /* ************************************************************************************** */ 

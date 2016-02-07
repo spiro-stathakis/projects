@@ -30,8 +30,10 @@ public static $status = [
     /* ************************************************************************************************************************* */ 
 	public static $member_type = [
 			'null'=>['id'=>1,'code'=>'null','name'=>'no value' , 'description'=>'No value'] ,
-			'member'=>['id'=>2,'code'=>'member','name'=>'Member' , 'description'=>'Membership of a collection'] ,
-			'manager'=>['id'=>3,'code'=>'manager','name'=>'Manager' , 'description'=>'Manager of a collection'] ,
+			'manager'=>['id'=>2,'code'=>'manager','name'=>'Manager' , 'description'=>'Manager of a collection'] ,
+			'member'=>['id'=>3,'code'=>'member','name'=>'Member' , 'description'=>'Membership of a collection'] ,
+			'collab'=>['id'=>4,'code'=>'collab','name'=>'Collaborator' , 'description'=>'Collaborator of a collection'] ,
+			'assoc'=>['id'=>5,'code'=>'assoc','name'=>'Associate' , 'description'=>'Associate of a collection'] ,
 	]; 
     
 
@@ -39,8 +41,9 @@ public static $status = [
     public static $collection_type = [
 			'null'=>['id'=>1,'code'=>'null','name'=>'no value' , 'description'=>'No value'] ,
 			'resource'=>['id'=>2,'code'=>'resource','name'=>'Resource' , 'description'=>'A collection for a resource at CUBRIC (ie. a scanner)'] ,
-			'project'=>['id'=>2,'code'=>'project','name'=>'Project' , 'description'=>'A collection for a project at CUBRIC (ie. a researcher study)'] ,
-				
+			'project'=>['id'=>3,'code'=>'project','name'=>'Project' , 'description'=>'A collection for a project at CUBRIC (ie. a researcher study)'] ,
+			'group'=>['id'=>4,'code'=>'group','name'=>'Group' , 'description'=>'A collection for a group at CUBRIC (ie. an ldap group)'] ,
+					
 	]; 
 
 

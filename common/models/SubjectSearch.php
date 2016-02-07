@@ -19,7 +19,7 @@ class SubjectSearch extends Subject
     {
         return [
             [['id', 'gp_opt_id', 'email_opt_id', 'sex_id', 'sort_order', 'status_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['cubric_id', 'first_name', 'last_name', 'dob', 'email', 'telephone', 'address'], 'safe'],
+            [['cubric_id', 'screening_form_id', 'project_id', 'first_name', 'last_name', 'dob', 'email', 'telephone', 'address'], 'safe'],
         ];
     }
 
@@ -61,6 +61,8 @@ class SubjectSearch extends Subject
         $query->andFilterWhere([
             'id' => $this->id,
             'dob' => $this->dob,
+            'screening_form_id'=>$this->screening_form_id, 
+            'project_id'=>$this->project_id, 
             'gp_opt_id' => $this->gp_opt_id,
             'email_opt_id' => $this->email_opt_id,
             'sex_id' => $this->sex_id,

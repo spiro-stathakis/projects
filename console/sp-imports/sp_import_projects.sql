@@ -34,10 +34,13 @@ BEGIN
 	DECLARE l_project_status_id INT; 
 	
 	DECLARE l_new_project_id INT; 
+	DECLARE l_new_collection_id INT; 
+	DECLARE l_collection_type_project INT DEFAULT 3; 
 	DECLARE l_collection_manager INT DEFAULT 2; 
 	DECLARE l_collection_member INT DEFAULT 3; 
-
-
+	DECLARE l_collection_collab INT DEFAULT 4; 
+	DECLARE l_csa_name VARCHAR(255); 
+	DECLARE l_pi_name VARCHAR(255); 
 	
 	
 	DECLARE  project_csr CURSOR FOR 
@@ -66,6 +69,8 @@ BEGIN
 			
 			IF l_count = 0 THEN 
 
+					SET l_pi_name  = (SELECT CONCAT('PI: ' , first_name, ' ' , last_name, '  [', user_name , ']') FROM user WHERE id=l_pi_id); 
+					SET l_csa_name  = (SELECT CONCAT('CSA: ' , first_name, ' ' , last_name, '  [', user_name , ']') FROM user WHERE id=l_csa_id); 
 					SET l_project_status_id = l_project_status_id + 1; 
 					CASE l_csa_id 
 		    			WHEN 1 THEN SET l_csa_id=26; # Derek Jones 
@@ -100,7 +105,59 @@ BEGIN
 
 					SET l_new_project_id = LAST_INSERT_ID(); 
 
+					#####################################################################################################
+					
 
+					INSERT INTO projects.collection  
+					(
+						name,description,collection_type_id,created_by,created_at
+					) 
+					VALUES 
+					(
+						concat( 'Project number ', l_study_id),
+						concat(l_pi_name , '. ', l_csa_name), 
+						l_collection_type_project, 
+						2, 
+						UNIX_TIMESTAMP() 
+					); 
+
+					SET l_new_collection_id = LAST_INSERT_ID(); 
+
+					#####################################################################################################
+					
+					INSERT INTO user_collection
+					(
+						collection_id, user_id , member_type_id , expiry
+					)
+					VALUES
+					( l_new_collection_id, l_csa_id , l_collection_manager , UNIX_TIMESTAMP() + (10  * (86400 * 365))),
+					( l_new_collection_id, l_pi_id  , l_collection_member , UNIX_TIMESTAMP() + (10  * (86400 * 365))); 
+
+					#####################################################################################################
+					
+					INSERT INTO project_collection
+					(
+						collection_id, project_id , member_type_id , expiry
+					)
+					VALUES
+					( l_new_collection_id, l_new_project_id  , l_collection_manager , UNIX_TIMESTAMP() + (10  * (86400 * 365))); 
+
+					#####################################################################################################
+					
+					INSERT INTO user_collection 
+					(
+						collection_id, user_id , member_type_id , expiry
+					) 
+						(
+							SELECT 
+							l_new_collection_id, SGU.UserID, l_collection_collab, (UNIX_TIMESTAMP() + (10  * (86400 * 365)))
+							FROM study.StudyGroupUser SGU 
+							INNER JOIN study.StudyGroupStudy SGS
+							ON SGU.StudyGroupID=SGS.StudyGroupID 
+							WHERE SGS.StudyID=l_study_id
+						); 
+					
+					#####################################################################################################
 					
 
 			END IF; 

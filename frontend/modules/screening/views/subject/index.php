@@ -23,7 +23,8 @@ $this->params['breadcrumbs'][] = $this->title;
     
 
 
-    <?= GridView::widget([
+
+   <?= GridView::widget([
         'dataProvider' => $dataProvider,
         //'filterModel' => $searchModel,
         'columns' => [
@@ -57,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ], 
                            'urlCreator' => function ($action, $model, $key, $index) {
                                if ($action === 'screen') {
-                                    $url = Url::to(['/screening/default/create', 'screening_form_id'=>1 , 'subject'=>$model->hash]); // your own url generation logic
+                                    $url = Url::to(['/screening/default/create','project_id'=>\Yii::$app->screeningform->project_id, 'screening_form_id'=>\Yii::$app->screeningform->screening_form_id, 'subject'=>$model->hash]); // your own url generation logic
                                     return $url;
                                 }
                             }    

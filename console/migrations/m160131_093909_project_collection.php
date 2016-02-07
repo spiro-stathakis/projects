@@ -11,7 +11,7 @@ class m160131_093909_project_collection extends XMigration
 
     public function init()
     {
-       $this->tableName = '{{%user_collection}}'; 
+       $this->tableName = '{{%project_collection}}'; 
        return parent::init();  
     }
 
@@ -39,21 +39,30 @@ class m160131_093909_project_collection extends XMigration
                 $this->mysqlOptions 
             );
 
-        $this->addForeignKey('fk_user_collection_status_id' , $this->tableName,  'status_id' , 'ref_status' , 'id' , 'NO ACTION' , 'NO ACTION'); 
-        $this->addForeignKey('fk_user_collection_collection_id' , $this->tableName,  'collection_id' , 'collection' , 'id' , 'NO ACTION' , 'NO ACTION'); 
-        $this->addForeignKey('fk_user_collection_user_id' , $this->tableName,  'user_id' , 'user' , 'id' , 'NO ACTION' , 'NO ACTION'); 
-        $this->addForeignKey('fk_user_collection_member_type_id' , $this->tableName,  'member_type_id' , 'ref_member_type' , 'id' , 'NO ACTION' , 'NO ACTION'); 
-                    
+        $this->addForeignKey('fk_project_collection_status_id' , $this->tableName,  'status_id' , 'ref_status' , 'id' , 'NO ACTION' , 'NO ACTION'); 
+        $this->addForeignKey('fk_project_collection_collection_id' , $this->tableName,  'collection_id' , 'collection' , 'id' , 'NO ACTION' , 'NO ACTION'); 
+        $this->addForeignKey('fk_project_collection_project_id' , $this->tableName,  'project_id' , 'project' , 'id' , 'NO ACTION' , 'NO ACTION'); 
+        $this->addForeignKey('fk_project_collection_member_type_id' , $this->tableName,  'member_type_id' , 'ref_member_type' , 'id' , 'NO ACTION' , 'NO ACTION'); 
+       
+                         
     }
 /* ************************************************************************************** */ 
 /* ************************************************************************************** */ 
      
     public function down()
     {
-        echo "m160131_093909_project_collection cannot be reverted.\n";
-
-        return false;
+        $this->init();
+        $this->dropForeignKey('fk_project_collection_status_id',$this->tableName); 
+        $this->dropForeignKey('fk_project_collection_collection_id',$this->tableName);
+        $this->dropForeignKey('fk_project_collection_project_id',$this->tableName);
+        $this->dropForeignKey('fk_project_collection_member_type_id',$this->tableName);
+        
+        $this->dropTable($this->tableName); 
+        return true;
     }
+
+/* ************************************************************************************** */ 
+/* ************************************************************************************** */ 
 
     /*
     // Use safeUp/safeDown to run migration code within a transaction

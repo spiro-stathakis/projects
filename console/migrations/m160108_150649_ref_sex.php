@@ -27,7 +27,7 @@ class m160108_150649_ref_sex extends XMigration
                         'code'=>$this->string(255)->notNull(),
                         'name'=>$this->string(255)->notNull(),
                         'description'=>$this->string(255)->notNull(),
-                        'sort_order'=> $this->integer()->notNull()->defaultValue(2),
+                        'sort_order'=> $this->integer()->notNull()->defaultValue(100),
                         'status_id'=>$this->integer()->notNull(),
                         'created_at' => $this->integer()->notNull(),
                         'updated_at' => $this->integer(),
@@ -38,9 +38,9 @@ class m160108_150649_ref_sex extends XMigration
                 );
             $this->addForeignKey('fk_ref_sex_status_id' , $this->tableName , 'status_id' , 'ref_status' , 'id' , 'NO ACTION' , 'NO ACTION'); 
             
-            $this->insert($this->tableName,['code'=>'null','name'=>'no value','description'=>'No value','sort_order'=>100,'status_id'=>1,'created_at'=>time(),'created_by'=>0 ]); 
-            $this->insert($this->tableName,['code'=>'f','name'=>'female','description'=>'Female', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>0]);
-            $this->insert($this->tableName,['code'=>'m','name'=>'male','description'=>'Male', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>0 ]);
+            $this->insert($this->tableName,['code'=>'null','name'=>'no value','description'=>'No value','sort_order'=>100,'status_id'=>1,'created_at'=>time(),'created_by'=>1 ]); 
+            $this->insert($this->tableName,['code'=>'f','name'=>'female','description'=>'Female', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>1]);
+            $this->insert($this->tableName,['code'=>'m','name'=>'male','description'=>'Male', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>1 ]);
            
     }
     /* ************************************************************************************** */ 
