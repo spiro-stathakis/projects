@@ -71,7 +71,20 @@ class ScreeningResponseComponent extends Object
                         
                          break; 
                     case Types::$input_type['text_agreement']['id']:
-                        $field = sprintf('text agreement'); 
+                        case Types::$input_type['text_agreement']['id']:
+                         $field = Html::radioList(
+                                        sprintf('question_%s',$options['screening_question_id']), 
+                                        Types::$boolean['null']['id'], 
+                                        [
+                                            yii::t('app', 'Agree')=>yii::t('app', 'Agree'), 
+                                            yii::t('app', 'Disagree')=>yii::t('app', 'Disagree'), 
+                                        
+                                        ],
+                                        [
+                                            'unselect'=>Types::$boolean['null']['description'],
+                                            'separator'=>'&nbsp;&nbsp;&nbsp;'
+                                        ]); 
+                         break; 
                          break; 
                     case Types::$input_type['image_overlay']['id']:
                         $field = sprintf('image overlay'); 
@@ -100,8 +113,8 @@ class ScreeningResponseComponent extends Object
     {
             return (new \yii\db\Query())
                     ->select([
-                        'sf.name as screening_form_name', 'sf.title as screening_form_description', 
-                        'sf.title as screening_form_title',  
+                        'se.screening_form_description', 
+                        'se.screening_form_title',  
                         'se.id as screening_entry_id','se.subject_id','se.researcher_id', 
                         'se.hash as entry_hash', 'se.progress_id' , 'se.contraindication_id', 
                         'sr.id as screening_response_id', 

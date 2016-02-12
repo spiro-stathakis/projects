@@ -70,7 +70,7 @@ signaturePad.prototype = {
             this.signee = 'researcher';
             $.app.page.signaturePad.clear(); 
         }else
-          ;//  window.location = $.app.mc.redirectUri;
+          window.location = $.app.mc.redirectUri;
 
          return true; 
        

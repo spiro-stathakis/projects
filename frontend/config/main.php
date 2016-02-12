@@ -26,27 +26,7 @@ return [
     ], 
     'components' => [
 
-       
-        'collection'=> [
-            'class'=>'common\components\CollectionComponent', 
-        ],
-
-        'project'=> [
-            'class'=>'common\components\ProjectComponent', 
-        ], 
-         
-        'screeningform'=> [
-            'class'=>'common\components\ScreeningFormComponent', 
-        ], 
-        'jsconfig'=> [
-            'class'=>'common\components\JsConfig', 
-        ], 
-        'screeningquestion' => [
-            'class' => 'common\components\ScreeningQuestionComponent', 
-        ],
-        'screeningresponse' => [
-            'class' => 'common\components\ScreeningResponseComponent', 
-        ],
+        
         'user' => [
             'identityClass' => 'common\models\UserIdentity',
             'enableAutoLogin' => true,

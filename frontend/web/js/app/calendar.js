@@ -18,11 +18,21 @@ AppPackageCalendar.prototype = {
     {
     	$('#eventModal').modal(); 
 		
-    }
+    }, 
 /* ********************************************************** */    
-    eventCreate
+    eventClick:function(date, jsEvent, view)
+    {
+        $('#eventModal').modal(); 
+        
+    },
 /* ********************************************************** */    
-    
+    eventMouseover:function(date, jsEvent, view)
+    {
+     
+     console.info(moment(date._start._i).calendar()); 
+        //$('#eventModal').modal(); 
+        
+    },
 /* ********************************************************** */
    
 

@@ -22,7 +22,7 @@ use Yii;
  * @property RefStatus $status
  * @property ScreeningEntry $screeningEntry
  * @property ScreeningQuestion $screeningQuestion
- * @property Subjects $subject
+ * @property Subject $subject
  */
 class ScreeningResponse extends \common\components\XActiveRecord
 {
@@ -40,7 +40,7 @@ class ScreeningResponse extends \common\components\XActiveRecord
     public function rules()
     {
         return [
-            [['screening_question_id', 'screening_entry_id', 'subject_id'], 'required'],
+            [['screening_question_id', 'screening_entry_id', 'subject_id', 'created_at', 'created_by'], 'required'],
             [['screening_question_id', 'screening_entry_id', 'subject_id', 'sort_order', 'status_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['response'], 'string', 'max' => 4096],
             [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => RefStatus::className(), 'targetAttribute' => ['status_id' => 'id']],
@@ -99,7 +99,7 @@ class ScreeningResponse extends \common\components\XActiveRecord
      */
     public function getSubject()
     {
-        return $this->hasOne(Subjects::className(), ['id' => 'subject_id']);
+        return $this->hasOne(Subject::className(), ['id' => 'subject_id']);
     }
 
     /**

@@ -48,7 +48,7 @@ class m160113_164628_screening_question extends XMigration
 
         $this->insert($this->tableName,['caption'=>'Participant',
                                     'content'=>'The MRI system uses magnetic and radio frequency fields that may be hazardous to certain individuals, such as those who have metallic, electronic, magnetic or mechanical implants, devices, or accessories.  It is therefore vital that formal comprehensive MRI screening and safety evaluation is carried out before entering the magnet environment.',
-                                    'input_type_id'=>8,
+                                    'input_type_id'=>7,
                                     'screening_form_id'=>1,
                                     'tristate_option_id'=>1, 
                                     'sort_order'=>10, 

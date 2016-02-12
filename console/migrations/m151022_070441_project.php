@@ -28,7 +28,7 @@ class m151022_070441_project extends XMigration
                         'csa_id'=>$this->integer()->notNull(),
                         'pi_id'=>$this->integer()->notNull(),
                         'wefo_id'=>$this->integer()->notNull(), 
-                        'name'=>$this->string(255)->notNull(),
+                        'title'=>$this->string(255)->notNull(),
                         'code'=>$this->string(255)->notNull(),
                         'funding_number'=>$this->string(255)->notNull(),
                         'funding_code'=>$this->string(255)->notNull(),

@@ -17,7 +17,9 @@ class CalendarJsAsset extends AssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
-    public $css = [];
+    public $css = [
+    	//'css/app/calendar.css'
+    ];
     public $js = [
         'js/app/calendar.js'
     ];

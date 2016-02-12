@@ -87,7 +87,7 @@ BEGIN
 
 					INSERT INTO projects.project 
 					(
-						csa_id,pi_id,wefo_id,name,code, 
+						csa_id,pi_id,wefo_id,title,code, 
 						funding_number,funding_code,app_received, 
 						cog_approval,presentation,ethics_approval, 
 						ethics_number,risk_assessment,rules_procedure, 
@@ -110,7 +110,7 @@ BEGIN
 
 					INSERT INTO projects.collection  
 					(
-						name,description,collection_type_id,created_by,created_at
+						title,description,collection_type_id,created_by,created_at
 					) 
 					VALUES 
 					(

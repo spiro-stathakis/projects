@@ -4,6 +4,7 @@ namespace common\models;
 
 use Yii;
 use common\components\Types; 
+
 /**
  * This is the model class for table "screening_entry".
  *
@@ -15,6 +16,9 @@ use common\components\Types;
  * @property integer $progress_id
  * @property integer $contraindication_id
  * @property string $hash
+ * @property string $screening_form_title
+ * @property string $screening_form_description
+ * @property string $resource_title
  * @property string $subject_signature
  * @property string $researcher_signature
  * @property integer $time_in
@@ -40,7 +44,6 @@ class ScreeningEntry extends \common\components\XActiveRecord
     /**
      * @inheritdoc
      */
-    
     public static function tableName()
     {
         return 'screening_entry';
@@ -52,10 +55,11 @@ class ScreeningEntry extends \common\components\XActiveRecord
     public function rules()
     {
         return [
-            [['screening_form_id', 'subject_id', 'researcher_id', 'project_id', 'progress_id', 'contraindication_id', 'hash'], 'required'],
+            [['screening_form_id', 'subject_id', 'researcher_id', 'project_id', 'progress_id', 'contraindication_id', 'hash', 'screening_form_title', 'created_at', 'created_by'], 'required'],
             [['screening_form_id', 'subject_id', 'researcher_id', 'project_id', 'progress_id', 'contraindication_id', 'time_in', 'time_out', 'sort_order', 'status_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['subject_signature', 'researcher_signature'], 'string'],
             [['hash'], 'string', 'max' => 255],
+            [['screening_form_title', 'screening_form_description', 'resource_title'], 'string', 'max' => 4096],
             [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => RefStatus::className(), 'targetAttribute' => ['status_id' => 'id']],
             [['contraindication_id'], 'exist', 'skipOnError' => true, 'targetClass' => RefBoolean::className(), 'targetAttribute' => ['contraindication_id' => 'id']],
             [['progress_id'], 'exist', 'skipOnError' => true, 'targetClass' => RefProgress::className(), 'targetAttribute' => ['progress_id' => 'id']],
@@ -80,6 +84,9 @@ class ScreeningEntry extends \common\components\XActiveRecord
             'progress_id' => Yii::t('app', 'Progress ID'),
             'contraindication_id' => Yii::t('app', 'Contraindication ID'),
             'hash' => Yii::t('app', 'Hash'),
+            'screening_form_title' => Yii::t('app', 'Screening Form Title'),
+            'screening_form_description' => Yii::t('app', 'Screening Form Description'),
+            'resource_title' => Yii::t('app', 'Resource Title'),
             'subject_signature' => Yii::t('app', 'Subject Signature'),
             'researcher_signature' => Yii::t('app', 'Researcher Signature'),
             'time_in' => Yii::t('app', 'Time In'),
@@ -93,7 +100,8 @@ class ScreeningEntry extends \common\components\XActiveRecord
         ];
     }
 
-    /* ******************************************************************************************************* */  
+
+/* ******************************************************************************************************* */  
     /* ******************************************************************************************************* */  
            
         public function init()  
@@ -117,6 +125,7 @@ class ScreeningEntry extends \common\components\XActiveRecord
       }  
     /* ******************************************************************************************************* */  
     
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -124,8 +133,7 @@ class ScreeningEntry extends \common\components\XActiveRecord
     {
         return $this->hasOne(RefStatus::className(), ['id' => 'status_id']);
     }
-    /* ******************************************************************************************************* */  
-    
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -133,8 +141,7 @@ class ScreeningEntry extends \common\components\XActiveRecord
     {
         return $this->hasOne(RefBoolean::className(), ['id' => 'contraindication_id']);
     }
-/* ******************************************************************************************************* */  
-    
+
     /**
      * @return \yii\db\ActiveQuery
      */

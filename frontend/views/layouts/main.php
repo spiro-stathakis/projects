@@ -61,20 +61,19 @@ $this->registerJs(" $.app.mc = ". Yii::$app->jsconfig->data. ";", \yii\web\View:
     NavBar::end();
     ?>
 
-    <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
-    </div>
-</div>
-
+   
+                <?= Breadcrumbs::widget([
+                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                ]) ?>
+                <?= Alert::widget() ?>
+                <?= $content ?>
+           
+   
 <footer class="footer">
     <div class="container">
         <p class="pull-left">&copy; CUBRIC <?= date('Y') ?></p>
 
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <p class="pull-right">Cardiff University</p>
     </div>
 </footer>
 

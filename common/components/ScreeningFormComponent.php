@@ -80,9 +80,9 @@ class ScreeningFormComponent extends Object
     {
             $this->_allScreeningForms   = (new \yii\db\Query())
                     ->select([
-                        's.id as screening_form_id' , 's.name as screening_form_name', 
+                        's.id as screening_form_id' , 's.title as screening_form_title', 
                         's.title as screening_form_title' , 's.description as screening_form_description',
-                        'c.id as collection_id','c.name as collection_name' , 'c.description as collection_description',
+                        'c.id as collection_id','c.title as collection_title' , 'c.description as collection_description',
                         'rct.name as collection_type_name',  
                         'rct.id as collection_type_id', 
                         'rmt.name as member_type_name'])
@@ -100,9 +100,9 @@ class ScreeningFormComponent extends Object
     {
             $this->_myScreeningForms   = (new \yii\db\Query())
                     ->select([
-                        's.id as screening_form_id' , 's.name as screening_form_name', 
+                        's.id as screening_form_id' , 
                         's.title as screening_form_title' , 's.description as screening_form_description',
-                        'c.id as collection_id','c.name as collection_name' , 'c.description as collection_description',
+                        'c.id as collection_id','c.title as collection_title' , 'c.description as collection_description',
                         'rct.name as collection_type_name',  
                         'rct.id as collection_type_id', 
                         'uc.member_type_id', 

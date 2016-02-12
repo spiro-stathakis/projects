@@ -76,8 +76,8 @@ class ProjectComponent extends Object
 
             return (new \yii\db\Query())
                     ->select([
-                            'c.name as collection_name','c.description as collection_description',
-                            'p.id as project_id','p.name as project_name','p.code as project_code'
+                            'c.title as collection_title','c.description as collection_description',
+                            'p.id as project_id','p.title as project_title','p.code as project_code'
                            ])
                     ->from('collection c')
                     ->join('LEFT JOIN','project_collection pc' , 'pc.collection_id=c.id')
@@ -94,8 +94,8 @@ class ProjectComponent extends Object
 
             return (new \yii\db\Query())
                     ->select([
-                            'c.name as collection_name','c.description as collection_description',
-                            'p.id as project_id','p.name as project_name','p.code as project_code', 
+                            'c.title as collection_title','c.description as collection_description',
+                            'p.id as project_id','p.title as project_title','p.code as project_code', 
                             'uc.member_type_id'
                              ])
                     ->from('collection c')

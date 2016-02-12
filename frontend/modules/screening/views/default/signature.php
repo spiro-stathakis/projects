@@ -1,7 +1,7 @@
 
 <?php frontend\packages\SignatureAsset::register($this); ?> 
 
-<div id="signature-pad" class="m-signature-pad">
+<div style='padding-top:100px' id="signature-pad" class="m-signature-pad">
     <div class="m-signature-pad--body">
       <canvas></canvas>
     </div>

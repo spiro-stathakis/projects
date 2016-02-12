@@ -24,7 +24,7 @@ class m160113_121911_collection extends XMigration
                 $this->tableName, 
                 [
                     'id'=>$this->primaryKey(),
-                    'name'=>$this->string(255)->notNull(),
+                    'title'=>$this->string(255)->notNull(),
                     'description'=>$this->string(4096),
                     'collection_type_id' => $this->integer()->notNull(),
                     'membership_duration'=> $this->integer()->notNull()->defaultValue(5256000),
@@ -43,7 +43,7 @@ class m160113_121911_collection extends XMigration
         $this->addForeignKey('fk_collection_status_id' , $this->tableName,  'status_id' , 'ref_status' , 'id' , 'NO ACTION' , 'NO ACTION'); 
         $this->addForeignKey('fk_collection_type_id' , $this->tableName,  'collection_type_id' , 'ref_collection_type' , 'id' , 'NO ACTION' , 'NO ACTION'); 
                    
-        $this->insert($this->tableName,['name'=>'MRI lab',
+        $this->insert($this->tableName,['title'=>'MRI lab',
                                     'description'=>'A collection of resources that are managed through the MRI lab',
                                     'collection_type_id'=>2,
                                     'membership_duration'=>365,
@@ -57,7 +57,7 @@ class m160113_121911_collection extends XMigration
                                     'updated_by'=>0,  
                                 ]); 
          
-         $this->insert($this->tableName,['name'=>'Park place',
+         $this->insert($this->tableName,['title'=>'Park place',
                                     'description'=>'A collection of resources that belong to the Park place site',
                                     'collection_type_id'=>2,
                                     'membership_duration'=>365,
@@ -70,7 +70,7 @@ class m160113_121911_collection extends XMigration
                                     'created_by'=>1, 
                                     'updated_by'=>0,  
                                 ]);       
-        $this->insert($this->tableName,['name'=>'cubric-int',
+        $this->insert($this->tableName,['title'=>'cubric-int',
                                     'description'=>'CUBRIC group that maps directly to cubric-int within LDAP',
                                     'collection_type_id'=>4,
                                     'membership_duration'=>365,

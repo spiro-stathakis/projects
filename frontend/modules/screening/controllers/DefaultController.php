@@ -8,6 +8,7 @@ use common\models\Subject;
 use common\models\ScreeningForm; 
 use common\models\ScreeningQuestion; 
 use common\models\ScreeningEntry; 
+use common\models\ScreeningResponse;  
 use yii\filters\AccessControl; 
 use common\components\Types; 
 class DefaultController extends XController
@@ -41,7 +42,7 @@ class DefaultController extends XController
 
 
     /* ************************************************************************************************************************* */ 
-    public function actionTimeU
+    
     /* ************************************************************************************************************************* */ 
     
     public function actionAjaxsign($hash)
@@ -83,7 +84,7 @@ class DefaultController extends XController
     public function actionConfirm($hash)
     {
 
-
+        return $this->_generatePdf($hash); 
     }
     /* ************************************************************************************************************************* */ 
     public function actionSignature($hash)
@@ -160,7 +161,38 @@ class DefaultController extends XController
        
 
         $screening_entry_model = ScreeningEntry::findOne(['hash'=>$hash]);
-       
+        if (yii::$app->request->isPost && $screening_entry_model != null) 
+        {
+            if ($screening_entry_model->researcher_id != yii::$app->user->id)
+                 throw new \yii\web\HttpException(403, yii::t('app', 'Permission denied.'));
+
+            if ($screening_entry_model->progress_id == Types::$progress['published']['id'])
+                 throw new \yii\web\HttpException(404, yii::t('app', 'Cannot locate this record.'));
+
+
+             foreach(yii::$app->request->post() as $k=>$v)
+             {
+                   if (strpos( $k , 'question_' )!== false )
+                   {
+                        $screening_question_id = str_replace('question_','',$k); 
+                        $screening_response_model =   ScreeningResponse::findOne([
+                                    'screening_question_id'=>$screening_question_id, 
+                                    'screening_entry_id'=>$screening_entry_model->id, 
+                        ]); 
+                        if ($screening_response_model !== null)
+                        {
+                            $screening_response_model->response = $v; 
+                            $screening_response_model->save(); 
+                        }
+
+                   }
+            } 
+             $this->redirect(['signature', 'hash'=>$hash]); 
+
+        }
+        
+        
+
         return $this->render('update', ['responses'=>yii::$app->screeningresponse->getResponses($hash),
                                 'subject_model'=> Subject::findOne($screening_entry_model->subject_id), 
                                 'screening_form_model'=>ScreeningForm::findOne($screening_entry_model->screening_form_id), 
@@ -188,8 +220,8 @@ class DefaultController extends XController
     {
     	$return = []; 
     	foreach (\Yii::$app->screeningform->myScreeningForms as $screeningForm) 
-    		$return[$screeningForm['collection_name']][] = [
-    									'screening_form_name'=>$screeningForm['screening_form_name'], 
+    		$return[$screeningForm['collection_title']][] = [
+    									'screening_form_name'=>$screeningForm['screening_form_title'], 
 										'screening_form_id'=>$screeningForm['screening_form_id'], 
                                     ];
     	
@@ -200,37 +232,107 @@ class DefaultController extends XController
     /* ******************************************************************************************************* */ 
     private function _generatePdf($hash)
     {
-         $screening_entry_model = ScreeningEntry::findOne(['hash'=>$hash]);
-
         require_once(\yii::$app->basePath . "/../vendor/setasign/fpdf/fpdf.php");
         require_once(\yii::$app->basePath . "/../vendor/setasign/fpdi/fpdi.php");
+        require_once(\yii::$app->basePath . "/../vendor/setasign/fpdi_pdf-parser/pdf_parser.php");
+        require_once(\yii::$app->basePath . "/../vendor/setasign/setapdf-signer/library/SetaPDF/Autoload.php");
+       
 
-
-    }
-    /* ******************************************************************************************************* */ 
-    public function actionPdf()
-    {
+        $screening_entry_model = ScreeningEntry::findOne(['hash'=>$hash]);
+        $count =1; 
         
        //class_exists('TCPDF', true); // trigger Composers autoloader to load the TCPDF class
         $pdf = new \FPDI();
+        $pdf->SetAutoPageBreak(true); 
         // add a page
+        $pdf->SetTopMargin(30);
         $pdf->AddPage();
         // set the source file
-        $pdf->setSourceFile(\yii::$app->basePath . "/../letterhead.pdf");
+        $pdf->setSourceFile(\yii::$app->basePath . "/../psych-letterhead.pdf");
         // import page 1
         $tplIdx = $pdf->importPage(1);
         // use the imported page and place it at point 10,10 with a width of 100 mm
-        $pdf->useTemplate($tplIdx, 10, 10, 100);
+        $pdf->useTemplate($tplIdx, 0, 0);
+        $pdf->SetFont('Courier', '',12);
 
+
+        $pdf->SetXY(10,6);
+        $pdf->Cell(150,3 ,'Confidential' ); 
+        
+
+        $pdf->SetXY(10,36);
+        $pdf->MultiCell(150,3 ,yii::$app->datecomponent->timestampToUkDate($screening_entry_model->created_at), 0, 'R'); 
+        $pdf->Ln();
+        $pdf->MultiCell(100,3 ,$screening_entry_model->screening_form_title, 0,'' ); 
+        $pdf->Ln(); 
+
+        $pdf->SetFont('Courier', '',9);
+      
+        $pdf->Cell(100,4,sprintf('Participant: %s %s (dob %s)',
+                                 
+                                 $screening_entry_model->subject->first_name,
+                                  $screening_entry_model->subject->last_name,
+                                  yii::$app->datecomponent->isoToUkDate($screening_entry_model->subject->dob)
+
+                                  ) );
+      
+      $pdf->Cell(50,4,sprintf('Identifier: %s', $screening_entry_model->subject->cubric_id),0,'','R' );
+      
+        
+     
+        $pdf->Ln();
+       $pdf->Cell(100,4,sprintf('Researcher: %s %s (project %s)',
+                                 $screening_entry_model->researcher->first_name,
+                                  $screening_entry_model->researcher->last_name,
+                                  $screening_entry_model->project->code
+                                  ) );
+       
+       $pdf->Cell(50,4,sprintf('Resource: %s',
+                                 'the scanner') , 0, '', 'R' );
+       
+       $pdf->Ln(); 
+       $pdf->Ln(); 
+
+       $pdf->SetFont('Courier', '',12);
+       $pdf->Cell(150,4,sprintf('Reponses:') );
+        $pdf->SetFont('Courier', '',9);
+        $pdf->Ln(); 
+        
+       foreach (yii::$app->screeningresponse->getResponses($hash) as $response)
+       {
+            if (strlen($response['caption']) > 0)
+            {
+                $pdf->Ln();
+                $pdf->Cell( 150, 4 ,sprintf('%s ' , $response['caption']) , 0 , 'U');
+                $count = 1; 
+
+            }
+            else
+            { 
+                $pdf->Cell( 150, 4 ,sprintf('%s. %s ', $count , $response['content']));
+                $pdf->Ln();  
+                if ($response['response'] === null) $response['response'] = 'UNKNOWN'; 
+                $pdf->Cell( 150, 4 ,sprintf('%s ', $response['response']));
+                
+                $count++;  
+            }
+            $pdf->Ln();  
+
+           
+       }
+       $pdf->Ln();  
+        $pdf->SetFont('Courier', '',12);
+            $pdf->Cell(150,4,sprintf('Signatures:') );
         // now write some text above the imported page
-        $pdf->SetFont('Helvetica');
-        $pdf->SetTextColor(255, 0, 0);
-        $pdf->SetXY(30, 30);
-        $pdf->Write(0, 'This is just a simple text');
+       
 
+
+        // NOW SET ScreeningEntry::progress_id = PUBLISHED so it cannot be edited again. 
         $pdf->Output();
 
     }
+    /* ******************************************************************************************************* */ 
+    
     /* ******************************************************************************************************* */
     private function _initScreeningForm($project_id, $screening_form_id, $subject_model)
     {

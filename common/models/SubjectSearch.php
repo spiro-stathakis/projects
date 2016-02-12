@@ -44,7 +44,7 @@ class SubjectSearch extends Subject
         $query = Subject::find();
 
         // add conditions that should always apply here
-
+        
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);

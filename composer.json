@@ -22,12 +22,20 @@
         "yiisoft/yii2-gii": "*",
         "philippfrenzel/yii2fullcalendar":"*",
         "adldap/adldap": "5.0.*" , 
-	"edvlerblog/yii2-adldap-module": "v1.0.1",
+        "setasign/fpdi_pdf-parser": "1.1.2", 
+	   "edvlerblog/yii2-adldap-module": "v1.0.1",
         "kartik-v/yii2-detail-view": "@dev",
         "kartik-v/yii2-widget-switchinput": "*",
         "yiisoft/yii2-jui": "^2.0",
-        "setasign/fpdi-fpdf": "1.6.1"
+        "fxp/composer-asset-plugin": "~1.1",
+        "setasign/setapdf-signer": "2.3.2.768", 
+        "setasign/fpdi-fpdf": "1.6.1",
+        "setasign/setapdf-core": "2.*"
     },
+     "repositories": [{
+            "type": "composer",
+            "url": "https://www.setasign.com/downloads/"
+    }], 
     "require-dev": {
         "yiisoft/yii2-codeception": "*",
         "yiisoft/yii2-debug": "*",

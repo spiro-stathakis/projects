@@ -3,11 +3,11 @@
 namespace common\models;
 
 /**
- * This is the ActiveQuery class for [[ScreeningEntry]].
+ * This is the ActiveQuery class for [[Event]].
  *
- * @see ScreeningEntry
+ * @see Event
  */
-class ScreeningEntryQuery extends \yii\db\ActiveQuery
+class EventQuery extends \yii\db\ActiveQuery
 {
     /*public function active()
     {
@@ -16,7 +16,7 @@ class ScreeningEntryQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return ScreeningEntry[]|array
+     * @return Event[]|array
      */
     public function all($db = null)
     {
@@ -25,7 +25,7 @@ class ScreeningEntryQuery extends \yii\db\ActiveQuery
 
     /**
      * @inheritdoc
-     * @return ScreeningEntry|array|null
+     * @return Event|array|null
      */
     public function one($db = null)
     {

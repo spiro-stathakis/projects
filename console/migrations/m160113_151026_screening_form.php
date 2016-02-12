@@ -23,7 +23,6 @@ class m160113_151026_screening_form extends XMigration
                 $this->tableName, 
                 [
                     'id'=>$this->primaryKey(),
-                    'name'=>$this->string(255)->notNull(),
                     'title'=>$this->string(4096),
                     'description'=>$this->string(4096),
                     'collection_id' => $this->integer()->notNull(),
@@ -40,7 +39,7 @@ class m160113_151026_screening_form extends XMigration
         $this->addForeignKey('fk_screening_form_status_id' , $this->tableName,  'status_id' , 'ref_status' , 'id' , 'NO ACTION' , 'NO ACTION'); 
         $this->addForeignKey('fk_screening_form_collection_id' , $this->tableName,  'collection_id' , 'collection' , 'id' , 'NO ACTION' , 'NO ACTION'); 
                    
-        $this->insert($this->tableName,['name'=>'MRI primary screening',
+        $this->insert($this->tableName,['title'=>'MRI primary screening',
                                     'description'=>'CUBRIC, Cardiff University - MRI screening form',
                                     'collection_id'=>1,
                                     'sort_order'=>100, 

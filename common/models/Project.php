@@ -11,7 +11,7 @@ use Yii;
  * @property integer $csa_id
  * @property integer $pi_id
  * @property integer $wefo_id
- * @property string $name
+ * @property string $title
  * @property string $code
  * @property string $funding_number
  * @property string $funding_code
@@ -57,9 +57,9 @@ class Project extends \common\components\XActiveRecord
     public function rules()
     {
         return [
-            [['csa_id', 'pi_id', 'wefo_id', 'name', 'code', 'funding_number', 'funding_code', 'app_received', 'cog_approval', 'presentation', 'ethics_approval', 'ethics_number', 'risk_assessment', 'rules_procedure', 'mri_time', 'meg_time', 'old_id', 'project_status_id', 'created_at', 'created_by'], 'required'],
+            [['csa_id', 'pi_id', 'wefo_id', 'title', 'code', 'funding_number', 'funding_code', 'app_received', 'cog_approval', 'presentation', 'ethics_approval', 'ethics_number', 'risk_assessment', 'rules_procedure', 'mri_time', 'meg_time', 'old_id', 'project_status_id', 'created_at', 'created_by'], 'required'],
             [['csa_id', 'pi_id', 'wefo_id', 'app_received', 'cog_approval', 'presentation', 'ethics_approval', 'risk_assessment', 'rules_procedure', 'mri_time', 'meg_time', 'old_id', 'project_status_id', 'sort_order', 'status_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['name', 'code', 'funding_number', 'funding_code', 'ethics_number'], 'string', 'max' => 255],
+            [['title', 'code', 'funding_number', 'funding_code', 'ethics_number'], 'string', 'max' => 255],
             [['wefo_id'], 'exist', 'skipOnError' => true, 'targetClass' => RefWefo::className(), 'targetAttribute' => ['wefo_id' => 'id']],
             [['csa_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['csa_id' => 'id']],
             [['pi_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['pi_id' => 'id']],
@@ -78,7 +78,7 @@ class Project extends \common\components\XActiveRecord
             'csa_id' => Yii::t('app', 'Csa ID'),
             'pi_id' => Yii::t('app', 'Pi ID'),
             'wefo_id' => Yii::t('app', 'Wefo ID'),
-            'name' => Yii::t('app', 'Name'),
+            'title' => Yii::t('app', 'Title'),
             'code' => Yii::t('app', 'Code'),
             'funding_number' => Yii::t('app', 'Funding Number'),
             'funding_code' => Yii::t('app', 'Funding Code'),
