@@ -5,6 +5,8 @@ use yii\bootstrap\Html;
 use yii\helpers\Url; 
 
 ?> 
+<?php echo $this->render('../default/_stepBar' , ['activeElement'=>4]);?> 
+<p>&nbsp; </p> 
 <?= DetailView::widget([
         'model' => $subject_model,
         'attributes' => [

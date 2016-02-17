@@ -1,19 +1,24 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\SubjectsSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-<div class="subjects-search">
 
+<?php echo $this->render('../default/_stepBar' , ['activeElement'=>3]);?> 
+<div class="subject-search">
+ <p>
+       Please ensure details are entered in exactly as they should be. The search will not return partial or near matches.  
+    </p>
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'post',
     ]); ?>
 
+ 
     <?//= $form->field($model, 'id') ?>
 
     <?//= $form->field($model, 'cubric_id') ?>
@@ -21,10 +26,12 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'first_name') ?>
 
     <?= $form->field($model, 'last_name') ?>
-
-    <?= $form->field($model, 'dob') ?>
-
+    <?= Html::activeDropDownList( $model, 'dob_yyyy' ,  $model->years , []); ?> 
+    <?= Html::activeDropDownList($model,  'dob_mm',  $model->months , []); ?> 
+    <?= Html::activeDropDownList( $model, 'dob_dd',  $model->days , []); ?> 
     <?= Html::hiddenInput('screening_form_id', $screening_form_id); ?> 
+    <?= Html::hiddenInput('resource_id', $resource_id); ?> 
+
     <?= Html::hiddenInput('project_id', $project_id); ?> 
 
     <?php // echo $form->field($model, 'email') ?>

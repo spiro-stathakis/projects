@@ -111,7 +111,7 @@ class m160113_164628_screening_question extends XMigration
                                     'updated_by'=>0,  
                                 ]); 
 
-        $this->insert($this->tableName,['caption'=>'MRI staff',
+        $this->insert($this->tableName,['caption'=>'Researcher',
                                     'content'=>'Participant/Patient Weight (kg)',
                                     'input_type_id'=>2,
                                     'screening_form_id'=>1,

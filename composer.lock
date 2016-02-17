@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "690ffeda34b84d8c388e5f470c6b69dc",
-    "content-hash": "444ea39c218958661abc5ff36bcad599",
+    "hash": "6d6da47db787dd58f4f85e066da58a7c",
+    "content-hash": "9857a900eb4cf33ebc541234e8a0a7e4",
     "packages": [
         {
             "name": "adldap/adldap",
@@ -1587,12 +1587,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "1ae3a683f38fe24d4b69ef35da82bd211e1894fb"
+                "reference": "6e351261f9cd33daf205a131a1ba61c6d33bd483"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/1ae3a683f38fe24d4b69ef35da82bd211e1894fb",
-                "reference": "1ae3a683f38fe24d4b69ef35da82bd211e1894fb",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/6e351261f9cd33daf205a131a1ba61c6d33bd483",
+                "reference": "6e351261f9cd33daf205a131a1ba61c6d33bd483",
                 "shasum": ""
             },
             "require": {
@@ -1651,7 +1651,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-02-03 15:13:49"
+            "time": "2016-02-11 14:56:33"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -2762,12 +2762,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "05a12065aa18e049f3cf91b0038374e4b1dbcb41"
+                "reference": "a4d7a7a129c244c8fadb7a8dce4258623c0dbbf3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/05a12065aa18e049f3cf91b0038374e4b1dbcb41",
-                "reference": "05a12065aa18e049f3cf91b0038374e4b1dbcb41",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/a4d7a7a129c244c8fadb7a8dce4258623c0dbbf3",
+                "reference": "a4d7a7a129c244c8fadb7a8dce4258623c0dbbf3",
                 "shasum": ""
             },
             "require": {
@@ -2803,7 +2803,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-02-09 20:02:42"
+            "time": "2016-02-12 16:14:34"
         },
         {
             "name": "yiisoft/yii2",
@@ -2811,12 +2811,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "1800d3840b098fc6e936852fa84b8c1b1a0a2e57"
+                "reference": "632905e1400e8d00cda44bcfb078c545d5c83c38"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/1800d3840b098fc6e936852fa84b8c1b1a0a2e57",
-                "reference": "1800d3840b098fc6e936852fa84b8c1b1a0a2e57",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/632905e1400e8d00cda44bcfb078c545d5c83c38",
+                "reference": "632905e1400e8d00cda44bcfb078c545d5c83c38",
                 "shasum": ""
             },
             "require": {
@@ -2897,7 +2897,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2016-02-10 22:42:43"
+            "time": "2016-02-12 16:29:18"
         },
         {
             "name": "yiisoft/yii2-bootstrap",
@@ -3157,12 +3157,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fzaninotto/Faker.git",
-                "reference": "ff1d463edb2c74e39f4ec76f7eb99fd47b237507"
+                "reference": "772feacf6849bf0114873e2b869bb500fccfd438"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/ff1d463edb2c74e39f4ec76f7eb99fd47b237507",
-                "reference": "ff1d463edb2c74e39f4ec76f7eb99fd47b237507",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/772feacf6849bf0114873e2b869bb500fccfd438",
+                "reference": "772feacf6849bf0114873e2b869bb500fccfd438",
                 "shasum": ""
             },
             "require": {
@@ -3199,7 +3199,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2016-02-09 21:50:17"
+            "time": "2016-02-11 12:29:31"
         },
         {
             "name": "yiisoft/yii2-codeception",

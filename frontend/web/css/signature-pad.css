@@ -7,21 +7,18 @@ body {
 }
 
 .m-signature-pad {
-  position: absolute;
+  position: relative;
   font-size: 10px;
   width: 700px;
   height: 400px;
-  top: 50%;
-  left: 50%;
-  margin-left: -350px;
-  margin-top: -200px;
+  
   border: 1px solid #e8e8e8;
   background-color: #fff;
   border-radius: 4px;
 }
 
 .m-signature-pad:before, .m-signature-pad:after {
-	position: absolute;
+	position: relative;
   z-index: -1;
   content: "";
 	width: 40%;
@@ -38,7 +35,7 @@ body {
 }
 
 .m-signature-pad:after {
-	left: auto;
+	
 	right: 20px;
 	-webkit-transform: skew(3deg) rotate(3deg);
 	-moz-transform: skew(3deg) rotate(3deg);

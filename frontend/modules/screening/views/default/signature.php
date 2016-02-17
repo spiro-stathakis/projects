@@ -1,6 +1,9 @@
 
-<?php frontend\packages\SignatureAsset::register($this); ?> 
 
+<?php echo $this->render('../default/_stepBar' , ['activeElement'=>5]);?> 
+<p>&nbsp; </p> 
+<p>&nbsp; </p> 
+<?php frontend\packages\SignatureAsset::register($this); ?> 
 <div style='padding-top:100px' id="signature-pad" class="m-signature-pad">
     <div class="m-signature-pad--body">
       <canvas></canvas>

@@ -10,7 +10,7 @@ use common\models\Subject;
 /**
  * SubjectsSearch represents the model behind the search form about `common\models\Subjects`.
  */
-class SubjectSearch extends Subject
+class SubjectScreeningSearch extends Subject
 {
     /**
      * @inheritdoc
@@ -19,7 +19,7 @@ class SubjectSearch extends Subject
     {
         return [
             [['id', 'gp_opt_id', 'email_opt_id', 'sex_id', 'sort_order', 'status_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['cubric_id', 'screening_form_id', 'project_id', 'first_name', 'last_name', 'dob', 'email', 'telephone', 'address'], 'safe'],
+            [['cubric_id', 'dob_yyyy','dob_mm','dob_dd','screening_form_id', 'project_id', 'first_name', 'last_name', 'dob', 'email', 'telephone', 'address'], 'safe'],
         ];
     }
 
@@ -51,12 +51,18 @@ class SubjectSearch extends Subject
 
         $this->load($params);
 
+       
+        if (! isset($this->dob))
+            if (isset($this->dob_yyyy) && isset($this->dob_mm) && isset($this->dob_dd))
+                $this->dob = sprintf('%s-%s-%s',$this->dob_yyyy,$this->dob_mm,$this->dob_dd  ); 
+       
+
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+            $query->where('0=1');
             return $dataProvider;
-        }
-
+        } 
+        print_r($this->dob); 
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,

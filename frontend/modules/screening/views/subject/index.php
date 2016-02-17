@@ -8,62 +8,78 @@ use yii\grid\GridView;
 /* @var $searchModel common\models\SubjectsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('app', 'Subjects');
-$this->params['breadcrumbs'][] = $this->title;
+
 ?>
+<?php echo $this->render('../default/_stepBar' , ['activeElement'=>4]);?> 
 <div class="subjects-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
-    <p>
-        <?= Html::a(Yii::t('app', 'Create Subjects'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
 
     
 
+<?php if ($dataProvider->totalCount === 0):  ?>
+
+<h4> Could not find a record. What would you like to do? </h4>
+<?= Html::beginForm ( ['create'], 'post' );?>
+<?= Html::hiddenInput('first_name', $searchModel->first_name);?>
+<?= Html::hiddenInput('last_name', $searchModel->last_name);?>
+<?= Html::hiddenInput('dob', $searchModel->dob);?>
+
+<?= Html::hiddenInput('screening_form_id', \yii::$app->ScreeningForm->screening_form_id);?>
+<?= Html::hiddenInput('resource_id', \yii::$app->ScreeningForm->resource_id);?>
+<?= Html::hiddenInput('project_id', \yii::$app->ScreeningForm->project_id);?>
 
 
-   <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        //'filterModel' => $searchModel,
-        'columns' => [
-            'cubric_id',
-            'first_name',
-            'last_name',
-            'dob',
-            // 'email:email',
-            // 'telephone',
-            // 'address',
-            // 'gp_opt_id',
-            // 'email_opt_id:email',
-            // 'sex_id',
-            // 'sort_order',
-            // 'status_id',
-            // 'created_at',
-            // 'updated_at',
-            // 'created_by',
-            // 'updated_by',
 
-            [
-            'class' => 'yii\grid\ActionColumn', 
-            'template'=>'{screen}&nbsp',
-                            'buttons'=>[
-                              'screen' => function ($url, $model) {     
-                                return Html::a('<span class="glyphicon glyphicon-list-alt"></span>', $url, [
-                                        'title' => Yii::t('yii', 'Start screening process'),
-                                ]);                                
-            
-                              }
-                        ], 
-                           'urlCreator' => function ($action, $model, $key, $index) {
-                               if ($action === 'screen') {
-                                    $url = Url::to(['/screening/default/create','project_id'=>\Yii::$app->screeningform->project_id, 'screening_form_id'=>\Yii::$app->screeningform->screening_form_id, 'subject'=>$model->hash]); // your own url generation logic
-                                    return $url;
-                                }
-                            }    
-                        ],
-            ],
-        ]); ?>
+<?= Html::submitButton (sprintf('Create %s %s record entry', $searchModel->first_name , $searchModel->last_name), ['class'=>'btn btn-primary']); ?>
+<h4> Or </h4>
+<?= Html::a(Yii::t('app', 'Search again'), ['/screening'], ['class' => 'btn btn-success']) ?>
+
+
+
+
+<?= Html::endForm();?>
+
+ <p></p>
+
+
+<?php endif; ?> 
+
+    
+<?php if ($dataProvider->totalCount > 0):  ?>
+
+
+       <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            //'filterModel' => $searchModel,
+            'columns' => [
+                'cubric_id',
+                'first_name',
+                'last_name',
+                'dob',
+                [
+                'class' => 'yii\grid\ActionColumn', 
+                'template'=>'{screen}&nbsp',
+                                'buttons'=>[
+                                  'screen' => function ($url, $model) {     
+                                    return Html::a('<span class="glyphicon glyphicon-list-alt"></span>', $url, [
+                                            'title' => Yii::t('yii', 'Start screening process'),
+                                    ]);                                
+                
+                                  }
+                            ], 
+                               'urlCreator' => function ($action, $model, $key, $index) {
+                                   if ($action === 'screen') {
+                                    $url = Url::to(['/screening/default/create',
+                                        'project_id'=>\yii::$app->ScreeningForm->project_id, 
+                                        'screening_form_id'=>\yii::$app->ScreeningForm->screening_form_id,
+                                        'resource_id'=>\yii::$app->ScreeningForm->resource_id,
+                                        'subject'=>$model->hash]); // your own url generation logic
+                                        return $url;
+                                    }
+                                }    
+                            ],
+                ],
+            ]); ?>
+
+<?php endif; ?> 
 
 </div>

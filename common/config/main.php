@@ -2,8 +2,14 @@
 return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'components' => [
+        'PdfComponent'=> [
+            'class'=>'common\components\PdfComponent', 
+        ], 
     	'calendarcomponent'=> [
             'class'=>'common\components\CalendarComponent', 
+        ],  
+        'resourcecomponent'=> [
+            'class'=>'common\components\ResourceComponent', 
         ],   
         'datecomponent'=> [
             'class'=>'common\components\DateComponent', 
@@ -16,7 +22,7 @@ return [
             'class'=>'common\components\ProjectComponent', 
         ], 
          
-        'screeningform'=> [
+        'ScreeningForm'=> [
             'class'=>'common\components\ScreeningFormComponent', 
         ], 
         'jsconfig'=> [

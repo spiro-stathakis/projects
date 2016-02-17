@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use common\components\Types; 
 
 /**
  * This is the model class for table "subject".
@@ -40,22 +41,56 @@ class Subject extends \common\components\XActiveRecord
      * @inheritdoc
      */
     
-    public $screening_form_id; 
+    public $dob_yyyy;
+    public $dob_mm; 
+    public $dob_dd;  
+    public $screening_form_id ; 
     public $project_id; 
 
+
+    public function init()
+    {
+
+        if ($this->isNewRecord)
+        {
+            $this->sex_id = Types::$sex['n']['id']; 
+            $this->gp_opt_id = Types::$boolean['false']['id']; 
+            $this->email_opt_id = Types::$boolean['false']['id']; 
+            $this->status_id = Types::$status['active']['id']; 
+            $this->old_id = 0; 
+            $this->cubric_id = sprintf('%s-', date('dmy')); 
+            $this->hash = Yii::$app->security->generateRandomString();  
+
+        }
+        return parent::init(); 
+    }
+
+
+    /* ****************************************************************************************************************** */ 
+     public function afterSave($insert, $changedAttributes)
+     {
+        if ($insert)
+        {
+            $this->cubric_id .= $this->id; 
+            $this->save(); 
+        }
+
+     }
+    /* ****************************************************************************************************************** */ 
     public static function tableName()
     {
         return 'subject';
     }
 
+    /* ****************************************************************************************************************** */ 
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['cubric_id', 'first_name', 'last_name', 'dob', 'hash', 'gp_opt_id', 'email_opt_id', 'sex_id', 'old_id', 'status_id', 'created_at', 'created_by'], 'required'],
-            [['dob','screening_form_id','project_id'], 'safe'],
+            [['cubric_id', 'first_name', 'last_name', 'dob', 'hash', 'gp_opt_id', 'email_opt_id', 'sex_id', 'old_id', 'status_id'], 'required'],
+            [['dob_yyyy','dob_mm','dob_dd','screening_form_id','hash', 'project_id'], 'safe'],
             [['gp_opt_id', 'email_opt_id', 'sex_id', 'old_id', 'sort_order', 'status_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['cubric_id', 'first_name', 'last_name', 'email', 'telephone', 'address'], 'string', 'max' => 255],
             [['hash'], 'string', 'max' => 32],
@@ -67,6 +102,7 @@ class Subject extends \common\components\XActiveRecord
         ];
     }
 
+    /* ****************************************************************************************************************** */ 
     /**
      * @inheritdoc
      */
@@ -77,7 +113,7 @@ class Subject extends \common\components\XActiveRecord
             'cubric_id' => Yii::t('app', 'Cubric ID'),
             'first_name' => Yii::t('app', 'First Name'),
             'last_name' => Yii::t('app', 'Last Name'),
-            'dob' => Yii::t('app', 'Dob'),
+            'dob' => Yii::t('app', 'Date of birth'),
             'hash' => Yii::t('app', 'Hash'),
             'email' => Yii::t('app', 'Email'),
             'telephone' => Yii::t('app', 'Telephone'),
@@ -95,6 +131,27 @@ class Subject extends \common\components\XActiveRecord
         ];
     }
 
+
+    /* ****************************************************************************************************************** */ 
+    public function getBooleanOptions()
+    {
+        return [
+                Types::$boolean['true']['id']=>Types::$boolean['true']['code'], 
+                Types::$boolean['false']['id']=>Types::$boolean['false']['code'], 
+        ];
+    }
+
+    /* ****************************************************************************************************************** */ 
+     public function getSexOptions()
+    {
+        return [
+                Types::$sex['n']['id']=>Types::$sex['n']['name'],
+                Types::$sex['f']['id']=>Types::$sex['f']['name'], 
+                Types::$sex['m']['id']=>Types::$sex['m']['name'], 
+        ];
+    }
+
+    /* ****************************************************************************************************************** */ 
     /**
      * @return \yii\db\ActiveQuery
      */

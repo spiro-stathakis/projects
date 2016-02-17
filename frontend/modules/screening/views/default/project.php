@@ -1,15 +1,16 @@
 <?php use yii\helpers\Html;  ?> 
-<div class="screening-default-index">
-    <h1><?= Yii::t('app', 'Screeing form module');?></h1>
+<?php echo $this->render('../default/_stepBar' , ['activeElement'=>2]);?> 
+<div class="screening-default-project">
     <p>
-        Your user account is able to create the following projects: 
+       <h4>Please select a project: </h4>
     </p>
+
     <p>
     
     <?php foreach($projectList as $project): ?> 
      
         <hr> 
-        <?=Html::a($project['collection_title'], ['subject/search', 'screening_form_id'=>$screening_form_id,'project_id' => $project['project_id']], ['class' => 'btn btn-primary']) ?>
+        <?=Html::a($project['collection_title'], ['subject/search', 'resource_id'=>$resource_id, 'screening_form_id'=>$screening_form_id,'project_id' => $project['project_id']], ['class' => 'btn btn-primary']) ?>
         <?=sprintf('<br/>%s<br/>%s ',$project['collection_description'] , $project['project_title']);?> 
         </hr> 
 

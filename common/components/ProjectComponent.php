@@ -47,6 +47,12 @@ class ProjectComponent extends Object
 
 	}
 	/* ******************************************************************************************************* */ 
+    public function canUse($project_id)
+    {
+
+            return ($this->isMember($project_id) || $this->isManager($project_id)); 
+    }
+    /* ******************************************************************************************************* */ 
     public function isMember($project_id)
     {
 

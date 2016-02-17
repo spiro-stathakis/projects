@@ -8,7 +8,8 @@ use common\models\Subject;
 use common\models\ScreeningForm; 
 use common\models\ScreeningQuestion; 
 use common\models\ScreeningEntry; 
-use common\models\ScreeningResponse;  
+use common\models\ScreeningResponse;
+use common\models\Resource;  
 use yii\filters\AccessControl; 
 use common\components\Types; 
 class DefaultController extends XController
@@ -25,6 +26,7 @@ class DefaultController extends XController
                         'class' => AccessControl::className(),
                         'rules' => [
                                     ['actions' => ['form'], 'allow' => true, 'roles' => ['@'],], 
+                                    ['actions' => ['resource'], 'allow' => true, 'roles' => ['@'],], 
                                     ['actions' => ['project'], 'allow' => true, 'roles' => ['@'],], 
                                     
                                     ['actions' => ['create'], 'allow' => true, 'roles' => ['@'],],
@@ -33,7 +35,8 @@ class DefaultController extends XController
                                     ['actions' => ['signature'], 'allow' => true, 'roles' => ['@'],],
                                     ['actions' => ['ajaxsign'], 'allow' => true, 'roles' => ['@'],], 
                                     ['actions' => ['confirm'], 'allow' => true, 'roles' => ['@'],],
-                                     ['actions' => ['pdf'], 'allow' => true, 'roles' => ['@'],], 
+                                    ['actions' => ['pdf'], 'allow' => true, 'roles' => ['@'],],
+                                    ['actions' => ['finish'], 'allow' => true, 'roles' => ['@'],], 
                                 ],
                         ],
         ];
@@ -49,22 +52,39 @@ class DefaultController extends XController
     {
          $arr = []; 
          $signature = ''; 
+         $filename = sprintf('%s.png', tempnam('/tmp', ''));
+         $imageWidth = 200; 
+         $imageHeight = 100; 
+         $resizeCommand =''; 
+         if (file_exists('/usr/bin/convert'))
+            $imageMagick = '/usr/bin/convert'; 
+         if (file_exists('/usr/local/bin/convert'))
+            $imageMagick = '/usr/local/bin/convert'; 
+
 
          $screening_entry_model = ScreeningEntry::findOne(['hash'=>$hash]);
          if ($screening_entry_model === null)
              throw new \yii\web\HttpException(404, yii::t('app', 'Page cannot be found.'));
 
-          if (! \Yii::$app->screeningform->isManager($screening_entry_model->screening_form_id))
+          if (! \yii::$app->ScreeningForm->isManager($screening_entry_model->screening_form_id))
             throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access page.'));
 
         $arr = explode(",", Yii::$app->request->post('signature')); 
         $signature = $arr[1]; 
-
+        
+        $decoded_image = base64_decode($signature);
+        file_put_contents($filename,$decoded_image);
+        
         if (Yii::$app->request->post('signee') == 'subject')
         {
-
             $screening_entry_model->subject_signature = $signature;
             $screening_entry_model->save(); 
+            $resizeCommand = sprintf('%s %s -resize %sx%s %s' , 
+                                $imageMagick, $filename, $imageWidth, $imageHeight, 
+                                sprintf('/tmp/subject-%s.png', $hash) 
+                ); 
+            system( $resizeCommand);
+            echo $resizeCommand;  
         }
         
         if (Yii::$app->request->post('signee') == 'researcher')
@@ -72,19 +92,42 @@ class DefaultController extends XController
                 $screening_entry_model->researcher_signature =$signature;
                 $screening_entry_model->progress_id = Types::$progress['published']['id']; 
                 $screening_entry_model->save(); 
+                $resizeCommand = sprintf('%s %s -resize %sx%s %s' , 
+                                $imageMagick, $filename, $imageWidth, $imageHeight, 
+                                sprintf('/tmp/researcher-%s.png', $hash)
+                ); 
+                 system( $resizeCommand); 
                 $this->_generatePdf($hash); 
         }
+      
+       
 
         
         
     }    
 
 
+    /* ************************************************************************************************************************* */
+
+    public function actionFinish($hash)
+    {
+
+      $screening_entry_model = ScreeningEntry::findOne(['hash'=>$hash]); 
+      if ( $screening_entry_model === null) 
+          throw new \yii\web\HttpException(404, yii::t('app', 'Page cannot be found.'));
+        
+      $subject_model = Subject::findOne(['id'=>$screening_entry_model->subject_id]); 
+      Yii::$app->user->logout();
+      return $this->render('finish',['cubric_identifier'=>$subject_model->cubric_id]);
+
+    }
     /* ************************************************************************************************************************* */ 
     public function actionConfirm($hash)
     {
 
-        return $this->_generatePdf($hash); 
+        if ($this->_generatePdf($hash))
+          $this->redirect(['finish', 'hash'=>$hash]); 
+
     }
     /* ************************************************************************************************************************* */ 
     public function actionSignature($hash)
@@ -96,45 +139,77 @@ class DefaultController extends XController
     }    
 
     /* ************************************************************************************************************************* */ 
-      public function actionProject($screening_form_id)
+      public function actionResource( $screening_form_id)
     {
-       if (! \Yii::$app->screeningform->isManager($screening_form_id))
+       if (! \yii::$app->ScreeningForm->canUse($screening_form_id))
              throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access page.'));
-         
-       return $this->render('project', ['projectList'=>$this->_projectList(),'screening_form_id'=>$screening_form_id]);
+        
+        $screening_form_model  = ScreeningForm::findOne(['id'=>$screening_form_id]); 
+
+
+        
+       return $this->render('resource', ['resourceList'=>$this->_resourceList($screening_form_model->collection_id),'screening_form_id'=>$screening_form_id]);
 
 
     }
     /* ************************************************************************************************************************* */ 
+      public function actionProject($resource_id, $screening_form_id)
+    {
+      if (! \yii::$app->ScreeningForm->canUse($screening_form_id))
+             throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access screening form.'));
+      if (! \Yii::$app->resourcecomponent->canUse($resource_id))
+              throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access resource.'));
+
+     
+       
+            
+       return $this->render('project', ['projectList'=>$this->_projectList(),'resource_id'=>$resource_id,'screening_form_id'=>$screening_form_id]);
+
+
+    } 
     
     /* ************************************************************************************************************************* */ 
     
     public function actionForm()
     {
+      $screeningList = $this->_screeningList(); 
+      if (count($screeningList) == 0 )
+            throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access screening forms.'));
+    	
 
-    	return $this->render('form', ['screeningList'=>$this->_screeningList()] );
+      return $this->render('form', ['screeningList'=>$screeningList] );
     }
 
 	/* ************************************************************************************************************************* */ 
     
-	public function actionCreate($project_id,$screening_form_id,$subject)
+	public function actionCreate($resource_id,$project_id,$screening_form_id,$subject)
 	{
 
 
 
-         
-         if (! \Yii::$app->project->isMember($project_id))
-            throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access page.'));
+        
+    if (! \Yii::$app->project->canUse($project_id))
+            throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access project.'));
 
-		 if (! \Yii::$app->screeningform->isManager($screening_form_id))
-            throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access page.'));
+		if (! \yii::$app->ScreeningForm->canUse($screening_form_id))
+            throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access screening form.'));
+
+    if (! \Yii::$app->resourcecomponent->canUse($resource_id))
+            throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access resource.'));
+
+  
+    $screening_form_model = ScreeningForm::findOne(['id'=>$screening_form_id]);
+    $resource_model = Resource::findOne(['id'=>$resource_id]);
+       
+
+        if ($resource_model->collection_id !== $screening_form_model->collection_id)
+            throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access page. Type mismatch'));
+
 
         if (Yii::$app->session->get('subjects') === null)
             Yii::$app->session->set('subjects' , []); 
 
-        if (in_array($subject , Yii::$app->session->get('subjects')))
-            $this->redirect('active');
-        else 
+        if (! in_array($subject , Yii::$app->session->get('subjects')))
         {
             $sub = Yii::$app->session->get('subjects');
             $sub[] =  $subject;  
@@ -145,7 +220,7 @@ class DefaultController extends XController
         if ($subject_model === null)
             throw new \yii\web\HttpException(404, yii::t('app', 'Cannot locate this subject.'));
 
-        $screening_entry_model = $this->_initScreeningForm($project_id,$screening_form_id,$subject_model); 
+        $screening_entry_model = $this->_initScreeningForm($project_id,$resource_id, $screening_form_id,$subject_model); 
         
         $this->redirect(['update' , 'hash'=>$screening_entry_model->hash]);
          
@@ -161,19 +236,23 @@ class DefaultController extends XController
        
 
         $screening_entry_model = ScreeningEntry::findOne(['hash'=>$hash]);
-        if (yii::$app->request->isPost && $screening_entry_model != null) 
-        {
-            if ($screening_entry_model->researcher_id != yii::$app->user->id)
+        if ($screening_entry_model->researcher_id != yii::$app->user->id)
                  throw new \yii\web\HttpException(403, yii::t('app', 'Permission denied.'));
 
-            if ($screening_entry_model->progress_id == Types::$progress['published']['id'])
+        if ($screening_entry_model->progress_id == Types::$progress['published']['id'])
                  throw new \yii\web\HttpException(404, yii::t('app', 'Cannot locate this record.'));
 
 
+ 
+        if (yii::$app->request->isPost && $screening_entry_model != null) 
+        {
+            
+          
              foreach(yii::$app->request->post() as $k=>$v)
              {
                    if (strpos( $k , 'question_' )!== false )
                    {
+                       
                         $screening_question_id = str_replace('question_','',$k); 
                         $screening_response_model =   ScreeningResponse::findOne([
                                     'screening_question_id'=>$screening_question_id, 
@@ -182,12 +261,13 @@ class DefaultController extends XController
                         if ($screening_response_model !== null)
                         {
                             $screening_response_model->response = $v; 
-                            $screening_response_model->save(); 
-                        }
+                            $screening_response_model->save();
+
+                        }  
 
                    }
             } 
-             $this->redirect(['signature', 'hash'=>$hash]); 
+            $this->redirect(['signature', 'hash'=>$hash]); 
 
         }
         
@@ -212,6 +292,7 @@ class DefaultController extends XController
     private function _projectList()
     {
         
+        //* NOTE THIS NEEDS TO CHANGE ONCE THE PERMISSIONS ARE IN PLACE *// 
         return \Yii::$app->project->allProjects;
 
     }
@@ -219,7 +300,7 @@ class DefaultController extends XController
     private function _screeningList()
     {
     	$return = []; 
-    	foreach (\Yii::$app->screeningform->myScreeningForms as $screeningForm) 
+    	foreach (\yii::$app->ScreeningForm->myScreeningForms as $screeningForm) 
     		$return[$screeningForm['collection_title']][] = [
     									'screening_form_name'=>$screeningForm['screening_form_title'], 
 										'screening_form_id'=>$screeningForm['screening_form_id'], 
@@ -230,122 +311,45 @@ class DefaultController extends XController
 
 
     /* ******************************************************************************************************* */ 
+
+    private function _resourceList($collection_id = 0)
+    {
+      $return = []; 
+      foreach (\Yii::$app->resourcecomponent->myResources as $res) 
+          if ($collection_id == 0 ||  $collection_id == $res['collection_id']) 
+                $return[$res['collection_title']][] = [
+                          'resource_title'=>$res['resource_title'], 
+                          'resource_id'=>$res['resource_id'], 
+                                    ];
+      
+      return $return; 
+    }
+    /* ******************************************************************************************************* */ 
+
     private function _generatePdf($hash)
     {
-        require_once(\yii::$app->basePath . "/../vendor/setasign/fpdf/fpdf.php");
-        require_once(\yii::$app->basePath . "/../vendor/setasign/fpdi/fpdi.php");
-        require_once(\yii::$app->basePath . "/../vendor/setasign/fpdi_pdf-parser/pdf_parser.php");
-        require_once(\yii::$app->basePath . "/../vendor/setasign/setapdf-signer/library/SetaPDF/Autoload.php");
-       
-
-        $screening_entry_model = ScreeningEntry::findOne(['hash'=>$hash]);
-        $count =1; 
-        
-       //class_exists('TCPDF', true); // trigger Composers autoloader to load the TCPDF class
-        $pdf = new \FPDI();
-        $pdf->SetAutoPageBreak(true); 
-        // add a page
-        $pdf->SetTopMargin(30);
-        $pdf->AddPage();
-        // set the source file
-        $pdf->setSourceFile(\yii::$app->basePath . "/../psych-letterhead.pdf");
-        // import page 1
-        $tplIdx = $pdf->importPage(1);
-        // use the imported page and place it at point 10,10 with a width of 100 mm
-        $pdf->useTemplate($tplIdx, 0, 0);
-        $pdf->SetFont('Courier', '',12);
-
-
-        $pdf->SetXY(10,6);
-        $pdf->Cell(150,3 ,'Confidential' ); 
-        
-
-        $pdf->SetXY(10,36);
-        $pdf->MultiCell(150,3 ,yii::$app->datecomponent->timestampToUkDate($screening_entry_model->created_at), 0, 'R'); 
-        $pdf->Ln();
-        $pdf->MultiCell(100,3 ,$screening_entry_model->screening_form_title, 0,'' ); 
-        $pdf->Ln(); 
-
-        $pdf->SetFont('Courier', '',9);
-      
-        $pdf->Cell(100,4,sprintf('Participant: %s %s (dob %s)',
-                                 
-                                 $screening_entry_model->subject->first_name,
-                                  $screening_entry_model->subject->last_name,
-                                  yii::$app->datecomponent->isoToUkDate($screening_entry_model->subject->dob)
-
-                                  ) );
-      
-      $pdf->Cell(50,4,sprintf('Identifier: %s', $screening_entry_model->subject->cubric_id),0,'','R' );
-      
-        
-     
-        $pdf->Ln();
-       $pdf->Cell(100,4,sprintf('Researcher: %s %s (project %s)',
-                                 $screening_entry_model->researcher->first_name,
-                                  $screening_entry_model->researcher->last_name,
-                                  $screening_entry_model->project->code
-                                  ) );
-       
-       $pdf->Cell(50,4,sprintf('Resource: %s',
-                                 'the scanner') , 0, '', 'R' );
-       
-       $pdf->Ln(); 
-       $pdf->Ln(); 
-
-       $pdf->SetFont('Courier', '',12);
-       $pdf->Cell(150,4,sprintf('Reponses:') );
-        $pdf->SetFont('Courier', '',9);
-        $pdf->Ln(); 
-        
-       foreach (yii::$app->screeningresponse->getResponses($hash) as $response)
-       {
-            if (strlen($response['caption']) > 0)
-            {
-                $pdf->Ln();
-                $pdf->Cell( 150, 4 ,sprintf('%s ' , $response['caption']) , 0 , 'U');
-                $count = 1; 
-
-            }
-            else
-            { 
-                $pdf->Cell( 150, 4 ,sprintf('%s. %s ', $count , $response['content']));
-                $pdf->Ln();  
-                if ($response['response'] === null) $response['response'] = 'UNKNOWN'; 
-                $pdf->Cell( 150, 4 ,sprintf('%s ', $response['response']));
-                
-                $count++;  
-            }
-            $pdf->Ln();  
-
-           
-       }
-       $pdf->Ln();  
-        $pdf->SetFont('Courier', '',12);
-            $pdf->Cell(150,4,sprintf('Signatures:') );
-        // now write some text above the imported page
-       
-
-
-        // NOW SET ScreeningEntry::progress_id = PUBLISHED so it cannot be edited again. 
-        $pdf->Output();
-
+       return \Yii::$app->PdfComponent->createScreeningPdf($hash); 
     }
     /* ******************************************************************************************************* */ 
     
     /* ******************************************************************************************************* */
-    private function _initScreeningForm($project_id, $screening_form_id, $subject_model)
+    private function _initScreeningForm($project_id,$resource_id, $screening_form_id, $subject_model)
     {
         $questions =  \yii::$app->screeningquestion->getQuestions($screening_form_id);
+        $resource_model = Resource::findOne(['id'=>$resource_id]); 
+        $screening_form_model = ScreeningForm::findOne(['id'=>$screening_form_id]);
         $screening_entry_model = new \common\models\ScreeningEntry(); 
         $screening_entry_model->screening_form_id = $screening_form_id; 
         $screening_entry_model->project_id = $project_id; 
         $screening_entry_model->subject_id = $subject_model->id; 
         $screening_entry_model->researcher_id = \Yii::$app->user->identity->id ;
-        
+        $screening_entry_model->screening_form_title = $screening_form_model->title ;
+        $screening_entry_model->resource_id = $resource_id;
+        $screening_entry_model->resource_title = $resource_model->title;
         if ($screening_entry_model->save() == false)
-            throw new \yii\web\HttpException(500, yii::t('app', 'An error occured.'));
-
+          throw new \yii\web\HttpException(500, yii::t('app', 'An error occured.'));
+           
+           
         foreach($questions as $q)
         {
            $model = new \common\models\ScreeningResponse; 

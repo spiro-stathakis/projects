@@ -118,13 +118,14 @@ class ScreeningResponseComponent extends Object
                         'se.id as screening_entry_id','se.subject_id','se.researcher_id', 
                         'se.hash as entry_hash', 'se.progress_id' , 'se.contraindication_id', 
                         'sr.id as screening_response_id', 
-                        'sr.screening_question_id' , 'sr.screening_entry_id', 'sr.response', 
+                        'sr.screening_entry_id', 'sr.response', 
+                        'sq.id as screening_question_id', 
                         'sq.caption' , 'sq.content' , 'sq.input_type_id','sq.screening_form_id',
                         'sq.tristate_option_id', 'sq.prefix_text', 'sq.suffix_text' 
                         ])
                     ->from('screening_form sf')
-                    ->join('LEFT JOIN' , 'screening_question sq' , 'sq.screening_form_id=sf.id')
-                    ->join('LEFT JOIN' , 'screening_entry se' , 'se.screening_form_id=sf.id')
+                    ->join('INNER JOIN' , 'screening_question sq' , 'sq.screening_form_id=sf.id')
+                    ->join('INNER JOIN' , 'screening_entry se' , 'se.screening_form_id=sf.id')
                     ->join('LEFT JOIN' , 'screening_response sr' , 'sr.screening_question_id=sq.id AND sr.screening_entry_id=se.id')
                     ->where('sq.status_id=:status_active AND se.hash=:entry_hash')
                     ->orderBy('sq.sort_order')

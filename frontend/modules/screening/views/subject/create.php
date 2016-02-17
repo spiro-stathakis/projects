@@ -2,20 +2,18 @@
 
 use yii\helpers\Html;
 
-
-/* @var $this yii\web\View */
-/* @var $model common\models\Subjects */
-
-$this->title = Yii::t('app', 'Create Subjects');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Subjects'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
 ?>
+<?php echo $this->render('../default/_stepBar' , ['activeElement'=>4]);?> 
+<div class="subjects-index">
 <div class="subjects-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,
+        'screening_form_id'=>$screening_form_id,
+        'resource_id'=>$resource_id,
+        'project_id'=>$project_id,
     ]) ?>
 
 </div>

@@ -13,6 +13,7 @@ use common\components\Types;
  * @property integer $subject_id
  * @property integer $researcher_id
  * @property integer $project_id
+ * @property integer $resource_id
  * @property integer $progress_id
  * @property integer $contraindication_id
  * @property string $hash
@@ -35,6 +36,7 @@ use common\components\Types;
  * @property RefProgress $progress
  * @property Project $project
  * @property User $researcher
+ * @property Resource $resource
  * @property ScreeningForm $screeningForm
  * @property Subject $subject
  * @property ScreeningResponse[] $screeningResponses
@@ -55,8 +57,8 @@ class ScreeningEntry extends \common\components\XActiveRecord
     public function rules()
     {
         return [
-            [['screening_form_id', 'subject_id', 'researcher_id', 'project_id', 'progress_id', 'contraindication_id', 'hash', 'screening_form_title', 'created_at', 'created_by'], 'required'],
-            [['screening_form_id', 'subject_id', 'researcher_id', 'project_id', 'progress_id', 'contraindication_id', 'time_in', 'time_out', 'sort_order', 'status_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['screening_form_id', 'subject_id', 'researcher_id', 'project_id', 'resource_id', 'progress_id', 'contraindication_id', 'hash', 'screening_form_title'], 'required'],
+            [['screening_form_id', 'subject_id', 'researcher_id', 'project_id', 'resource_id', 'progress_id', 'contraindication_id', 'time_in', 'time_out', 'sort_order', 'status_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['subject_signature', 'researcher_signature'], 'string'],
             [['hash'], 'string', 'max' => 255],
             [['screening_form_title', 'screening_form_description', 'resource_title'], 'string', 'max' => 4096],
@@ -65,6 +67,7 @@ class ScreeningEntry extends \common\components\XActiveRecord
             [['progress_id'], 'exist', 'skipOnError' => true, 'targetClass' => RefProgress::className(), 'targetAttribute' => ['progress_id' => 'id']],
             [['project_id'], 'exist', 'skipOnError' => true, 'targetClass' => Project::className(), 'targetAttribute' => ['project_id' => 'id']],
             [['researcher_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['researcher_id' => 'id']],
+            [['resource_id'], 'exist', 'skipOnError' => true, 'targetClass' => Resource::className(), 'targetAttribute' => ['resource_id' => 'id']],
             [['screening_form_id'], 'exist', 'skipOnError' => true, 'targetClass' => ScreeningForm::className(), 'targetAttribute' => ['screening_form_id' => 'id']],
             [['subject_id'], 'exist', 'skipOnError' => true, 'targetClass' => Subject::className(), 'targetAttribute' => ['subject_id' => 'id']],
         ];
@@ -81,6 +84,7 @@ class ScreeningEntry extends \common\components\XActiveRecord
             'subject_id' => Yii::t('app', 'Subject ID'),
             'researcher_id' => Yii::t('app', 'Researcher ID'),
             'project_id' => Yii::t('app', 'Project ID'),
+            'resource_id' => Yii::t('app', 'Resource ID'),
             'progress_id' => Yii::t('app', 'Progress ID'),
             'contraindication_id' => Yii::t('app', 'Contraindication ID'),
             'hash' => Yii::t('app', 'Hash'),
@@ -99,33 +103,31 @@ class ScreeningEntry extends \common\components\XActiveRecord
             'updated_by' => Yii::t('app', 'Updated By'),
         ];
     }
-
-
 /* ******************************************************************************************************* */  
-    /* ******************************************************************************************************* */  
-           
-        public function init()  
-          {  
-                  if ($this->isNewRecord)  
-                  {  
-                      $this->progress_id = Types::$progress['in_progress']['id'];  
-                      $this->contraindication_id = Types::$boolean['null']['id'];  
-                  }  
-              return parent::init();  
-          }  
-    /* ******************************************************************************************************* */  
-    /* ******************************************************************************************************* */  
-                    
-      public function beforeValidate()  
-      {  
-          if ($this->isNewRecord)  
-              $this->hash = Yii::$app->security->generateRandomString();  
+       /* ******************************************************************************************************* */  
+               
+           public function init()  
+             {  
+                     if ($this->isNewRecord)  
+                     {  
+                         $this->progress_id = Types::$progress['in_progress']['id'];  
+                         $this->contraindication_id = Types::$boolean['null']['id'];  
+                     }  
+                 return parent::init();  
+             }  
+       /* ******************************************************************************************************* */  
+       /* ******************************************************************************************************* */  
+                        
+         public function beforeValidate()  
+         {  
+             if ($this->isNewRecord)  
+                 $this->hash = Yii::$app->security->generateRandomString();  
+        
+             return parent::beforeValidate();  
+         }  
+       /* ******************************************************************************************************* */  
+        
     
-          return parent::beforeValidate();  
-      }  
-    /* ******************************************************************************************************* */  
-    
-
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -164,6 +166,14 @@ class ScreeningEntry extends \common\components\XActiveRecord
     public function getResearcher()
     {
         return $this->hasOne(User::className(), ['id' => 'researcher_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getResource()
+    {
+        return $this->hasOne(Resource::className(), ['id' => 'resource_id']);
     }
 
     /**
