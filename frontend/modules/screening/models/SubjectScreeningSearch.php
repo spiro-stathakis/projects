@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\components\Types; 
+
 /**
  * SubjectsSearch represents the model behind the search form about `common\models\Subjects`.
  */
@@ -18,7 +19,7 @@ class SubjectScreeningSearch extends \common\models\Subject
     {
         return [
             [['id', 'gp_opt_id', 'email_opt_id', 'sex_id', 'sort_order', 'status_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['cubric_id', 'dob_yyyy','dob_mm','dob_dd','hash','screening_form_id', 'project_id', 'first_name', 'last_name', 'dob', 'email', 'telephone', 'address'], 'safe'],
+            [['cubric_id', 'dob_yyyy','dob_mm','dob_dd','screening_form_id', 'project_id', 'first_name', 'last_name', 'dob', 'email', 'telephone', 'address','hash'], 'safe'],
         ];
     }
 
@@ -65,6 +66,7 @@ class SubjectScreeningSearch extends \common\models\Subject
      *
      * @return ActiveDataProvider
      */
+
     public function search($params)
     {
         $query = parent::find();
@@ -77,7 +79,7 @@ class SubjectScreeningSearch extends \common\models\Subject
 
         $this->load($params);
 
-       
+      
         if (! isset($params['dob']))
             if (isset($this->dob_yyyy) && isset($this->dob_mm) && isset($this->dob_dd))
                 $this->dob = sprintf('%s-%s-%s',$this->dob_yyyy,$this->dob_mm,$this->dob_dd  ); 
@@ -89,9 +91,11 @@ class SubjectScreeningSearch extends \common\models\Subject
             return $dataProvider;
         } 
 
+
+        
         if (isset($params['hash']))
         
-            $query->Where(['=','hash', $this->hash])
+            $query->Where(['=','hash', $params['hash']])
             ->andWhere(['=','status_id', Types::$status['active']['id']]); 
                  
         
@@ -102,12 +106,12 @@ class SubjectScreeningSearch extends \common\models\Subject
                 ->andWhere(['=','dob', $this->dob])
                 ->andWhere(['=','status_id', Types::$status['active']['id']]);
 
-print_r($params); 
 
         
 
-           
-        
-        return $dataProvider;
+         return $dataProvider;
     }
+
+
+
 }

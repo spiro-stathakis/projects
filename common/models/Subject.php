@@ -59,13 +59,21 @@ class Subject extends \common\components\XActiveRecord
             $this->status_id = Types::$status['active']['id']; 
             $this->old_id = 0; 
             $this->cubric_id = sprintf('%s-', date('dmy')); 
-            $this->hash = Yii::$app->security->generateRandomString();  
+              
 
         }
         return parent::init(); 
     }
 
+    /* ****************************************************************************************************************** */ 
+    
+    public function beforeValidate()
+    {
 
+            if ($this->isNewRecord)
+               $this->hash = Yii::$app->security->generateRandomString();
+           return parent::beforeValidate(); 
+    } 
     /* ****************************************************************************************************************** */ 
      public function afterSave($insert, $changedAttributes)
      {

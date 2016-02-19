@@ -40,7 +40,7 @@ use yii\helpers\Url;
 ?> 
 
 
-<?php echo Html::beginForm(Url::to(['default/update', 'hash'=>$hash]),'post'); ?> 
+<?php echo Html::beginForm(Url::to(['default/update']),'post'); ?> 
 
 <?php foreach ($screening_questions as $ques): ?> 
 		<fieldset> 

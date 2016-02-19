@@ -5,14 +5,14 @@ namespace app\modules\screening\controllers;
 use Yii;
 use common\models\Subject;
 use frontend\modules\screening\models\SubjectScreeningSearch;
-use common\components\XController;
+//use common\components\XController;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * SubjectsController implements the CRUD actions for Subjects model.
  */
-class SubjectController extends XController
+class SubjectController extends ScreeningController
 {
     public function behaviors()
     {
@@ -29,28 +29,27 @@ class SubjectController extends XController
     
 
     /* ******************************************************************************************************* */ 
-    public function actionSearch($resource_id, $screening_form_id, $project_id)
+    public function actionSearch($project_id)  // step 3 of screening process
     {
-
 
         if (! \Yii::$app->project->canUse($project_id))
              throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access page.'));
 
-        if (! \yii::$app->ScreeningForm->canUse($screening_form_id))
+        if (! \yii::$app->ScreeningForm->canUse($this->getScreeningSession('screening_form_id')))
              throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access page.'));
         
-        if (! \Yii::$app->resourcecomponent->canUse($resource_id))
+        if (! \yii::$app->resourcecomponent->canUse($this->getScreeningSession('resource_id')))
              throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access page.'));
         
+        $this->setScreeningSession('project_id', $project_id); 
+
         $searchModel = new SubjectScreeningSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('search', [
             'model' => $searchModel,
             'dataProvider' => $dataProvider,
-            'screening_form_id'=> $screening_form_id, 
-            'resource_id'=> $resource_id, 
-            'project_id'=>$project_id 
+            
         ]);
 
     }
@@ -64,20 +63,14 @@ class SubjectController extends XController
      * Lists all Subjects models.
      * @return mixed
      */
-    public function actionIndex($hash=null)
+    public function actionIndex() // step 4 of screening process
     {
 
         $searchModel = new SubjectScreeningSearch();
         // if you came from a create get the subject from a hash 
-        if ($hash !== null) 
-                $dataProvider = $searchModel->search(['hash'=>$hash]); 
-        else 
-          // you have performed a search on an existing subject - may / may not have a result  
-            $dataProvider = $searchModel->search(Yii::$app->request->post());
         
-        yii::$app->ScreeningForm->screening_form_id = Yii::$app->request->post('screening_form_id'); 
-        yii::$app->ScreeningForm->project_id = Yii::$app->request->post('project_id'); 
-        yii::$app->ScreeningForm->resource_id = Yii::$app->request->post('resource_id'); 
+        $dataProvider = $searchModel->search(['hash'=>$this->getScreeningSession('subject_hash')]); 
+        
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -106,7 +99,8 @@ class SubjectController extends XController
         $model = new Subject();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index', 'hash' => $model->hash]);
+            $this->setScreeningSession('subject_hash', $model->hash);
+            return $this->redirect(['index']);
         } else {
             
             if (Yii::$app->request->post('first_name'))
@@ -118,13 +112,7 @@ class SubjectController extends XController
             if (Yii::$app->request->post('dob'))
                  $model->dob = Yii::$app->request->post('dob');
             
-
-            return $this->render('create', [
-                'model' => $model,
-                'screening_form_id'=>Yii::$app->request->post('screening_form_id'), 
-                'resource_id'=>Yii::$app->request->post('resource_id'), 
-                'project_id'=>Yii::$app->request->post('project_id')
-                ]);
+            return $this->render('create', ['model' => $model]);
         }
     }
     

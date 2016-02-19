@@ -10,7 +10,7 @@
     <?php foreach($projectList as $project): ?> 
      
         <hr> 
-        <?=Html::a($project['collection_title'], ['subject/search', 'resource_id'=>$resource_id, 'screening_form_id'=>$screening_form_id,'project_id' => $project['project_id']], ['class' => 'btn btn-primary']) ?>
+        <?=Html::a($project['collection_title'], ['subject/search','project_id' => $project['project_id']], ['class' => 'btn btn-primary']) ?>
         <?=sprintf('<br/>%s<br/>%s ',$project['collection_description'] , $project['project_title']);?> 
         </hr> 
 

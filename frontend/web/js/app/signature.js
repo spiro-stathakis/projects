@@ -10,7 +10,7 @@ signaturePad.prototype = {
     canvas:'',
     signaturePad:'', 
     signee:'subject',
-    hash:'', 
+    screening_hash:'', 
     init:function () { 
             
             
@@ -53,7 +53,7 @@ signaturePad.prototype = {
         var data = {}; 
         data.signature = this.signaturePad.toDataURL();
         data.signee = this.signee; 
-        data.hash = this.hash;
+        data.screening_hash = this.screening_hash;
         $.ajax({
               type: "POST",
               url: $.app.mc.signatureUri,

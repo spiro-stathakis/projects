@@ -17,8 +17,8 @@
         </h4>
       </div>
      
-      <button type="button" class="button clear" data-action="clear">Clear</button>
-      <button type="button" class="button save" data-action="save">Save</button>
+      <button type="button" class="button clear btn btn-primary" data-action="clear">Clear</button>
+      <button type="button" class="button save btn btn-primary" data-action="save">Save</button>
     </div>
   </div>
 

@@ -29,10 +29,7 @@ use yii\bootstrap\ActiveForm;
     <?= Html::activeDropDownList( $model, 'dob_yyyy' ,  $model->years , []); ?> 
     <?= Html::activeDropDownList($model,  'dob_mm',  $model->months , []); ?> 
     <?= Html::activeDropDownList( $model, 'dob_dd',  $model->days , []); ?> 
-    <?= Html::hiddenInput('screening_form_id', $screening_form_id); ?> 
-    <?= Html::hiddenInput('resource_id', $resource_id); ?> 
-
-    <?= Html::hiddenInput('project_id', $project_id); ?> 
+    
 
     <?php // echo $form->field($model, 'email') ?>
 
