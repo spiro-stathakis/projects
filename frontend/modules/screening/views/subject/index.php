@@ -23,9 +23,6 @@ use yii\grid\GridView;
 <?= Html::hiddenInput('last_name', $searchModel->last_name);?>
 <?= Html::hiddenInput('dob', $searchModel->dob);?>
 
-<?= Html::hiddenInput('screening_form_id', \yii::$app->ScreeningForm->screening_form_id);?>
-<?= Html::hiddenInput('resource_id', \yii::$app->ScreeningForm->resource_id);?>
-<?= Html::hiddenInput('project_id', \yii::$app->ScreeningForm->project_id);?>
 
 
 

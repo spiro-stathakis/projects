@@ -17,7 +17,7 @@ class DefaultController extends ScreeningController
 	
 
  public $defaultAction = 'form';
-    /* ************************************************************************************************************************* */ 
+    /* ****************************************************************************************************************** */ 
    
      public function behaviors()
     {
@@ -50,6 +50,8 @@ class DefaultController extends ScreeningController
     
     public function actionForm() // step 0 of screening process 
     {
+
+      $this->resetScreeningSession(); 
       $screeningList = $this->_screeningList(); 
       if (count($screeningList) == 0 )
             throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access screening forms.'));
@@ -238,7 +240,7 @@ public function actionUpdate()   // step 6 of screening process
                                 sprintf('/tmp/researcher-%s.png', $hash)
                 ); 
                  system( $resizeCommand); 
-                $this->_generatePdf($hash); 
+                $this->_generatePdf(); 
         }
       
        
@@ -250,10 +252,10 @@ public function actionUpdate()   // step 6 of screening process
 
     /* ************************************************************************************************************************* */
 
-    public function actionFinish($hash)
+    public function actionFinish($sig)
     {
 
-      $screening_entry_model = ScreeningEntry::findOne(['hash'=>$hash]); 
+      $screening_entry_model = ScreeningEntry::findOne(['hash'=>$sig]); 
       if ( $screening_entry_model === null) 
           throw new \yii\web\HttpException(404, yii::t('app', 'Page cannot be found.'));
         
@@ -263,11 +265,11 @@ public function actionUpdate()   // step 6 of screening process
 
     }
     /* ************************************************************************************************************************* */ 
-    public function actionConfirm($hash)
+    public function actionConfirm()
     {
-
-        if ($this->_generatePdf($hash))
-          $this->redirect(['finish', 'hash'=>$hash]); 
+        $screening_hash =  $this->getScreeningSession('screening_hash'); 
+        if ($this->_generatePdf($screening_hash))
+          $this->redirect(['finish', 'sig'=>$screening_hash]); 
 
     }
     /* ********************************************************************************************************************* */ 

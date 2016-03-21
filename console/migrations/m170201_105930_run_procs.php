@@ -9,10 +9,10 @@ class m170201_105930_run_procs extends Migration
             
             $this->execute('CALL sp_import_projects();');
             $this->execute('CALL sp_import_subjects();');
-            $this->execute('CALL sp_import_calendars();');
+            # $this->execute('CALL sp_import_calendars();');
             $this->execute('CALL sp_inserts()'); 
-            $this->execute('CALL sp_import_events()'); 
-            $this->execute('CALL sp_import_event_entry()'); 
+            # $this->execute('CALL sp_import_events()'); 
+            # $this->execute('CALL sp_import_event_entry()'); 
             
     }
 

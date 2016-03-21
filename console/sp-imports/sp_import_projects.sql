@@ -110,12 +110,14 @@ BEGIN
 
 					INSERT INTO projects.collection  
 					(
-						title,description,collection_type_id,created_by,created_at
+						title,description,alias,collection_type_id,created_by,created_at
 					) 
 					VALUES 
 					(
 						concat( 'Project number ', l_study_id),
 						concat(l_pi_name , '. ', l_csa_name), 
+						concat( 'project- ', l_study_id),
+						
 						l_collection_type_project, 
 						2, 
 						UNIX_TIMESTAMP() 

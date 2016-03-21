@@ -4,8 +4,7 @@
 /* @var $content string */
 
 use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
+
 use yii\widgets\Breadcrumbs;
 use frontend\packages\AppAsset;
 use frontend\packages\AppJsAsset;
@@ -30,36 +29,10 @@ $this->registerJs(" $.app.mc = ". Yii::$app->jsconfig->data. ";", \yii\web\View:
 <?php $this->beginBody() ?>
 
 <div class="wrap">
-    <?php
-    NavBar::begin([
-        'brandLabel' => 'CUBRIC',
+    <?=Yii::$app->controller->renderPartial('//layouts/_navBar'); ?>  
 
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
-        ],
-    ]);
-    $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
-    ];
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
-    } else {
-        $menuItems[] = [
-            'label' => 'Logout (' . Yii::$app->user->identity->user_name . ')',
-            'url' => ['/site/logout'],
-            'linkOptions' => ['data-method' => 'post']
-        ];
-    }
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => $menuItems,
-    ]);
-    NavBar::end();
-    ?>
+   
+   
 
    <div class="container">
                

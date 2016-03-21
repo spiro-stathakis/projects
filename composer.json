@@ -26,6 +26,7 @@
 	   "edvlerblog/yii2-adldap-module": "v1.0.1",
         "kartik-v/yii2-detail-view": "@dev",
         "kartik-v/yii2-widget-switchinput": "*",
+        "kartik-v/yii2-grid": "@dev",
         "yiisoft/yii2-jui": "^2.0",
         "fxp/composer-asset-plugin": "~1.1",
         "setasign/setapdf-signer": "2.3.2.768", 

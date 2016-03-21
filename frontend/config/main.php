@@ -22,6 +22,12 @@ return [
         'screening' => [
             'class' => 'app\modules\screening\Module',
         ],
+        'collections' => [
+            'class' => 'app\modules\collections\Module',
+        ],
+        'gridview' =>  [
+            'class' => '\kartik\grid\Module'
+        ],
 
     ], 
     'components' => [

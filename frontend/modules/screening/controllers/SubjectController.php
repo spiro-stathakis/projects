@@ -32,6 +32,10 @@ class SubjectController extends ScreeningController
     public function actionSearch($project_id)  // step 3 of screening process
     {
 
+        if ($this->getScreeningSession('subject_hash') !== null)
+                $this->redirect('index'); 
+
+
         if (! \Yii::$app->project->canUse($project_id))
              throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access page.'));
 
@@ -44,6 +48,8 @@ class SubjectController extends ScreeningController
         $this->setScreeningSession('project_id', $project_id); 
 
         $searchModel = new SubjectScreeningSearch();
+        
+       
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('search', [
@@ -68,8 +74,11 @@ class SubjectController extends ScreeningController
 
         $searchModel = new SubjectScreeningSearch();
         // if you came from a create get the subject from a hash 
-        
-        $dataProvider = $searchModel->search(['hash'=>$this->getScreeningSession('subject_hash')]); 
+    
+        if ($this->getScreeningSession('subject_hash') === null)
+            $dataProvider = $searchModel->search(Yii::$app->request->post());
+        else
+            $dataProvider = $searchModel->search(['hash'=>$this->getScreeningSession('subject_hash')]); 
         
         return $this->render('index', [
             'searchModel' => $searchModel,

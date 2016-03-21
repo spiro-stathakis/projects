@@ -13,6 +13,15 @@ abstract class ScreeningController extends \common\components\XController
 									];
 	
 	/* ************************************************************************************************************************* */
+	/* ************************************************************************************************************************* */
+	public function resetScreeningSession()
+	{
+			foreach($this->_screeningSession as $k=>$v)
+				$this->setScreeningSession($k,null); 
+
+
+	}
+	/* ************************************************************************************************************************* */
 	public function init()
 	{
 		if (yii::$app->session->get('screeningSession') === null)
@@ -39,9 +48,7 @@ abstract class ScreeningController extends \common\components\XController
 				throw new \yii\web\HttpException(500, 'Invalid key in screening session structure.');
 			
 			$this->_screeningSession = Yii::$app->session->get('screeningSession');
-			if ($this->_screeningSession[$name] === null )
-				throw new \yii\web\HttpException(404, 'Cannot find page. Invalid key in screening session structure.');
-
+			
 			return $this->_screeningSession[$name]; 
 
 	}
