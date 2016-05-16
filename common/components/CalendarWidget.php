@@ -18,7 +18,7 @@ class CalendarWidget extends Widget{
 		parent::init();
 		
 
-        foreach(\yii::$app->calendarcomponent->myCalendars as $cal)
+        foreach(\yii::$app->CalendarComponent->myCalendars as $cal)
             $this->_css .= sprintf('.calendar-%s, *  fc-time-grid-event fc-v-event fc-event fc-start fc-end , 
                 .calendar-%s a {background-color:#%s;border-color:#%s;opacity: 1;} 
                 .calendar-%s  .fc-time{opacity:2;background-color:#%s}' , 

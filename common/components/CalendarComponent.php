@@ -114,7 +114,7 @@ class CalendarComponent extends Object
                     'ee.id as event_entry_id' , 'ee.title as event_entry_title', 
                     'ee.description as event_entry_description', 'ee.booking_status_id', 
                     'ee.start_timestamp' , 'ee.end_timestamp' , 'ee.all_day_option_id' , 
-                    'p.code as hex_code', 
+                    'p.hex_code', 
                     ])
                 ->from('event e')
                 ->join('LEFT JOIN','calendar c' , 'e.calendar_id=c.id')
@@ -138,7 +138,8 @@ class CalendarComponent extends Object
         $select =       ['cal.id as calendar_id', 'cal.collection_id', 
                         'cal.title as calendar_title',
                         'col.title  as collection_title',
-                        'p.code as hex_code']; 
+                        'uc.member_type_id',
+                        'p.hex_code']; 
 
             $query1   = (new \yii\db\Query())
                     ->select($select)
@@ -149,42 +150,24 @@ class CalendarComponent extends Object
                     ->join('LEFT JOIN','calendar_subscription cs', 'cs.calendar_id=cal.id')
                     ->where('(uc.status_id=:status_active) 
                             AND 
+                            (cal.status_id=:calendar_active)
+                            AND 
                             (uc.expiry = 0 OR uc.expiry > UNIX_TIMESTAMP()) 
                             AND 
                             (uc.member_type_id=:mem_type_manager OR uc.member_type_id=:mem_type_member)
                             AND  
-                            
                             uc.user_id=:user_id')
                     ->addParams([':status_active'=>Types::$status['active']['id'], 
-                                 ':mem_type_manager'=>Types::$member_type['manager']['id'], 
+                                ':calendar_active'=>Types::$status['active']['id'], 
+                                ':mem_type_manager'=>Types::$member_type['manager']['id'], 
                                 ':mem_type_member'=>Types::$member_type['member']['id'], 
                                 ':user_id'=>\Yii::$app->user->identity->id 
-                        ]);
+                        ])->all();
 
-            $query2   = (new \yii\db\Query())
-                    ->select($select)
-                    ->from('calendar cal')
-                    ->join('INNER JOIN','collection col' , 'cal.collection_id=col.id')
-                    ->join('INNER JOIN','user_collection uc', 'uc.collection_id=col.id')
-                    ->join('INNER JOIN','palette p', 'cal.palette_id=p.id')
-                    ->join('LEFT JOIN','calendar_subscription cs', 'cs.calendar_id=cal.id')
-                    ->where('(uc.status_id=:status_active) 
-                            AND 
-                            (uc.expiry = 0 OR uc.expiry > UNIX_TIMESTAMP()) 
-                            AND 
-                            (uc.member_type_id=:mem_type_manager OR uc.member_type_id=:mem_type_member)
-                            AND 
-                            uc.user_id=:user_id')
-                    ->addParams([':status_active'=>Types::$status['active']['id'], 
-                                 ':mem_type_manager'=>Types::$member_type['manager']['id'], 
-                                ':mem_type_member'=>Types::$member_type['member']['id'], 
-                                ':user_id'=>\Yii::$app->user->identity->id 
-                        ]);
-                $unionQuery = (new \yii\db\Query())
-                    ->from(['union_query' => $query1->union($query2)])
-                    ->all();
+            
+              
 
-             return  $unionQuery; 
+             return  $query1; 
          
 
     }

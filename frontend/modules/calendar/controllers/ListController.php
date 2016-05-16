@@ -21,7 +21,7 @@ class ListController extends XController
 	$start_timestamp = yii::$app->datecomponent->isoDateToTimestamp($start); 
 	$end_timestamp = yii::$app->datecomponent->isoDateToTimestamp($end);
 
-	$list = yii::$app->calendarcomponent->getEvents($start_timestamp,$end_timestamp); 
+	$list = yii::$app->CalendarComponent->getEvents($start_timestamp,$end_timestamp); 
 
 
 	foreach ( $list as $e)

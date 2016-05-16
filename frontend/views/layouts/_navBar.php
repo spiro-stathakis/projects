@@ -12,12 +12,12 @@ use yii\bootstrap\NavBar;
     
     $menuItems[]=  ['label' => 'Home', 'url' => ['/']];
     $menuItems[]=  ['label' => 'Collections' ,'url'=> ['/collections']];
-    $menuItems[]=  ['label' => 'About', 'url' => ['/site/about']];
-    $menuItems[]=  ['label' => 'Contact', 'url' => ['/site/contact']];
+   
 
-    $menuItems[]=  ['label' => 'Roles', 'items'=>[
-                        ['label' => 'Contact', 'url' => ['/site/contact']],
-                        ['label' => 'Contact', 'url' => ['/site/contact']],
+    $menuItems[]=  ['label' => 'Booking system',  'items'=>[
+                        ['label' => 'View calendars', 'url' => ['/calendar']],
+                        ['label' => 'Edit a calendar', 'url' => ['/calendar/list'] , 'visible'=>Yii::$app->user->can('editCalendar')],
+                        ['label' => 'Create a calendar', 'url' => ['/calendar/create'] , 'visible'=>Yii::$app->user->can('createCalendar')],
 
     ]];
 
