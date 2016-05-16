@@ -3,7 +3,7 @@
 use common\components\XMigration;
 
 
-class m160113_121911_collection extends XMigration
+class m151022_021911_collection extends XMigration
 {
 
 

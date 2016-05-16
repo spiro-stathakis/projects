@@ -30,6 +30,7 @@ class m150915_114548_user extends XMigration
             'password_hash' => $this->string()->notNull(),
             'password_reset_token' => $this->string()->unique(),
             'old_id' => $this->integer()->notNull()->defaultValue(0),
+            'expiry_date' => $this->integer()->notNull()->defaultValue(0),
             'reg_date' => $this->integer()->notNull(),
             'status_id' => $this->integer()->notNull()->defaultValue(2),
             'created_at' => $this->integer()->notNull(),

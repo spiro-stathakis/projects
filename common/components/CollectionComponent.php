@@ -86,7 +86,7 @@ class CollectionComponent extends Object
     public function ajaxCollectionMembers($collection_id)
     {
         
-
+        $out = array(); 
         $data = $this->_getCollectionUsers($collection_id); 
         if ($data)
             foreach ( $data as $c)

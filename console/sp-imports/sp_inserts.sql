@@ -14,15 +14,7 @@ BEGIN
 	DECLARE l_member_type_member INT UNSIGNED DEFAULT 3; 
 	
 	INSERT INTO user_collection (collection_id, user_id, member_type_id, created_at,created_by)
-	(SELECT l_collection_cubric_int, u.id , l_member_type_member , UNIX_TIMESTAMP() , 1  FROM user u ); 
-
-		
-	INSERT INTO collection_collection (parent_collection_id, child_collection_id, member_type_id , created_at, created_by)
-	VALUES (l_collection_park_place , l_collection_cubric_int , l_member_type_member , UNIX_TIMESTAMP() , 1); 
-	
-
-
-
+	(SELECT l_collection_park_place, u.id , l_member_type_member , UNIX_TIMESTAMP() , 1  FROM user u ); 
 
 	
 END ;;

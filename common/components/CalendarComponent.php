@@ -135,7 +135,7 @@ class CalendarComponent extends Object
     private function _getMyCalendars()
     {
 
-        $select =       ['cal.id as calendar_id', 'cal.id as collection_id', 
+        $select =       ['cal.id as calendar_id', 'cal.collection_id', 
                         'cal.title as calendar_title',
                         'col.title  as collection_title',
                         'p.code as hex_code']; 
@@ -144,18 +144,16 @@ class CalendarComponent extends Object
                     ->select($select)
                     ->from('calendar cal')
                     ->join('INNER JOIN','collection col' , 'cal.collection_id=col.id')
-                    ->join('INNER JOIN','collection_collection cc', 'cc.parent_collection_id=col.id')
-                    ->join('INNER JOIN','user_collection uc', 'cc.child_collection_id=uc.collection_id')
+                    ->join('INNER JOIN','user_collection uc', 'uc.collection_id=col.id')
                     ->join('INNER JOIN','palette p', 'cal.palette_id=p.id')
                     ->join('LEFT JOIN','calendar_subscription cs', 'cs.calendar_id=cal.id')
-                    ->where('(uc.status_id=:status_active AND cc.status_id=:status_active) 
+                    ->where('(uc.status_id=:status_active) 
                             AND 
                             (uc.expiry = 0 OR uc.expiry > UNIX_TIMESTAMP()) 
                             AND 
                             (uc.member_type_id=:mem_type_manager OR uc.member_type_id=:mem_type_member)
                             AND  
-                            (cc.member_type_id=:mem_type_manager OR cc.member_type_id=:mem_type_member)
-                            AND 
+                            
                             uc.user_id=:user_id')
                     ->addParams([':status_active'=>Types::$status['active']['id'], 
                                  ':mem_type_manager'=>Types::$member_type['manager']['id'], 
