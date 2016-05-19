@@ -25,14 +25,14 @@ class m160204_081115_calendar extends XMigration
                 [
                     'id'=>$this->primaryKey(),
                     'collection_id'=> $this->integer()->notNull(),
-                    'title'=>$this->string(2048)->notNull(),
+                    'title'=>$this->string(255)->notNull()->unique(),
                     'description'=>$this->string(2048)->notNull(),
                     'location'=>$this->string(2048)->notNull(),
                     'start_hour'=>$this->string(4)->notNull()->defaultValue('09'),
                     'start_min'=>$this->string(4)->notNull()->defaultValue('09'),
                     'end_hour'=>$this->string(4)->notNull()->defaultValue('09'),
                     'end_min'=>$this->string(4)->notNull()->defaultValue('09'),
-                    'palette_id'=> $this->integer()->notNull(),
+                    'hex_code'=>$this->string(16)->notNull()->defaultValue('#c0c0c0'),
                     'project_option_id'=> $this->integer()->notNull()->defaultValue(3),
                     'allow_overlap_option_id'=> $this->integer()->notNull()->defaultValue(3),
                     'read_only_option_id'=> $this->integer()->notNull()->defaultValue(3),
@@ -50,7 +50,6 @@ class m160204_081115_calendar extends XMigration
 
         $this->addForeignKey('fk_calendar_status_id' , $this->tableName,  'status_id' , 'ref_status' , 'id' , 'NO ACTION' , 'NO ACTION'); 
         $this->addForeignKey('fk_calendar_collection_id' , $this->tableName,  'collection_id' , 'collection' , 'id' , 'NO ACTION' , 'NO ACTION'); 
-        $this->addForeignKey('fk_calendar_palette_id' , $this->tableName,  'palette_id' , 'palette' , 'id' , 'NO ACTION' , 'NO ACTION'); 
         $this->addForeignKey('fk_calendar_project_option_id' , $this->tableName,  'project_option_id' , 'ref_boolean' , 'id' , 'NO ACTION' , 'NO ACTION'); 
         $this->addForeignKey('fk_calendar_allow_overlap_option_id' , $this->tableName,  'allow_overlap_option_id' , 'ref_boolean' , 'id' , 'NO ACTION' , 'NO ACTION'); 
         $this->addForeignKey('fk_calendar_read_only_option_id' , $this->tableName,  'read_only_option_id' , 'ref_boolean' , 'id' , 'NO ACTION' , 'NO ACTION'); 
@@ -66,7 +65,6 @@ class m160204_081115_calendar extends XMigration
         $this->init();
         $this->dropForeignKey('fk_calendar_status_id',$this->tableName); 
         $this->dropForeignKey('fk_calendar_collection_id',$this->tableName); 
-        $this->dropForeignKey('fk_calendar_palette_id',$this->tableName); 
         $this->dropForeignKey('fk_calendar_project_option_id',$this->tableName); 
         $this->dropForeignKey('fk_calendar_allow_overlap_option_id',$this->tableName); 
         $this->dropForeignKey('fk_calendar_read_only_option_id',$this->tableName); 

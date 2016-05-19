@@ -16,8 +16,8 @@ use yii\bootstrap\NavBar;
 
     $menuItems[]=  ['label' => 'Booking system',  'items'=>[
                         ['label' => 'View calendars', 'url' => ['/calendar']],
-                        ['label' => 'Edit a calendar', 'url' => ['/calendar/list'] , 'visible'=>Yii::$app->user->can('editCalendar')],
-                        ['label' => 'Create a calendar', 'url' => ['/calendar/create'] , 'visible'=>Yii::$app->user->can('createCalendar')],
+                        ['label' => 'Edit a calendar', 'url' => ['/calendar/manage/list'] , 'visible'=>Yii::$app->user->can('editCalendar')],
+                        ['label' => 'Create a calendar', 'url' => ['/calendar/manage/create'] , 'visible'=>Yii::$app->user->can('createCalendar')],
 
     ]];
 

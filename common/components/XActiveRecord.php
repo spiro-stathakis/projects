@@ -15,7 +15,15 @@ use yii\behaviors\BlameableBehavior;
  */
 abstract class XActiveRecord extends \yii\db\ActiveRecord
 {
-    
+        protected $collectionComponent;
+
+        public function init()
+        {
+             $this->collectionComponent = \yii::$app->CollectionComponent;
+            return parent::init(); 
+
+        }
+/* ************************************************************************************************************ */ 
     	public function behaviors()
     	{
     		return [

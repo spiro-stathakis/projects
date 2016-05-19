@@ -1,4 +1,5 @@
 <?php
+
 $params = array_merge(
     require(__DIR__ . '/../../common/config/params.php'),
     require(__DIR__ . '/../../common/config/params-local.php'),
@@ -18,7 +19,11 @@ return [
         ],
         'calendar' => [
             'class' => 'app\modules\calendar\Module',
+         
         ],
+        'datecontrol' =>  [
+            'class' => '\kartik\datecontrol\Module'
+        ], 
         'screening' => [
             'class' => 'app\modules\screening\Module',
         ],
@@ -51,9 +56,11 @@ return [
         ],
         
         'urlManager' => [
+            'class' => 'yii\web\UrlManager',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                  
             ],
         ],
         

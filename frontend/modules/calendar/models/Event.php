@@ -1,7 +1,8 @@
 <?php
 
-namespace common\models;
-
+namespace frontend\modules\calendar\models;
+use common\models\RefStatus; 
+use frontend\modules\calendar\models\Calendar; 
 use Yii;
 
 /**
@@ -12,7 +13,6 @@ use Yii;
  * @property string $description
  * @property integer $calendar_id
  * @property integer $project_id
- * @property integer $all_day_option_id
  * @property integer $sort_order
  * @property integer $status_id
  * @property integer $old_id
@@ -22,11 +22,10 @@ use Yii;
  * @property integer $updated_by
  *
  * @property RefStatus $status
- * @property RefBoolean $allDayOption
  * @property Calendar $calendar
  * @property EventEntry[] $eventEntries
  */
-class Event extends \common\components\XActiveRecord
+class Event extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
@@ -42,11 +41,10 @@ class Event extends \common\components\XActiveRecord
     public function rules()
     {
         return [
-            [['title', 'description', 'calendar_id', 'project_id', 'all_day_option_id', 'created_at', 'created_by'], 'required'],
-            [['calendar_id', 'project_id', 'all_day_option_id', 'sort_order', 'status_id', 'old_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['title', 'description', 'calendar_id', 'project_id', 'created_at', 'created_by'], 'required'],
+            [['calendar_id', 'project_id', 'sort_order', 'status_id', 'old_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['title', 'description'], 'string', 'max' => 2048],
             [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => RefStatus::className(), 'targetAttribute' => ['status_id' => 'id']],
-            [['all_day_option_id'], 'exist', 'skipOnError' => true, 'targetClass' => RefBoolean::className(), 'targetAttribute' => ['all_day_option_id' => 'id']],
             [['calendar_id'], 'exist', 'skipOnError' => true, 'targetClass' => Calendar::className(), 'targetAttribute' => ['calendar_id' => 'id']],
         ];
     }
@@ -62,7 +60,6 @@ class Event extends \common\components\XActiveRecord
             'description' => Yii::t('app', 'Description'),
             'calendar_id' => Yii::t('app', 'Calendar ID'),
             'project_id' => Yii::t('app', 'Project ID'),
-            'all_day_option_id' => Yii::t('app', 'All Day Option ID'),
             'sort_order' => Yii::t('app', 'Sort Order'),
             'status_id' => Yii::t('app', 'Status ID'),
             'old_id' => Yii::t('app', 'Old ID'),
@@ -79,14 +76,6 @@ class Event extends \common\components\XActiveRecord
     public function getStatus()
     {
         return $this->hasOne(RefStatus::className(), ['id' => 'status_id']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getAllDayOption()
-    {
-        return $this->hasOne(RefBoolean::className(), ['id' => 'all_day_option_id']);
     }
 
     /**

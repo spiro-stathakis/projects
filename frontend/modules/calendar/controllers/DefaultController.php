@@ -1,12 +1,25 @@
 <?php
 
 namespace app\modules\calendar\controllers;
-
+use yii; 
+use yii\filters\AccessControl;
 use common\components\XController;
-use app\modules\calendar\models\Event; 
-use yii\filters\AccessControl; 
+use common\components\Types;
+use frontend\modules\calendar\models\Booking; 
+
 class DefaultController extends XController
 {
+
+/* ********************************************************************** */ 
+
+    public function init()
+    {
+        if (! Yii::$app->user->isGuest)
+            yii::$app->jsconfig->addData('myCalendars', yii::$app->CalendarComponent->myCalendars);
+        return parent::init(); 
+    }
+
+/* ********************************************************************** */ 
 
 	 public function behaviors()
     {
@@ -14,32 +27,28 @@ class DefaultController extends XController
                 'access' => [
                         'class' => AccessControl::className(),
                         'rules' => [
-                                    ['actions' => ['create'], 'allow' => true, 'roles' => ['createCalendar'],], 
-                                    ['actions' => ['edit'], 'allow' => true, 'roles' => ['editCalendar'],], 
-                                   
+                                    [
+                                        'actions' => ['index'], 
+                                        'allow' => true,
+                                        'roles' => ['@'],
+                                     ], 
                                 ],
                         ],
         ];
         
     }
 
+/* ********************************************************************** */ 
 
     public function actionIndex()
     {
-	        
-		
+	 $bookingModel  = new Booking;    
+	 return $this->render('index', ['bookingModel'=>$bookingModel]);
 
-	  //echo $this->layout; 
-	 //echo $this->action->id; 
-	 return $this->render('index');
+
     }
 
-/* ********************************************************************** */ 
-	public function actionCreate()
-	{
-
-		echo "Create a calendar"; 
-	}
+	
 	
 /* ********************************************************************** */ 
 

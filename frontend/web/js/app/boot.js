@@ -19,6 +19,13 @@ $.app = {
             if (!$.app.page.delayed) // Flag, in case you don't need to load file on start
                 $.app.page.init.call($.app.page);
         }
+        if ($.app.cal !== undefined)
+        {
+             if (!$.app.cal.delayed) 
+                $.app.cal.init.call($.app.cal);
+        }
+
+
     },
     /* ********************************************************** */
 

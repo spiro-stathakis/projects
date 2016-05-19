@@ -25,7 +25,7 @@ class m160204_083022_calendar_subscription extends XMigration
                     'id'=>$this->primaryKey(),
                     'calendar_id'=> $this->integer()->notNull(),
                     'user_id'=> $this->integer()->notNull(),
-                    'display_option_id'=>$this->string(2048)->notNull(),
+                    'display_option_id'=>$this->integer()->notNull(),
                     'sort_order'=> $this->integer()->notNull()->defaultValue(100),
                     'status_id'=>$this->integer()->notNull()->defaultValue(2),
                     'created_at' => $this->integer()->notNull(),
@@ -39,7 +39,7 @@ class m160204_083022_calendar_subscription extends XMigration
         $this->addForeignKey('fk_calendar_subscription_status_id' , $this->tableName,  'status_id' , 'ref_status' , 'id' , 'NO ACTION' , 'NO ACTION'); 
         $this->addForeignKey('fk_calendar_subscription_calendar_id' , $this->tableName,  'calendar_id' , 'calendar' , 'id' , 'NO ACTION' , 'NO ACTION'); 
         $this->addForeignKey('fk_calendar_subscription_user_id' , $this->tableName,  'user_id' , 'user' , 'id' , 'NO ACTION' , 'NO ACTION'); 
-                     
+         $this->addForeignKey('fk_calendar_display_option_id' , $this->tableName,  'display_option_id' , 'ref_boolean' , 'id' , 'NO ACTION' , 'NO ACTION'); 
 
     }
 
@@ -51,7 +51,7 @@ class m160204_083022_calendar_subscription extends XMigration
         $this->dropForeignKey('fk_calendar_subscription_status_id',$this->tableName); 
         $this->dropForeignKey('fk_calendar_subscription_calendar_id',$this->tableName); 
         $this->dropForeignKey('fk_calendar_subscription_user_id',$this->tableName); 
-        
+         $this->dropForeignKey('fk_calendar_display_option_id',$this->tableName); 
         $this->dropTable($this->tableName); 
         return true;
     }

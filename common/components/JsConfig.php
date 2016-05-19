@@ -20,7 +20,7 @@ class JsConfig extends Object
     public function init()
     {
         $this->_data = []; 
-        parent::init(); 
+        return parent::init(); 
     }
     /* ******************************************************************************************************* */ 
     public function addData($name,$value)

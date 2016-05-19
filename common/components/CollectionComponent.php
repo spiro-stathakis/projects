@@ -140,6 +140,20 @@ class CollectionComponent extends Object
 
 	}
 	/* ******************************************************************************************************* */ 
+    public function getCalendarCollections()
+    {
+        $return = [];
+        foreach($this->_collectionMembership as $collection)
+            if (
+                $collection['member_type_id'] == Types::$member_type['manager']['id'] || 
+                $collection['collection_type_id'] == Types::$collection_type['group']['id']
+             )
+                $return[] = $collection; 
+        
+        return $return; 
+   
+    }
+    /* ******************************************************************************************************* */ 
     public function  getAllManagement()
 	{
         $return = [];

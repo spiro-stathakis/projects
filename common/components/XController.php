@@ -17,7 +17,7 @@ abstract class XController extends \yii\web\Controller
     /**
      * @inheritdoc
      */
-
+    protected $collectionComponent;
     /* ******************************************************************************************************* */ 
     public function init()
     {
@@ -25,6 +25,7 @@ abstract class XController extends \yii\web\Controller
 
         \yii::$app->jsconfig->addData('g', \yii::$app->user->isGuest); 
         \yii::$app->language = 'en-gb'; 
+        $this->collectionComponent = \yii::$app->CollectionComponent;
         return parent::init(); 
     }
     /* ******************************************************************************************************* */ 

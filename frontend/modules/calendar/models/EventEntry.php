@@ -1,7 +1,10 @@
 <?php
 
-namespace common\models;
-
+namespace frontend\modules\calendar\models;
+use common\models\RefStatus; 
+use common\models\RefBoolean; 
+use common\models\RefBookingStatus; 
+use frontend\modules\calendar\models\Event; 
 use Yii;
 
 /**
@@ -30,7 +33,7 @@ use Yii;
  * @property RefBookingStatus $bookingStatus
  * @property Event $event
  */
-class EventEntry extends \common\components\XActiveRecord
+class EventEntry extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc

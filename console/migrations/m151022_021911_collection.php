@@ -62,7 +62,7 @@ class m151022_021911_collection extends XMigration
          $this->insert($this->tableName,['title'=>'Park place',
                                     'description'=>'A collection of resources that belong to the Park place site',
                                     'alias'=>'park-place', 
-                                    'collection_type_id'=>2,
+                                    'collection_type_id'=>4,
                                     'membership_duration'=>365,
                                     'member_count'=>0,
                                     'manager_count'=>0, 

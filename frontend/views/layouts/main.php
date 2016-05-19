@@ -21,7 +21,7 @@ $this->registerJs(" $.app.mc = ". Yii::$app->jsconfig->data. ";", \yii\web\View:
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?= Html::csrfMetaTags() ?>
+    <?= Html::csrfMetaTags(); ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
@@ -34,7 +34,7 @@ $this->registerJs(" $.app.mc = ". Yii::$app->jsconfig->data. ";", \yii\web\View:
    
    
 
-   <div class="container">
+   <div class="container-fluid" style="padding-top:43px">
                
                 <?= Alert::widget() ?>
                 <?= $content ?>
@@ -42,7 +42,7 @@ $this->registerJs(" $.app.mc = ". Yii::$app->jsconfig->data. ";", \yii\web\View:
 </div>
    
 <footer class="footer">
-    <div class="container">
+    <div class="container-fluid">
         <p class="pull-left">&copy; CUBRIC <?= date('Y') ?></p>
 
         <p class="pull-right">Cardiff University</p>
