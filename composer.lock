@@ -219,16 +219,16 @@
         },
         {
             "name": "bower-asset/fullcalendar",
-            "version": "v2.7.1",
+            "version": "v2.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fullcalendar/fullcalendar.git",
-                "reference": "237bd4da83f38ba678fd5272c44b7a2ad13ccdc5"
+                "reference": "0725d49df0243bd7c97519a42f9a5002bd4c3fc9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fullcalendar/fullcalendar/zipball/237bd4da83f38ba678fd5272c44b7a2ad13ccdc5",
-                "reference": "237bd4da83f38ba678fd5272c44b7a2ad13ccdc5",
+                "url": "https://api.github.com/repos/fullcalendar/fullcalendar/zipball/0725d49df0243bd7c97519a42f9a5002bd4c3fc9",
+                "reference": "0725d49df0243bd7c97519a42f9a5002bd4c3fc9",
                 "shasum": ""
             },
             "require": {
@@ -3966,12 +3966,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fzaninotto/Faker.git",
-                "reference": "191fc2b648e1b00ad4725fcae0ab0729537725c8"
+                "reference": "df56110269ffaaea78295290c74d0bd1b3ac176f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/191fc2b648e1b00ad4725fcae0ab0729537725c8",
-                "reference": "191fc2b648e1b00ad4725fcae0ab0729537725c8",
+                "url": "https://api.github.com/repos/fzaninotto/Faker/zipball/df56110269ffaaea78295290c74d0bd1b3ac176f",
+                "reference": "df56110269ffaaea78295290c74d0bd1b3ac176f",
                 "shasum": ""
             },
             "require": {
@@ -4008,7 +4008,7 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2016-05-10 09:22:13"
+            "time": "2016-05-19 20:16:37"
         },
         {
             "name": "yiisoft/yii2-codeception",

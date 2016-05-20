@@ -1,27 +1,20 @@
 <?php
-
-/* @var $this \yii\web\View */
-/* @var $content string */
-
-use yii\helpers\Html;
-
+use yii\bootstrap\Html;
 use yii\widgets\Breadcrumbs;
 use frontend\packages\AppAsset;
 use frontend\packages\AppJsAsset;
 use common\widgets\Alert;
-
 AppAsset::register($this);
 AppJsAsset::register($this);
-$this->registerJs(" $.app.mc = ". Yii::$app->jsconfig->data. ";", \yii\web\View::POS_END, 'my-options');
-
-?>
-<?php $this->beginPage() ?>
+$this->registerJs(" $.app.mc = ". Yii::$app->jsconfig->data. ";", \yii\web\View::POS_END, 'my-options');?> 
+<?php $this->beginPage(); ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <head>
-    <meta charset="<?= Yii::$app->charset ?>">
+    <?=Html::csrfMetaTags();?>
+    <meta charset="<?=Yii::$app->charset?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?= Html::csrfMetaTags(); ?>
+   
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>

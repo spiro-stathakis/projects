@@ -21,6 +21,12 @@ class SiteController extends Controller
     /**
      * @inheritdoc
      */
+    public function init()
+    {
+
+        $this->enableCsrfValidation= false; 
+        return parent::init();
+    }
     public function behaviors()
     {
         return [
@@ -40,12 +46,14 @@ class SiteController extends Controller
                     ],
                 ],
             ],
+            
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'logout' => ['post'],
                 ],
             ],
+             
         ];
     }
 
@@ -82,7 +90,7 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        if (!\Yii::$app->user->isGuest) {
+        if (!\yii::$app->user->isGuest) {
             return $this->goHome();
         }
 

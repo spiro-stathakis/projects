@@ -60,6 +60,7 @@ AppPackageCalendar.prototype = {
     createEvent: function ()
     {
            var values = {};
+           values['_csrf'] =  yii.getCsrfToken();
             $.each($('#frmBookingForm').serializeArray(), function(i, field) {
                 values[field.name] = field.value;
             });

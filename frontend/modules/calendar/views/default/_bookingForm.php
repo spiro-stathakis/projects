@@ -95,5 +95,6 @@ use frontend\packages\DatePickerAsset;
 
 
 ?>
+<input type="hidden" name="_csrf" value="<?=Yii::$app->request->getCsrfToken()?>" />
 <?php \kartik\form\ActiveForm::end(); ?>
 	

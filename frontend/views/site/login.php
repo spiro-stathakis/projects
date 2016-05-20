@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 </div>
                             </div>
                             <div class="panel-body">
-                                <form accept-charset="UTF-8" role="form" class="form-signin">
+                                
                                     <fieldset>
                                         <label class="panel-login">
                                             <div class="login_result"></div>
@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
                                     </fieldset>
-                                </form>
+                                
                             </div>
                         </div>
                     </div>
