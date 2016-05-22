@@ -37,7 +37,7 @@ class m150916_103336_ref_wefo extends XMigration
                         'created_by' => $this->integer()->notNull(),
                         'updated_by' => $this->integer(),
                     ], 
-                    $options 
+                    $this->mysqlOptions 
                 );
             $this->addForeignKey('fk_ref_wefo_type_status_id' , $this->tableName , 'status_id' , 'ref_status' , 'id' , 'NO ACTION' , 'NO ACTION'); 
             
