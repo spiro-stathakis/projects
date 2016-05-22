@@ -17,6 +17,7 @@ public function __construct(){
 	if ( ($this->_ldapCnx=ldap_connect($this->_host) ) === FALSE )
 		throw new CException(sprintf('Cannot connect to ldap host: %s' , $this->_host));
 
+	ldap_set_option ($this->_ldapCnx, LDAP_OPT_REFERRALS, 0);
 	ldap_set_option($this->_ldapCnx, LDAP_OPT_PROTOCOL_VERSION, 3);
 }
 /* #################################################################### */
