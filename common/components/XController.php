@@ -26,6 +26,7 @@ abstract class XController extends \yii\web\Controller
         \yii::$app->jsconfig->addData('g', \yii::$app->user->isGuest); 
         \yii::$app->language = 'en-gb'; 
         $this->collectionComponent = \yii::$app->CollectionComponent;
+        //$this->enableCsrfValidation = false;
         return parent::init(); 
     }
     /* ******************************************************************************************************* */ 

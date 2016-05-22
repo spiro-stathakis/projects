@@ -9,14 +9,14 @@ use frontend\models\SignupForm;
 use frontend\models\ContactForm;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
-use yii\web\Controller;
+use common\components\XController;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 
 /**
  * Site controller
  */
-class SiteController extends Controller
+class SiteController extends XController
 {
     /**
      * @inheritdoc
@@ -24,7 +24,6 @@ class SiteController extends Controller
     public function init()
     {
 
-        $this->enableCsrfValidation= false; 
         return parent::init();
     }
     public function behaviors()
@@ -96,7 +95,7 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            return $this->goHome();
         } else {
             return $this->render('login', [
                 'model' => $model,
