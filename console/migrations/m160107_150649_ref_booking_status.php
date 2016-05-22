@@ -34,7 +34,7 @@ class m160107_150649_ref_booking_status extends XMigration
                         'created_by' => $this->integer()->notNull(),
                         'updated_by' => $this->integer(),
                     ], 
-                    $options 
+                     $this->mysqlOptions  
                 );
             $this->addForeignKey('fk_ref_booking_status_id' , $this->tableName , 'status_id' , 'ref_status' , 'id' , 'NO ACTION' , 'NO ACTION'); 
             $this->insert($this->tableName,['code'=>'null','name'=>'no value','description'=>'No value','sort_order'=>100,'status_id'=>1,'created_at'=>time(),'created_by'=>1 ]); 

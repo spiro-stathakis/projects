@@ -37,7 +37,7 @@ class m151022_065739_ref_project_status extends XMigration
                         'created_by' => $this->integer()->notNull(),
                         'updated_by' => $this->integer(),
                     ], 
-                    $options 
+                    $this->mysqlOptions 
                 );
             $this->addForeignKey('fk_ref_project_status_id' , $this->tableName , 'status_id' , 'ref_status' , 'id' , 'NO ACTION' , 'NO ACTION'); 
             
