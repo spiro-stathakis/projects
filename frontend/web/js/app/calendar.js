@@ -65,10 +65,10 @@ AppPackageCalendar.prototype = {
             });
           $.ajax({
               type: "POST",
-              url: $.app.mc.aa,
-              data: data,
-              success: success,
-              dataType: dataType
+              url: $.app.mc.createEventUri,
+              data: values,
+              success: function(){},
+              dataType: 'JSON'
             });
     } 
 /* ********************************************************** */

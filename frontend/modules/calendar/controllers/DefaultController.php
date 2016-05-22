@@ -6,6 +6,7 @@ use yii\filters\AccessControl;
 use common\components\XController;
 use common\components\Types;
 use frontend\modules\calendar\models\Booking; 
+use yii\helpers\Url; 
 
 class DefaultController extends XController
 {
@@ -14,8 +15,10 @@ class DefaultController extends XController
 
     public function init()
     {
-        if (! Yii::$app->user->isGuest)
+        if (! Yii::$app->user->isGuest){
             yii::$app->jsconfig->addData('myCalendars', yii::$app->CalendarComponent->myCalendars);
+             yii::$app->jsconfig->addData('createEventUri', Url::to('/calendar/ajax/createevent') );
+        }
         return parent::init(); 
     }
 

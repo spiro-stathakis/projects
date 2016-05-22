@@ -31,7 +31,7 @@ class AjaxController extends XController
             'access' => [
                         'class' => AccessControl::className(),
                         'rules' => [
-                                    ['actions' => ['listcalendars', 'listevents'], 'allow' => true, 'roles' => ['@'],], 
+                                    ['actions' => ['createevent','listcalendars', 'listevents'], 'allow' => true, 'roles' => ['@'],], 
                         ],
             ],
         ];
@@ -45,6 +45,14 @@ class AjaxController extends XController
     public function actionListcalendars()
     {
         print_r(yii::$app->CalendarComponent->myCalendars); 
+    }
+    /* ****************************************************************************************** */ 
+    public function actionCreateevent()
+    {
+        $request = \yii::$app->request; 
+        $data =  $request->post('Booking'); 
+        $this->sendContent($data); 
+
     }
     /* ****************************************************************************************** */ 
     public function actionTogglesub()
