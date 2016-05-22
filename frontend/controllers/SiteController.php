@@ -89,6 +89,7 @@ class SiteController extends XController
      */
     public function actionLogin()
     {
+        var_dump($_COOKIE); 
         if (!\yii::$app->user->isGuest) {
             return $this->goHome();
         }

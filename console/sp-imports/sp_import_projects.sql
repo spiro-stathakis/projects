@@ -44,7 +44,7 @@ BEGIN
 	
 	
 	DECLARE  project_csr CURSOR FOR 
-		SELECT s.StudyID,s.UserID,s.CsaID,s.StudyTypeID,S.StudyStatusID,       
+		SELECT s.StudyID,s.UserID,s.CsaID,s.StudyTypeID,s.StudyStatusID,       
 		s.StudyCode,s.StudyName,s.EthicsNumber,s.Funding,             
 		s.FundingCode,s.MriTime,s.MegTime,s.ApplicationReceived,
 		s.CogApproval,s.Presentation,s.EthicsApproval,s.RiskAssessment,     
