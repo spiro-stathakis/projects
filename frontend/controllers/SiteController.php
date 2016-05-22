@@ -89,14 +89,13 @@ class SiteController extends XController
      */
     public function actionLogin()
     {
-        var_dump($_COOKIE); 
         if (!\yii::$app->user->isGuest) {
             return $this->goHome();
         }
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goHome();
+            return $this->goBack();
         } else {
             return $this->render('login', [
                 'model' => $model,

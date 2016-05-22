@@ -14,6 +14,8 @@ use frontend\packages\DatePickerAsset;
 							'type'=>ActiveForm::TYPE_HORIZONTAL, 
 							'formConfig'=>['labelSpan'=>3],
 							'enableAjaxValidation' => true,
+							'id'=>'frmBookingForm', 
+			    
 			]);
 			echo Form::widget([
 			    'model'=>$model,
@@ -52,7 +54,7 @@ use frontend\packages\DatePickerAsset;
 			        'start_date' => [
 			                    'type'=>Form::INPUT_WIDGET, 
 			                    'widgetClass'=>'\kartik\datecontrol\DateControl',
-			                    'options'=>['options'=>['options'=>['id'=>'start_date']]], 
+			                    'options'=>['options'=>['id'=>'start_date']], 
 			        ],
 			        'all_day_option_id'=>['type'=>Form::INPUT_CHECKBOX]
 				 ]

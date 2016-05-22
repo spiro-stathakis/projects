@@ -11,7 +11,7 @@ AppPackageCalendar.prototype = {
     selectedTime:0, 
 
     init:function() { //default function
-        moment.locale("en-GB");
+        moment.locale("en-gb");
         this.initCalendarSelector(); 
         return true;
 
@@ -21,7 +21,6 @@ AppPackageCalendar.prototype = {
 /* ********************************************************** */    
     dayClick:function(date, jsEvent, view)
     {
-        alert(moment.locale()); 
         this.selectedDate = date.format('L');
         this.selectedTime = date.format('LT')
         //$('#start_date').datetimepicker('date' , this.selectedDate);
@@ -60,11 +59,17 @@ AppPackageCalendar.prototype = {
     createEvent: function ()
     {
            var values = {};
-           values['_csrf'] =  yii.getCsrfToken();
             $.each($('#frmBookingForm').serializeArray(), function(i, field) {
                 values[field.name] = field.value;
+               
             });
-            console.info(values); 
+          $.ajax({
+              type: "POST",
+              url: $.app.mc.aa,
+              data: data,
+              success: success,
+              dataType: dataType
+            });
     } 
 /* ********************************************************** */
 /* ********************************************************** */
