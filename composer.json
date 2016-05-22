@@ -22,7 +22,6 @@
         "yiisoft/yii2-gii": "*",
         "philippfrenzel/yii2fullcalendar":"*",
         "setasign/fpdi_pdf-parser": "1.1.2", 
-	    "edvlerblog/yii2-adldap-module": "v1.1.0",
 	    "kartik-v/yii2-widget-activeform": "*",
         "kartik-v/yii2-detail-view": "@dev",
         "kartik-v/yii2-widget-switchinput": "*",

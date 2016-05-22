@@ -37,7 +37,7 @@ class m150915_114548_user extends XMigration
             'updated_at' => $this->integer(),
             'created_by' => $this->integer()->notNull(),
             'updated_by' => $this->integer(),
-        ], $mysqlOptions);
+        ], $this->mysqlOptions);
         //$this->renameColumn('user', 'status', 'status_id'); 
         $this->addForeignKey('fk_users_status_id' , 'user' , 'status_id' , 'ref_status' , 'id' , 'NO ACTION' , 'NO ACTION'); 
         $this->addForeignKey('fk_users_auth_type_id' , 'user' , 'auth_type_id' , 'ref_auth_type' , 'id' , 'NO ACTION' , 'NO ACTION'); 
