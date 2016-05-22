@@ -29,7 +29,7 @@ class DefaultController extends XController
                         'rules' => [
                                     [
                                         'actions' => ['index'], 
-                                        'allow' => false,
+                                        'allow' => true,
                                         'roles' => ['@'],
                                      ], 
                                 ],
