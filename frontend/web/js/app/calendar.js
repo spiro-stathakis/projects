@@ -24,6 +24,7 @@ AppPackageCalendar.prototype = {
         this.selectedDate = date.format('L');
         this.selectedTime = date.format('LT')
         //$('#start_date').datetimepicker('date' , this.selectedDate);
+        $('#start_date-disp').val(this.selectedDate);
         $('#start_date').val(this.selectedDate);
         $('#start_time').val(this.selectedTime);
         $('#end_time').val(date.add(1, 'hours').format('LT'));
@@ -67,11 +68,26 @@ AppPackageCalendar.prototype = {
               type: "POST",
               url: $.app.mc.createEventUri,
               data: values,
-              success: function(){},
+              success: function(data, textStatus, jqXHR){return $.app.cal.processCreateEvent( data, textStatus, jqXHR)},
               dataType: 'JSON'
             });
-    } 
+    } ,
 /* ********************************************************** */
+  processCreateEvent: function ( data, textStatus, jqXHR)
+  {
+    var response = '';
+    var title = ''; 
+    if (data.error)
+    {
+      title = 'There is a problem: ';
+      for(var i=0 ; i < data.message.length ; i++)
+        response += data.message[i] + '  '; 
+      $('#spanResponse').css('color','#990000'); 
+      $('#spanTitle').html(title); 
+     
+    }
+     $('#spanResponse').html(response); 
+  }
 /* ********************************************************** */
 
 /* ********************************************************** */

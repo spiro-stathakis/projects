@@ -24,9 +24,9 @@ class m160209_080045_event extends XMigration
                 [
                     'id'=>$this->primaryKey(),
                     'title'=>$this->string(2048)->notNull(),
-                    'description'=>$this->string(2048)->notNull(),
+                    'description'=>$this->string(2048),
                     'calendar_id'=> $this->integer()->notNull(),
-                    'project_id'=> $this->integer()->notNull(),
+                    'project_id'=> $this->integer(),
                     'sort_order'=> $this->integer()->notNull()->defaultValue(100),
                     'status_id'=>$this->integer()->notNull()->defaultValue(2),
                     'old_id'=>$this->integer(),

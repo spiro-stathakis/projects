@@ -4,6 +4,8 @@ namespace frontend\modules\calendar\models;
 use common\models\RefStatus; 
 use common\models\RefBoolean; 
 use common\models\RefBookingStatus; 
+use common\components\Types; 
+use common\components\XActiveRecord; 
 use frontend\modules\calendar\models\Event; 
 use Yii;
 
@@ -33,7 +35,7 @@ use Yii;
  * @property RefBookingStatus $bookingStatus
  * @property Event $event
  */
-class EventEntry extends \yii\db\ActiveRecord
+class EventEntry extends XActiveRecord
 {
     /**
      * @inheritdoc
@@ -43,13 +45,23 @@ class EventEntry extends \yii\db\ActiveRecord
         return 'event_entry';
     }
 
+
+    public function init()
+    {
+        if ($this->isNewRecord)
+        {
+            $this->booking_status_id = Types::$bookingStatus['confirmed']['id']; 
+            $this->all_day_option_id = Types::$boolean['false']['id']; 
+        } 
+        return parent::init(); 
+    }
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['event_id', 'title', 'description', 'booking_status_id', 'start_timestamp', 'end_timestamp', 'all_day_option_id', 'confirm_by', 'confirm_date', 'created_at', 'created_by'], 'required'],
+            [['event_id', 'title', 'booking_status_id', 'start_timestamp', 'end_timestamp', 'all_day_option_id'], 'required'],
             [['event_id', 'booking_status_id', 'start_timestamp', 'end_timestamp', 'all_day_option_id', 'confirm_by', 'confirm_date', 'sort_order', 'status_id', 'old_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['title', 'description'], 'string', 'max' => 2048],
             [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => RefStatus::className(), 'targetAttribute' => ['status_id' => 'id']],

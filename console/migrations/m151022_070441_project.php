@@ -28,6 +28,7 @@ class m151022_070441_project extends XMigration
                         'csa_id'=>$this->integer()->notNull(),
                         'pi_id'=>$this->integer()->notNull(),
                         'collection_id'=>$this->integer()->notNull(),
+                        'resource_collection_id'=>$this->integer()->notNull(),
                         'wefo_id'=>$this->integer()->notNull(), 
                         'title'=>$this->string(255)->notNull(),
                         'code'=>$this->string(255)->notNull(),
@@ -59,6 +60,10 @@ class m151022_070441_project extends XMigration
             $this->addForeignKey('fk_project_project_pi_id' , $this->tableName,  'pi_id' , 'user' , 'id' , 'NO ACTION' , 'NO ACTION'); 
             $this->addForeignKey('fk_project_project_wefo_id' , $this->tableName,  'wefo_id' , 'ref_wefo' , 'id' , 'NO ACTION' , 'NO ACTION'); 
            $this->addForeignKey('fk_project_project_collection_id' , $this->tableName,  'collection_id' , 'collection' , 'id' , 'NO ACTION' , 'NO ACTION'); 
+
+            $this->addForeignKey('fk_project_resource_collection_id' , $this->tableName,  'resource_collection_id' , 'collection' , 'id' , 'NO ACTION' , 'NO ACTION'); 
+
+           
             
     
     }
@@ -71,6 +76,7 @@ class m151022_070441_project extends XMigration
         $this->dropForeignKey('fk_project_project_csa_id',$this->tableName); 
         $this->dropForeignKey('fk_project_project_pi_id',$this->tableName); 
         $this->dropForeignKey('fk_project_project_wefo_id',$this->tableName); 
+        $this->dropForeignKey('fk_project_resource_collection_id',$this->tableName); 
         $this->dropTable($this->tableName); 
 
 

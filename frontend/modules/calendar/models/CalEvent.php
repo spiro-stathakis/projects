@@ -1,6 +1,6 @@
 <?php 
 
-namespace app\modules\calendar\models;
+namespace frontend\modules\calendar\models;
 
 
 

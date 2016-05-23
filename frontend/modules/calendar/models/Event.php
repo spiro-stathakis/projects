@@ -2,6 +2,7 @@
 
 namespace frontend\modules\calendar\models;
 use common\models\RefStatus; 
+use common\components\XActiveRecord; 
 use frontend\modules\calendar\models\Calendar; 
 use Yii;
 
@@ -25,7 +26,7 @@ use Yii;
  * @property Calendar $calendar
  * @property EventEntry[] $eventEntries
  */
-class Event extends \yii\db\ActiveRecord
+class Event extends XActiveRecord
 {
     /**
      * @inheritdoc
@@ -35,13 +36,19 @@ class Event extends \yii\db\ActiveRecord
         return 'event';
     }
 
+
+     public function init()
+        {
+            return parent::init(); 
+
+        }
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['title', 'description', 'calendar_id', 'project_id', 'created_at', 'created_by'], 'required'],
+            [['title', 'calendar_id'], 'required'],
             [['calendar_id', 'project_id', 'sort_order', 'status_id', 'old_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['title', 'description'], 'string', 'max' => 2048],
             [['status_id'], 'exist', 'skipOnError' => true, 'targetClass' => RefStatus::className(), 'targetAttribute' => ['status_id' => 'id']],

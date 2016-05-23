@@ -3,6 +3,8 @@
 use yii\bootstrap\Html;
 use kartik\form\ActiveForm;
 use kartik\builder\Form;
+use kartik\widgets\SwitchInput;
+use yii\helpers\Url; 
 
 use frontend\packages\DatePickerAsset;
 
@@ -15,6 +17,7 @@ use frontend\packages\DatePickerAsset;
 							'formConfig'=>['labelSpan'=>3],
 							'enableAjaxValidation' => true,
 							'id'=>'frmBookingForm', 
+							 
 			    
 			]);
 			echo Form::widget([
@@ -54,9 +57,11 @@ use frontend\packages\DatePickerAsset;
 			        'start_date' => [
 			                    'type'=>Form::INPUT_WIDGET, 
 			                    'widgetClass'=>'\kartik\datecontrol\DateControl',
-			                    'options'=>['options'=>['id'=>'start_date']], 
+			                    'options'=>['options'=>['id'=>'start_date']],  
 			        ],
-			        'all_day_option_id'=>['type'=>Form::INPUT_CHECKBOX]
+			        'all_day_option_id'=>['type'=>Form::INPUT_DROPDOWN_LIST,
+			        					  'items'=>$model->allDayOptions, 
+			        ]
 				 ]
 			]);
 

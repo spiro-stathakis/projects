@@ -39,6 +39,9 @@ return [
          'PdfComponent'=> [
             'class'=>'common\components\PdfComponent', 
         ], 
+        'AjaxResponse'=> [
+            'class'=>'common\components\AjaxResponse', 
+        ], 
         'SecurityComponent'=> [
             'class'=>'common\components\SecurityComponent', 
         ],
@@ -48,7 +51,7 @@ return [
         'resourcecomponent'=> [
             'class'=>'common\components\ResourceComponent', 
         ],   
-        'datecomponent'=> [
+        'DateComponent'=> [
             'class'=>'common\components\DateComponent', 
         ],        
         'CollectionComponent'=> [

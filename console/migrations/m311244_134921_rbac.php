@@ -24,6 +24,15 @@ class m311244_134921_rbac extends Migration
         $auth->add($editCalendar);
 
 
+        $core_staff_role = $auth->createRole('core_manager_role');
+        $auth->add($core_staff_role);
+        
+
+
+        $director_role = $auth->createRole('director_role');
+        $auth->add($director_role);
+
+
 
         $lab_manager_role = $auth->createRole('lab_manager_role');
         $auth->add($lab_manager_role);
@@ -35,6 +44,13 @@ class m311244_134921_rbac extends Migration
         $admin_role  = $auth->createRole('admin_role');
         $auth->add($admin_role); 
 
+
+
+
+        $auth->addChild($lab_manager_role, $core_staff_role);
+        $auth->addChild($tech_role, $core_staff_role);
+        $auth->addChild($admin_role, $core_staff_role);
+        $auth->addChild($director_role, $core_staff_role);
 
 
         $auth->addChild($lab_manager_role, $createCalendar);

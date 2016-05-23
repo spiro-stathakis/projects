@@ -9,7 +9,7 @@ namespace common\components;
 
 use yii\behaviors\TimestampBehavior; 
 use yii\behaviors\BlameableBehavior; 
-
+use common\components\Types; 
 /**
  * Site controller
  */
@@ -20,6 +20,7 @@ abstract class XActiveRecord extends \yii\db\ActiveRecord
         public function init()
         {
              $this->collectionComponent = \yii::$app->CollectionComponent;
+             $this->status_id = Types::$status['active']['id']; 
             return parent::init(); 
 
         }
