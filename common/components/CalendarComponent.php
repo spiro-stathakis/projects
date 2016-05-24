@@ -80,11 +80,13 @@ class CalendarComponent extends Object
     
     public function getMyCalendarList()
     {
-        if ($this->_myCalendarList == null) 
+        if ($this->_myCalendarList == null)
+        {
+            $this->_myCalendarList = [];   
             foreach($this->myCalendars as $rec)
                 if ($rec['display_option_id'] == Types::$boolean['true']['id'] || $rec['display_option_id'] == null )
                     $this->_myCalendarList[$rec['calendar_id']] = $rec['calendar_title'];
-        
+        }
         return $this->_myCalendarList; 
 
 

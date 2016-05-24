@@ -15,11 +15,11 @@ class DateComponent extends Object
     private $_myCalendarCollections; 
     private $_isoRegExDate = "/^([0-9]{4})-([0-9]{1,2})-([0-9]{1,2})$/"; 
     private $_ukRegExDate = "/^([0-9]{1,2})-([0-9]{1,2})-([0-9]{4})$/"; 
-    private $_ukRegExDateTime = "/^([0-9]{1,2})\/([0-9]{1,2})\/([0-9]{4}) ([0-1]?[0-9]|[2][0-3]):([0-5][0-9])$/";
-    private $_isoDateTimeFormat  = "Y/m/d H:i"; 
-    private $_isoDateFormat  = "Y/m/d"; 
-    private $_ukDateTimeFormat  = "d/m/Y H:i"; 
-    private $_ukDateFormat  = "d/m/Y"; 
+    private $_ukRegExDateTime = "/^([0-9]{1,2})-([0-9]{1,2})-([0-9]{4}) ([0-1]?[0-9]|[2][0-3]):([0-5][0-9])$/";
+    private $_isoDateTimeFormat  = "Y-m-d H:i"; 
+    private $_isoDateFormat  = "Y-m-d"; 
+    private $_ukDateTimeFormat  = "d-m-Y H:i"; 
+    private $_ukDateFormat  = "d-m-Y"; 
     private $_dateStruct = []; 
 	
 	/* ******************************************************************************************************* */ 
@@ -34,16 +34,19 @@ class DateComponent extends Object
     }
     /* ******************************************************************************************************* */ 
     /* ******************************************************************************************************* */ 
-   
-    /* ******************************************************************************************************* */ 
-    public function timestampToIsoDate($timestamp, $time=false)
+    public function timeStampToIsoDateTime($timestamp)
     {
         $date = new \DateTime();
         $date->setTimestamp($timestamp);
-        if ($time)
-            return $date->format($this->_isoDateTimeFormat);
-        else 
-            return $date->format($this->_isoDateFormat);
+        return $date->format($this->_isoDateTimeFormat);
+    
+    }
+    /* ******************************************************************************************************* */ 
+    public function timestampToIsoDate($timestamp)
+    {
+        $date = new \DateTime();
+        $date->setTimestamp($timestamp);
+        return $date->format($this->_isoDateFormat);
     }
     /* ******************************************************************************************************* */ 
     public function ukDateTimeToTimestamp($dateTime)

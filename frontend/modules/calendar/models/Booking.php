@@ -22,17 +22,18 @@ class Booking extends Model
     public $start_time; 
     public $end_time; 
    
-    public $start_datetime; 
-    public $end_datetime; 
+    public $start_datetime_uk; 
+    public $end_datetime_uk; 
 
 
     public $start_timestamp; 
     public $end_timestamp; 
-    
-    
+    public $jsObject; 
+   
 
     public function init()
     {
+        $this->jsObject = []; 
         $this->booking_status_id = Types::$bookingStatus['confirmed']['id']; 
         $this->all_day_option_id = Types::$boolean['false']['id']; 
         return parent::init(); 
@@ -42,7 +43,7 @@ class Booking extends Model
         return [
             [['title','start_time','end_time','start_date', 'calendar_id'], 'required'],
             [['start_timestamp','end_timestamp'], 'integer'],
-            [['start_datetime','end_datetime'] , 'date', 'format'=>'dd/MM/yyyy H:m'],
+            [['start_datetime_uk','end_datetime_uk'] , 'date', 'format'=>'dd-MM-yyyy H:m'],
         ];
     }
     /* ************************************************************************************************ */ 
@@ -60,15 +61,28 @@ class Booking extends Model
     {
 
         $dateObj =\yii::$app->DateComponent; 
-        $this->start_timestamp = $dateObj->ukDateTimeToTimestamp($this->start_datetime);
-        $this->end_timestamp = $dateObj->ukDateTimeToTimestamp($this->end_datetime);
+        if ($this->all_day_option_id == Types::$boolean['true']['id']) 
+            $this->jsObject['allDay'] = 1;  
+        else 
+            $this->jsObject['allDay'] = 0;
+
+        $this->start_timestamp = $dateObj->ukDateTimeToTimestamp($this->start_datetime_uk);
+        $this->end_timestamp = $dateObj->ukDateTimeToTimestamp($this->end_datetime_uk);
+        $this->jsObject['start'] = $dateObj->timeStampToIsoDateTime($this->start_timestamp);
+        $this->jsObject['end'] = $dateObj->timeStampToIsoDateTime($this->end_timestamp);
+        $this->jsObject['className'] = sprintf('calendar-%s', $this->calendar_id); 
+        $this->jsObject['title'] = $this->title; 
+        $this->jsObject['description'] = $this->description; 
+        
         return parent::afterValidate(); 
     }
     /* ************************************************************************************************ */ 
+    
+    /* ************************************************************************************************ */ 
     public function beforeValidate()
     {
-        $this->start_datetime  = sprintf(sprintf('%s %s', $this->start_date, $this->start_time)); 
-        $this->end_datetime  = sprintf(sprintf('%s %s', $this->start_date, $this->end_time)); 
+        $this->start_datetime_uk  = sprintf(sprintf('%s %s', $this->start_date, $this->start_time)); 
+        $this->end_datetime_uk  = sprintf(sprintf('%s %s', $this->start_date, $this->end_time)); 
         
         return parent::beforeValidate(); 
     }

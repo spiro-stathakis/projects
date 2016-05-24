@@ -9,19 +9,31 @@ AppPackageCalendar.prototype = {
     delayed:false, // whether to load on start
     selectedDate:0, 
     selectedTime:0, 
+    getEventObject:function(event){
+        return {
+            'id':event.id, 
+            'title':event.title, 
+            'allDay':event.allDay, 
+            'start':event.start, 
+            'end':event.end,  
+            'url':event.url, 
+            'className':event.class  
+        }; 
 
+    }, 
+  /* ********************************************************** */    
+    
     init:function() { //default function
-        moment.locale("en-gb");
         this.initCalendarSelector(); 
         return true;
 
     	// do some init like set the fields to an initial value
 
     }, 
-/* ********************************************************** */    
+  /* ********************************************************** */    
     dayClick:function(date, jsEvent, view)
     {
-        this.selectedDate = date.format('L');
+        this.selectedDate = date.format('DD-MM-YYYY');
         this.selectedTime = date.format('LT')
         //$('#start_date').datetimepicker('date' , this.selectedDate);
         $('#start_date-disp').val(this.selectedDate);
@@ -50,8 +62,7 @@ AppPackageCalendar.prototype = {
    {
         if (document.getElementById('calendar-selector'))
         {
-
-            $('#calendar-selector').html('hello there'); 
+            $('#calendar-selector').html('Dim calendar boyo'); 
         }
 
    }, 
@@ -84,8 +95,12 @@ AppPackageCalendar.prototype = {
         response += data.message[i] + '  '; 
       $('#spanResponse').css('color','#990000'); 
       $('#spanTitle').html(title); 
-     
     }
+    if (! data.error)
+    { 
+        $('#eventModal').modal('hide');   
+        $('#full-calendar').fullCalendar('renderEvent', data.message); 
+    } 
      $('#spanResponse').html(response); 
   }
 /* ********************************************************** */

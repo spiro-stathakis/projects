@@ -65,9 +65,10 @@ class AjaxController extends XController
         $eventEntryModel = new EventEntry; 
 
         $bookingModel->load($request->post()); 
+
         if ($bookingModel->validate())
         {
-            yii::$app->AjaxResponse->message = $bookingModel->attributes; 
+             
             
             $eventModel->load(['Event'=>$bookingModel->attributes]); 
             if ($eventModel->validate())
@@ -91,6 +92,7 @@ class AjaxController extends XController
                             yii::$app->AjaxResponse->message = array_values($eventEntryModel->getErrors());  
                         }
                         $transaction->commit();
+                        yii::$app->AjaxResponse->message = $bookingModel->jsObject;
                         
                     } 
                     catch (Exception $e)

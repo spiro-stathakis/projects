@@ -20,8 +20,8 @@ class CalendarWidget extends Widget{
 
         foreach(\yii::$app->CalendarComponent->myCalendars as $cal)
             $this->_css .= sprintf('.calendar-%s, *  fc-time-grid-event fc-v-event fc-event fc-start fc-end , 
-                .calendar-%s a {background-color:#%s;border-color:#%s;opacity: 1;} 
-                .calendar-%s  .fc-time{opacity:2;background-color:#%s}' , 
+                .calendar-%s a {background-color:%s;border-color:%s;opacity: 1;} 
+                .calendar-%s  .fc-time{opacity:2;background-color:%s}' , 
                 $cal['calendar_id'], $cal['calendar_id'], $cal['hex_code'], 
                 $cal['hex_code'] , $cal['calendar_id'] ,$cal['hex_code']
                 ); 
@@ -41,10 +41,14 @@ class CalendarWidget extends Widget{
          'options'=>[
                 'lang'=>'en-gb', 
                 'timeFormat'=>'H(:mm)', // uppercase H for 24-hour clock
-                 'aspectRatio'=>1.4, 
+                'aspectRatio'=>1.4, 
+                'id'=>'full-calendar', 
+                
+
 
                 
          ] , 
+         
          'clientOptions'=>[ 
 
                   'weekends' => true,
