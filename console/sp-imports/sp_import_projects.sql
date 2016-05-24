@@ -20,6 +20,7 @@ BEGIN
 	DECLARE l_study_code VARCHAR(255) DEFAULT ''; 
 	DECLARE l_ethics_number VARCHAR(255) DEFAULT ''; 
 	DECLARE l_funding_number VARCHAR(255) DEFAULT '';
+	DECLARE l_public_option_id INT UNSIGNED DEFAULT 3; 
 	DECLARE l_funding_code VARCHAR(255) DEFAULT '';
 	DECLARE l_resource_collection_id INT UNSIGNED DEFAULT 1; 
 	DECLARE l_mri_time INT; 
@@ -88,7 +89,7 @@ BEGIN
 
 					INSERT INTO projects.collection  
 					(
-						title,description,alias,collection_type_id,created_by,created_at
+						title,description,alias,collection_type_id,public_option_id,created_by,created_at
 					) 
 					VALUES 
 					(
@@ -97,6 +98,7 @@ BEGIN
 						concat( 'project-', l_study_id),
 						
 						l_collection_type_project, 
+						l_public_option_id, 
 						2, 
 						UNIX_TIMESTAMP() 
 					); 

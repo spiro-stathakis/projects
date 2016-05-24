@@ -28,6 +28,7 @@ class m151022_021911_collection extends XMigration
                     'alias'=>$this->string(255)->notNull(),
                     'description'=>$this->string(4096),
                     'collection_type_id' => $this->integer()->notNull(),
+                    'public_option_id' => $this->integer()->notNull(),
                     'membership_duration'=> $this->integer()->notNull()->defaultValue(5256000),
                     'member_count' => $this->integer()->notNull()->defaultValue(0),
                     'manager_count'=>$this->integer()->notNull()->defaultValue(0),
@@ -42,12 +43,14 @@ class m151022_021911_collection extends XMigration
             );
 
         $this->addForeignKey('fk_collection_status_id' , $this->tableName,  'status_id' , 'ref_status' , 'id' , 'NO ACTION' , 'NO ACTION'); 
-        $this->addForeignKey('fk_collection_type_id' , $this->tableName,  'collection_type_id' , 'ref_collection_type' , 'id' , 'NO ACTION' , 'NO ACTION'); 
+        $this->addForeignKey('fk_collection_type_id' , $this->tableName,  'collection_type_id' , 'ref_collection_type' , 'id' , 'NO ACTION' , 'NO ACTION');
+        $this->addForeignKey('fk_collection_public_option_id' , $this->tableName,  'public_option_id' , 'ref_boolean' , 'id' , 'NO ACTION' , 'NO ACTION'); 
                    
         $this->insert($this->tableName,['title'=>'MRI',
                                     'description'=>'A collection of resources that are managed through the MRI lab',
                                     'alias'=>'mri', 
                                     'collection_type_id'=>2,
+                                    'public_option_id'=>3, 
                                     'membership_duration'=>365,
                                     'member_count'=>0,
                                     'manager_count'=>0, 
@@ -63,6 +66,7 @@ class m151022_021911_collection extends XMigration
                                     'description'=>'A collection of resources that belong to the Park place site',
                                     'alias'=>'park-place', 
                                     'collection_type_id'=>4,
+                                    'public_option_id'=>3, 
                                     'membership_duration'=>365,
                                     'member_count'=>0,
                                     'manager_count'=>0, 
@@ -77,6 +81,7 @@ class m151022_021911_collection extends XMigration
                                     'description'=>'CUBRIC group for users in Cardiff University',
                                     'alias'=>'cubric-int', 
                                     'collection_type_id'=>4,
+                                    'public_option_id'=>3, 
                                     'membership_duration'=>365,
                                     'member_count'=>0,
                                     'manager_count'=>0, 
@@ -98,6 +103,8 @@ class m151022_021911_collection extends XMigration
         $this->init();
         $this->dropForeignKey('fk_collection_status_id',$this->tableName); 
         $this->dropForeignKey('fk_collection_type_id',$this->tableName); 
+        $this->dropForeignKey('fk_collection_public_option_id',$this->tableName); 
+        
         $this->dropTable($this->tableName); 
         return true;
     }

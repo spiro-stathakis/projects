@@ -114,22 +114,10 @@ class CollectionComponent extends Object
     }
     /* ******************************************************************************************************* */ 
     
-    public function getTrainingManagement()
-    {
-
-        $return = [];
-        foreach($this->_collectionMembership as $collection)
-            if ($collection['member_type_id'] == Types::$member_type['manager']['id'] && 
-                $collection['collection_type_id'] == Types::$collection_type['training']['id']
-            )
-                $return[] = $collection; 
-        
-        return $return; 
-
-    }
+   
 	
     /* ******************************************************************************************************* */ 
-    public function getAllMemberships()
+    public function getMyMemberList()
 	{
         $return = [];
         foreach($this->_collectionMembership as $collection)
@@ -137,6 +125,23 @@ class CollectionComponent extends Object
                 $return[] = $collection; 
         
         return $return; 
+
+	}
+	/* ******************************************************************************************************* */ 
+    public function getMyList()
+    {
+        return $this->_collectionMembership; 
+    }
+    /* ******************************************************************************************************* */ 
+    public function  getMyManagerList()
+	{
+        $return = [];
+        foreach($this->_collectionMembership as $collection)
+            if ($collection['member_type_id'] == Types::$member_type['manager']['id'])
+                $return[] = $collection; 
+        
+        return $return; 
+
 
 	}
 	/* ******************************************************************************************************* */ 
@@ -153,19 +158,5 @@ class CollectionComponent extends Object
         return $return; 
    
     }
-    /* ******************************************************************************************************* */ 
-    public function  getAllManagement()
-	{
-        $return = [];
-        foreach($this->_collectionMembership as $collection)
-            if ($collection['member_type_id'] == Types::$member_type['manager']['id'])
-                $return[] = $collection; 
-        
-        return $return; 
-
-
-	}
-	/* ******************************************************************************************************* */ 
-    
 
 }

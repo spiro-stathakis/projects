@@ -6,10 +6,10 @@ use kartik\builder\Form;
 use kartik\widgets\SwitchInput;
 use yii\helpers\Url; 
 
-use frontend\packages\DatePickerAsset;
+use frontend\packages\BootstrapTreeviewAsset;
 
 ?>
-<?php  DatePickerAsset::register($this); ?> 
+<?php BootstrapTreeviewAsset::register($this);?> 
 
 			<?php 
 			$form = ActiveForm::begin([

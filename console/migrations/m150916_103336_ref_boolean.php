@@ -2,7 +2,7 @@
 
 use common\components\XMigration;
 
-class m160108_144951_ref_boolean extends XMigration
+class m150916_103336_ref_boolean extends XMigration
 {
   
      /* ************************************************************************************** */ 

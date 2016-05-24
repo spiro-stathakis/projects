@@ -139,11 +139,12 @@ class AjaxController extends XController
             else 
                 $model->title =  $e['event_title'];
 
-            $model->start = yii::$app->DateComponent->timestampToIsoDate($e['start_timestamp'], true) ;
-            $model->end =  yii::$app->DateComponent->timestampToIsoDate($e['end_timestamp'], true) ;
+            $model->start = yii::$app->DateComponent->timestampToIsoDateTime($e['start_timestamp']) ;
+            $model->end =  yii::$app->DateComponent->timestampToIsoDateTime($e['end_timestamp']) ;
             if ($e['all_day_option_id'] == Types::$boolean['true']['id'])
                 $model->allDay = true; 
-            
+            else 
+                 $model->allDay = false;
             //$model->backgroundcolor = $e['hex_code']; 
             $model->className = sprintf('calendar-%s' , $e['calendar_id']); 
 

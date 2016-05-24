@@ -30,6 +30,7 @@ class Booking extends Model
     public $end_timestamp; 
     public $jsObject; 
    
+    /* ************************************************************************************************ */ 
 
     public function init()
     {
@@ -38,6 +39,8 @@ class Booking extends Model
         $this->all_day_option_id = Types::$boolean['false']['id']; 
         return parent::init(); 
     }
+    /* ************************************************************************************************ */ 
+
     public function rules()
     {
         return [
@@ -62,9 +65,9 @@ class Booking extends Model
 
         $dateObj =\yii::$app->DateComponent; 
         if ($this->all_day_option_id == Types::$boolean['true']['id']) 
-            $this->jsObject['allDay'] = 1;  
+            $this->jsObject['allDay'] = true;  
         else 
-            $this->jsObject['allDay'] = 0;
+            $this->jsObject['allDay'] = false;
 
         $this->start_timestamp = $dateObj->ukDateTimeToTimestamp($this->start_datetime_uk);
         $this->end_timestamp = $dateObj->ukDateTimeToTimestamp($this->end_datetime_uk);

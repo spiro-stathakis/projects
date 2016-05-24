@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use common\components\Types; 
+
 
 /**
  * This is the model class for table "collection".
@@ -12,6 +14,7 @@ use Yii;
  * @property string $alias
  * @property string $description
  * @property integer $collection_type_id
+ * @property integer $public_option_id
  * @property integer $membership_duration
  * @property integer $member_count
  * @property integer $manager_count
@@ -48,7 +51,7 @@ class Collection extends \common\components\XActiveRecord
     public function rules()
     {
         return [
-            [['title', 'alias', 'collection_type_id', 'created_at', 'created_by'], 'required'],
+            [['title', 'alias', 'collection_type_id', 'public_option_id'], 'required'],
             [['collection_type_id', 'membership_duration', 'member_count', 'manager_count', 'sort_order', 'status_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['title', 'alias'], 'string', 'max' => 255],
             [['description'], 'string', 'max' => 4096],
@@ -68,6 +71,7 @@ class Collection extends \common\components\XActiveRecord
             'alias' => Yii::t('app', 'Alias'),
             'description' => Yii::t('app', 'Description'),
             'collection_type_id' => Yii::t('app', 'Collection Type ID'),
+            'public_option_id'=> Yii::t('app', 'Public option'), 
             'membership_duration' => Yii::t('app', 'Membership Duration'),
             'member_count' => Yii::t('app', 'Member Count'),
             'manager_count' => Yii::t('app', 'Manager Count'),
@@ -104,6 +108,10 @@ class Collection extends \common\components\XActiveRecord
         return $this->hasOne(RefStatus::className(), ['id' => 'status_id']);
     }
 
+    public function getPublicOption()
+    {
+        return $this->hasOne(RefStatus::className(), ['id' => 'public_option_id']);
+    }
     /**
      * @return \yii\db\ActiveQuery
      */

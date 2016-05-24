@@ -9,28 +9,68 @@ AppPackageCalendar.prototype = {
     delayed:false, // whether to load on start
     selectedDate:0, 
     selectedTime:0, 
-    getEventObject:function(event){
-        return {
-            'id':event.id, 
-            'title':event.title, 
-            'allDay':event.allDay, 
-            'start':event.start, 
-            'end':event.end,  
-            'url':event.url, 
-            'className':event.class  
-        }; 
-
-    }, 
+    
   /* ********************************************************** */    
     
     init:function() { //default function
-        this.initCalendarSelector(); 
+        $('#tree').treeview({
+            showCheckbox:true, 
+            data: $.app.mc.tree,
+            highlightSelected: false, 
+            levels:0, 
+            onNodeChecked: function(event, data) {
+              $.app.cal.calendarToggle(data); 
+            },
+            onNodeUnchecked: function(event, data) {
+              $.app.cal.calendarToggle(data); 
+            }
+        });
         return true;
 
     	// do some init like set the fields to an initial value
 
     }, 
-  /* ********************************************************** */    
+  /* ********************************************************** */  
+    calendarToggle:function(data){
+          console.info(data); 
+    },
+  /* ********************************************************** */  
+    getTree: function()
+    {
+    return   [
+      {
+        text: "Parent 1",
+              nodes: [
+            {
+              text: "Child 1",
+              nodes: [
+                {
+                  text: "Grandchild 1"
+                },
+                {
+                  text: "Grandchild 2"
+                }
+              ]
+            },
+            {
+              text: "Child 2"
+            }
+          ]
+        },
+        {
+          text: "Parent 2"
+        },
+        {
+          text: "Parent 3"
+        },
+        {
+          text: "Parent 4"
+        },
+        {
+          text: "Parent 5"
+        }
+      ];
+    },  
     dayClick:function(date, jsEvent, view)
     {
         this.selectedDate = date.format('DD-MM-YYYY');
@@ -58,14 +98,7 @@ AppPackageCalendar.prototype = {
         
     },
 /* ********************************************************** */
-   initCalendarSelector: function()
-   {
-        if (document.getElementById('calendar-selector'))
-        {
-            $('#calendar-selector').html('Dim calendar boyo'); 
-        }
-
-   }, 
+  
 
 /* ********************************************************** */
     createEvent: function ()

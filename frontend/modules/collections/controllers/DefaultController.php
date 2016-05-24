@@ -14,13 +14,11 @@ class DefaultController  extends \common\components\XController
 {
    
 
-	protected $collectionComponent;
 	
 
 	/* ****************************************************************************************************************** */ 
    	public function init()
    	{
-   		$this->collectionComponent = \yii::$app->CollectionComponent;
    		return parent::init(); 
 	}
 	/* ****************************************************************************************************************** */ 
@@ -56,11 +54,11 @@ class DefaultController  extends \common\components\XController
     public function actionIndex()
     {
     	$memberProvider  =  new ArrayDataProvider([
-    			'allModels' =>$this->collectionComponent->getAllMemberships(),
+    			'allModels' =>yii::$app->CollectionComponent->myMemberList,
     			'pagination'=>false, 
     	]);
     	$managerProvider  =  new ArrayDataProvider([
-    			'allModels' =>$this->collectionComponent->getAllManagement(),
+    			'allModels' =>yii::$app->CollectionComponent->myManagerList,
     			'pagination'=>false, 
     	]);
 
@@ -70,7 +68,7 @@ class DefaultController  extends \common\components\XController
     public function actionMembers($id)
     {
 
-    	if ($this->collectionComponent->isManager($id) === false) 
+    	if (yii::$app->CollectionComponent->isManager($id) === false) 
     		 throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access collection.'));
     	
       $collectionModel = Collection::findOne($id); 
@@ -98,7 +96,7 @@ class DefaultController  extends \common\components\XController
           $collection_id = \yii::$app->request->post('col');
           $member_type_id = \yii::$app->request->post('mem');
 
-          if ($this->collectionComponent->isManager($collection_id ) === false) 
+          if (yii::$app->CollectionComponent->isManager($collection_id ) === false) 
               throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access collection.'));
 
           
@@ -135,7 +133,7 @@ class DefaultController  extends \common\components\XController
           $collection_id = \yii::$app->request->post('col');
           $member_type_id = \yii::$app->request->post('mem');
 
-          if ($this->collectionComponent->isManager($collection_id ) === false) 
+          if (yii::$app->CollectionComponent->isManager($collection_id ) === false) 
               throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access collection.'));
 
           

@@ -169,7 +169,7 @@ class Calendar extends \common\components\XActiveRecord
    public function getCollectionOptions()
    {
         $return = []; 
-        foreach ($this->collectionComponent->getCalendarCollections() as $rec)
+        foreach ( \yii::$app->CollectionComponent->CalendarCollections as $rec)
                 $return[$rec['collection_id']] = $rec['title']; 
 
         return $return; 

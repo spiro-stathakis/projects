@@ -15,11 +15,10 @@ use common\components\Types;
  */
 abstract class XActiveRecord extends \yii\db\ActiveRecord
 {
-        protected $collectionComponent;
-
+        
         public function init()
         {
-             $this->collectionComponent = \yii::$app->CollectionComponent;
+            
              $this->status_id = Types::$status['active']['id']; 
             return parent::init(); 
 

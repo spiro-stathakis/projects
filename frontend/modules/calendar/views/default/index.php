@@ -19,13 +19,8 @@ echo $this->render('_bookingModal', ['model'=>$bookingModel]);
 <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-         		<div id='div-calendar-list'> 
-         		      <?=Html::checkBoxList('calendar-list',
-                                        array_keys(yii::$app->CalendarComponent->myCalendarList),
-                                        yii::$app->CalendarComponent->theCalendarList,
-                                        ['options'=>['seperator'=>'<br/>'],'itemOptions'=>['onclick'=>'alert(\'hello\')'] ]); 
-
-                                        ?> 
+         		<div id='tree'> 
+         		     
     					
          		</div>
 		</ul> 
