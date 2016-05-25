@@ -2,7 +2,7 @@
 namespace common\components; 
 use Yii; 
 use yii\base\Object;
-
+use common\components\Types; 
 /* 
 Function: 
 
@@ -149,9 +149,14 @@ class CalendarComponent extends Object
                 ->join('LEFT JOIN','calendar c' , 'e.calendar_id=c.id')
                 ->join('LEFT JOIN', 'event_entry ee' , 'ee.event_id=e.id')
                 ->join('LEFT JOIN','ref_booking_status rbs', 'ee.booking_status_id=rbs.id')
-                ->where('ee.start_timestamp >= :start AND ee.end_timestamp <= :end')
+                ->join('LEFT JOIN', 'calendar_subscription cs' , 'cs.calendar_id=c.id')
+                ->where('(ee.start_timestamp >= :start AND ee.end_timestamp <= :end)
+                            AND 
+                        (cs.display_option_id = :true OR cs.display_option_id IS NULL)
+                    ')
                  ->addParams([':start'=>$start, 
-                             ':end'=>$end 
+                             ':end'=>$end , 
+                             ':true'=>Types::$boolean['true']['id'] 
                         ])
                 ->all();
 

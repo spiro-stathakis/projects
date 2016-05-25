@@ -41,7 +41,7 @@ class CollectionComponent extends Object
     private function _getCollectionData()
     {
     		$this->_collectionMembership   = (new \yii\db\Query())
-    				->select(['c.id as collection_id','c.title as title' , 'c.description',
+    				->select(['c.id as collection_id','c.title as collection_title' , 'c.description as collection_description',
     					'rct.name as collection_type_name',  
     					'rct.id as collection_type_id', 
     					'uc.member_type_id', 

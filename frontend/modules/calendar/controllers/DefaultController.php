@@ -18,6 +18,8 @@ class DefaultController extends XController
         if (! Yii::$app->user->isGuest){
             yii::$app->jsconfig->addData('myCalendars', yii::$app->CalendarComponent->myCalendars);
             yii::$app->jsconfig->addData('createEventUri', Url::to('/calendar/ajax/createevent') );
+            yii::$app->jsconfig->addData('subscribeUri', Url::to('/calendar/ajax/subscribe') );
+            yii::$app->jsconfig->addData('unsubscribeUri', Url::to('/calendar/ajax/unsubscribe') );
 
             
         }
@@ -59,33 +61,42 @@ class DefaultController extends XController
     {
         $tree = []; 
         foreach(yii::$app->CollectionComponent->myList as $collection)
-            $tree[] = [
-                        'text'=>$collection['title'],
-                        'selectedIcon'=>'glyphicon glyphicon-calendar',
-                        'selectable'=>false, 
-                        'nodes'=>
-                            [
-                                [
-                                    'text'=>'abce',
-                                    'custom'=>'boo!',
-                                    
-                                    //'selectable'=>'true',
-                                   // 'icon'=>'glyphicon glyphicon-calendar', 
-                                   'state'=>['checked'=>true,], 
-                                     
-                                    
-                                ],
-                                [
-                                    'text'=>'def', 
-
-                                ]
-                            ]
-                        ];  
+            $tree[] = $this->_getTreeSection($collection);
         
         return $tree; 
 
     }
 /* ********************************************************************** */ 
+    private function _getTreeSection($collection)
+    {
+        $checked = false; 
+        $nodes = []; 
+        foreach(yii::$app->CalendarComponent->myCalendars as $calendar)
+        {
+            $checked = false; 
+            if ($calendar['collection_id'] == $collection['collection_id'])
+            {
+                if (array_key_exists( $calendar['calendar_id'], yii::$app->CalendarComponent->myCalendarList))
+                    $checked = true; 
+                            $nodes[] = [
+                                'text'=>$calendar['calendar_title'], 
+                                'cal_id'=>$calendar['calendar_id'], 
+                                'state'=>['checked'=>$checked], 
+                            ];
 
+            }
+        }
+        return [
+                'text'=>$collection['collection_title'], 
+                'selectedIcon'=>'glyphicon glyphicon-calendar',
+                'selectable'=>false, 
+                'tags'=>[count($nodes)],
+                'state'=>['disabled'=>(count($nodes)===0)],  
+                'nodes'=>$nodes, 
+
+        ]; 
+    }
+
+/* ********************************************************************** */ 
 
 }

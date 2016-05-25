@@ -9,7 +9,7 @@ AppPackageCalendar.prototype = {
     delayed:false, // whether to load on start
     selectedDate:0, 
     selectedTime:0, 
-    
+    calId:0, 
   /* ********************************************************** */    
     
     init:function() { //default function
@@ -18,11 +18,12 @@ AppPackageCalendar.prototype = {
             data: $.app.mc.tree,
             highlightSelected: false, 
             levels:0, 
+            showTags:true, 
             onNodeChecked: function(event, data) {
-              $.app.cal.calendarToggle(data); 
+              $.app.cal.subscribe(data); 
             },
             onNodeUnchecked: function(event, data) {
-              $.app.cal.calendarToggle(data); 
+              $.app.cal.unsubscribe(data); 
             }
         });
         return true;
@@ -30,47 +31,47 @@ AppPackageCalendar.prototype = {
     	// do some init like set the fields to an initial value
 
     }, 
+    getDataForm:function(){
+      return {
+            '_csrf' : $.app.mc.csrfToken 
+          }
+    } ,
   /* ********************************************************** */  
-    calendarToggle:function(data){
-          console.info(data); 
+    subscribe:function(data){
+          var form = this.getDataForm(); 
+          form.cal_id = data.cal_id;
+          $.app.cal.calId = data.cal_id; 
+          $.ajax({
+              type: "POST",
+              url: $.app.mc.subscribeUri,
+              data: form,
+              success: function(data,status,xhr){
+                 $('#full-calendar').fullCalendar('refetchEvents');
+              },
+              dataType: 'json'
+            });
     },
   /* ********************************************************** */  
-    getTree: function()
-    {
-    return   [
-      {
-        text: "Parent 1",
-              nodes: [
-            {
-              text: "Child 1",
-              nodes: [
-                {
-                  text: "Grandchild 1"
-                },
-                {
-                  text: "Grandchild 2"
-                }
-              ]
-            },
-            {
-              text: "Child 2"
-            }
-          ]
-        },
-        {
-          text: "Parent 2"
-        },
-        {
-          text: "Parent 3"
-        },
-        {
-          text: "Parent 4"
-        },
-        {
-          text: "Parent 5"
-        }
-      ];
-    },  
+  
+    unsubscribe:function(data){
+          var form = this.getDataForm(); 
+          form.cal_id = data.cal_id;
+          $.app.cal.calId = data.cal_id; 
+          $.ajax({
+              type: "POST",
+              url: $.app.mc.unsubscribeUri,
+              data: form,
+              success: function(data,status,xhr){
+                  $('#full-calendar').fullCalendar('removeEvents', function(event) { 
+                        return event.cal_id == $.app.cal.calId; 
+              });
+
+              },
+              dataType: 'json'
+            });
+    },
+  /* ********************************************************** */  
+   
     dayClick:function(date, jsEvent, view)
     {
         this.selectedDate = date.format('DD-MM-YYYY');

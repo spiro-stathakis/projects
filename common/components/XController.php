@@ -8,7 +8,7 @@ namespace common\components;
 //use yii\filters\AccessControl;
 
 
-
+use yii; 
 /**
  * Site controller
  */
@@ -27,8 +27,11 @@ abstract class XController extends \yii\web\Controller
     {
 
 
-        \yii::$app->jsconfig->addData('g', \yii::$app->user->isGuest); 
-        \yii::$app->language = 'en-gb'; 
+        yii::$app->jsconfig->addData('g', yii::$app->user->isGuest); 
+        yii::$app->jsconfig->addData('csrfTokenParam',yii::$app->request->csrfParam); 
+        yii::$app->jsconfig->addData('csrfToken', yii::$app->request->csrfToken); 
+        
+        yii::$app->language = 'en-gb'; 
         $this->collectionComponent = \yii::$app->CollectionComponent;
         $this->enableCsrfValidation = false;
         return parent::init(); 

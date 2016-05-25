@@ -9,6 +9,7 @@ use frontend\modules\calendar\models\Booking;
 use frontend\modules\calendar\models\Event;
 use frontend\modules\calendar\models\CalEvent;
 use frontend\modules\calendar\models\EventEntry;
+use frontend\modules\calendar\models\CalendarSubscription; 
 use common\components\XController;
 use common\components\Types; 
 use yii\widgets\ActiveForm;
@@ -37,7 +38,14 @@ class AjaxController extends XController
             'access' => [
                         'class' => AccessControl::className(),
                         'rules' => [
-                                    ['actions' => ['createevent','listcalendars', 'listevents'], 'allow' => true, 'roles' => ['@'],], 
+                                    ['actions' => ['createevent',
+                                                    'listcalendars', 
+                                                    'listevents', 
+                                                    'unsubscribe', 
+                                                    'subscribe', 
+                                                ], 
+
+                                                'allow' => true, 'roles' => ['@'],], 
                         ],
             ],
         ];
@@ -53,7 +61,52 @@ class AjaxController extends XController
         print_r(yii::$app->CalendarComponent->myCalendars); 
     }
     /* ****************************************************************************************** */ 
-   
+    public function actionSubscribe()
+    {
+            $cal_id = yii::$app->request->post('cal_id'); 
+            if ($cal_id  === null)
+                throw new \yii\web\HttpException(404, sprintf('Calendar not found %s', $cal_id));
+           
+            $model = CalendarSubscription::findOne([
+                'calendar_id' => $cal_id,
+                'user_id' => yii::$app->user->id,
+            ]);
+            if ($model == null)
+            {
+                $model = new CalendarSubscription; 
+                $model->user_id = yii::$app->user->id; 
+                $model->calendar_id = $cal_id; 
+            }
+
+            $model->display_option_id = Types::$boolean['true']['id']; 
+            $model->save(); 
+            $this->sendContent(['status'=>'success']); 
+
+
+    }
+    /* ****************************************************************************************** */ 
+    public function actionUnsubscribe()
+    {
+            $cal_id = yii::$app->request->post('cal_id'); 
+            if ($cal_id  === null)
+                throw new \yii\web\HttpException(404, sprintf('Calendar not found %s', $cal_id));
+           
+            $model = CalendarSubscription::findOne([
+                'calendar_id' => $cal_id,
+                'user_id' => yii::$app->user->id,
+            ]);
+            if ($model == null)
+            {
+                $model = new CalendarSubscription; 
+                $model->user_id = yii::$app->user->id; 
+                $model->calendar_id = $cal_id; 
+            }
+
+            $model->display_option_id = Types::$boolean['false']['id']; 
+            $model->save(); 
+            $this->sendContent(['status'=>'success']); 
+
+    }
     /* ****************************************************************************************** */ 
     
     public function actionCreateevent()
@@ -114,11 +167,7 @@ class AjaxController extends XController
 
     }
     /* ****************************************************************************************** */ 
-    public function actionTogglesub()
-    {
-            $request = Yii::$app->request;
-            $cal_id = $request['cal_id']; 
-    }
+   
     /* ****************************************************************************************** */ 
     public function actionListevents($start=NULL,$end=NULL,$_=NULL)
     {
@@ -134,6 +183,7 @@ class AjaxController extends XController
         {
             $model = new CalEvent(); 
             $model->id = $e['event_entry_id']; 
+            $model->cal_id = $e['calendar_id']; 
             if (strlen($e['event_entry_title']) > 0)
                 $model->title =  $e['event_entry_title']; 
             else 
