@@ -46,8 +46,29 @@ class Booking extends Model
         return [
             [['title','start_time','end_time','start_date', 'calendar_id'], 'required'],
             [['start_timestamp','end_timestamp'], 'integer'],
+            [['start_timestamp'] , 'validateSlot'], 
+            [['start_timestamp'] , 'validateStartEnd'], 
             [['start_datetime_uk','end_datetime_uk'] , 'date', 'format'=>'dd-MM-yyyy H:m'],
         ];
+    }
+    /* ************************************************************************************************ */ 
+
+    public function validateStartEnd($attribute, $params)
+    {
+       if ($this->start_timestamp > $this->end_timestamp)
+                $this->addError($attribute, 'The end date is before the start date.');
+            
+            
+    }
+    /* ************************************************************************************************ */ 
+
+    public function validateSlot($attribute, $params)
+    {
+        $conflicts =yii::$app->CalendarComponent->hasConflict($this->start_timestamp, $this->end_timestamp, $this->calendar_id);
+            if ($conflicts)
+                $this->addError($attribute, 'This slot has already been booked.');
+            
+            
     }
     /* ************************************************************************************************ */ 
 
@@ -69,8 +90,6 @@ class Booking extends Model
         else 
             $this->jsObject['allDay'] = false;
 
-        $this->start_timestamp = $dateObj->ukDateTimeToTimestamp($this->start_datetime_uk);
-        $this->end_timestamp = $dateObj->ukDateTimeToTimestamp($this->end_datetime_uk);
         $this->jsObject['start'] = $dateObj->timeStampToIsoDateTime($this->start_timestamp);
         $this->jsObject['end'] = $dateObj->timeStampToIsoDateTime($this->end_timestamp);
         $this->jsObject['className'] = sprintf('calendar-%s', $this->calendar_id); 
@@ -84,8 +103,11 @@ class Booking extends Model
     /* ************************************************************************************************ */ 
     public function beforeValidate()
     {
-        $this->start_datetime_uk  = sprintf(sprintf('%s %s', $this->start_date, $this->start_time)); 
-        $this->end_datetime_uk  = sprintf(sprintf('%s %s', $this->start_date, $this->end_time)); 
+        $dateObj =\yii::$app->DateComponent; 
+        $this->start_datetime_uk  = sprintf('%s %s', $this->start_date, $this->start_time); 
+        $this->end_datetime_uk  = sprintf('%s %s', $this->start_date, $this->end_time); 
+        $this->start_timestamp = $dateObj->ukDateTimeToTimestamp($this->start_datetime_uk);
+        $this->end_timestamp = $dateObj->ukDateTimeToTimestamp($this->end_datetime_uk);
         
         return parent::beforeValidate(); 
     }

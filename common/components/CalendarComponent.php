@@ -12,7 +12,7 @@ getEvents: Get events appropriate to user context
 getMyCalendarList: Return array ['id'=>'name'] of items that is appropriate to user context AND selected to view
 getTheCalendarList: Return array ['id'=>'name'] of items that is appropriate to user context 
 getMyCalendars: Return array of records that is appropriate to user context 
-
+hasConflict: Returns boolean 
 
 */ 
 class CalendarComponent extends Object
@@ -69,7 +69,11 @@ class CalendarComponent extends Object
     }
     
     /* ******************************************************************************************************* */ 
-    
+    public function hasConflict($start,$end,$calendar_id)
+    {
+        return $this->_hasConflict($start,$end,$calendar_id); 
+    }
+    /* ******************************************************************************************************* */ 
     public function getEvents($start,$end)
     {
         return $this->_getEvents($start, $end); 
@@ -131,8 +135,37 @@ class CalendarComponent extends Object
     /*                                          PRIVATE FUNCTIONS                                              */ 
 
     /* ******************************************************************************************************* */ 
-    
+    private function _hasConflict($start, $end,$calendar_id)
+         {
+            $data   = (new \yii\db\Query())
+                ->select(['e.id as event_id' , 'ee.id as event_entry_id' , 'ee.booking_status_id', 'c.id as calendar_id'])
+                ->from('event e')
+                ->join('INNER JOIN','calendar c' , 'e.calendar_id=c.id')
+                ->join('INNER JOIN', 'event_entry ee' , 'ee.event_id=e.id')
+                ->where(
+                        '(c.id = :calendar_id)
+                         AND 
+                        (
+                            ( :start >  ee.start_timestamp AND :start < ee.end_timestamp ) 
+                            OR 
+                            ( :end > ee.start_timestamp  AND  :end < ee.end_timestamp )
+                            OR 
+                            ( :start = ee.start_timestamp )
+                            OR 
+                            ( :start < ee.start_timestamp AND :end > ee.end_timestamp ) 
+                             
+                        )')
+                 ->addParams([':start'=>$start, 
+                             ':end'=>$end , 
+                             ':calendar_id'=>$calendar_id 
+                        ])
+                ->all();
 
+         return  $data; 
+
+        }
+    /* ******************************************************************************************************* */ 
+    
     private function _getEvents($start, $end)
          {
             $data   = (new \yii\db\Query())
@@ -150,10 +183,11 @@ class CalendarComponent extends Object
                 ->join('LEFT JOIN', 'event_entry ee' , 'ee.event_id=e.id')
                 ->join('LEFT JOIN','ref_booking_status rbs', 'ee.booking_status_id=rbs.id')
                 ->join('LEFT JOIN', 'calendar_subscription cs' , 'cs.calendar_id=c.id')
-                ->where('(ee.start_timestamp >= :start AND ee.end_timestamp <= :end)
+                ->where(
+                        '(ee.start_timestamp >= :start AND ee.end_timestamp <= :end)
                             AND 
-                        (cs.display_option_id = :true OR cs.display_option_id IS NULL)
-                    ')
+                        (cs.display_option_id = :true OR cs.display_option_id IS NULL)'
+                        )
                  ->addParams([':start'=>$start, 
                              ':end'=>$end , 
                              ':true'=>Types::$boolean['true']['id'] 
@@ -163,6 +197,8 @@ class CalendarComponent extends Object
          return  $data; 
 
         }
+    /* ******************************************************************************************************* */ 
+   
     /* ******************************************************************************************************* */ 
     
     private function _getMyCalendars()

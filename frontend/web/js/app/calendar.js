@@ -34,7 +34,7 @@ AppPackageCalendar.prototype = {
     getDataForm:function(){
       return {
             '_csrf' : $.app.mc.csrfToken 
-          }
+          };
     } ,
   /* ********************************************************** */  
     subscribe:function(data){
@@ -94,7 +94,7 @@ AppPackageCalendar.prototype = {
     eventMouseover:function(date, jsEvent, view)
     {
      
-     console.info(moment(date._i).calendar()); 
+    // console.info(moment(date._i).calendar()); 
         //$('#eventModal').modal(); 
         
     },
@@ -128,13 +128,14 @@ AppPackageCalendar.prototype = {
       for(var i=0 ; i < data.message.length ; i++)
         response += data.message[i] + '  '; 
       $('#spanResponse').css('color','#990000'); 
-      $('#spanTitle').html(title); 
+      
     }
     if (! data.error)
     { 
         $('#eventModal').modal('hide');   
         $('#full-calendar').fullCalendar('renderEvent', data.message); 
     } 
+    $('#spanTitle').html(title);  
      $('#spanResponse').html(response); 
   }
 /* ********************************************************** */
