@@ -24,7 +24,7 @@ class m311244_134921_rbac extends Migration
         $auth->add($editCalendar);
 
 
-        $core_staff_role = $auth->createRole('core_manager_role');
+        $core_staff_role = $auth->createRole('core_staff_role');
         $auth->add($core_staff_role);
         
 

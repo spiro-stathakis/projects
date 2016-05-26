@@ -65,6 +65,35 @@ class ProjectComponent extends Object
 
     }
     /* ******************************************************************************************************* */ 
+    public function getMyProjectCollectionList()
+    {
+        $list = []; $out = []; 
+        if (Yii::$app->user->can('core_staff_role'))
+            $list = $this->allProjects; 
+        else 
+            $list = $this->myProjects; 
+        foreach ($list as $project) 
+            $out[$project['project_id']] = $project['project_title']; 
+
+        return $out; 
+        
+    }
+    /* ******************************************************************************************************* */ 
+    
+    public function getMyProjectList()
+    {
+        $list = []; $out = []; 
+        if (Yii::$app->user->can('core_staff_role'))
+            $list = $this->allProjects; 
+        else 
+            $list = $this->myProjects; 
+        foreach ($list as $project) 
+            $out[$project['project_id']] = $project['project_title']; 
+
+        return $out; 
+        
+    }
+    /* ******************************************************************************************************* */ 
     public function getAllProjects()
     {
         if ($this->_allProjects === null)
@@ -86,8 +115,7 @@ class ProjectComponent extends Object
                             'p.id as project_id','p.title as project_title','p.code as project_code'
                            ])
                     ->from('collection c')
-                    ->join('LEFT JOIN','project_collection pc' , 'pc.collection_id=c.id')
-                    ->join('LEFT JOIN','project p' , 'pc.project_id=p.id')
+                    ->join('LEFT JOIN','project p' , 'p.collection_id=c.id')
                     ->orderBy('p.created_at DESC')
                     ->all();
 
@@ -105,8 +133,6 @@ class ProjectComponent extends Object
                             'uc.member_type_id'
                              ])
                     ->from('collection c')
-                    ->join('LEFT JOIN','project_collection pc' , 'pc.collection_id=c.id')
-                    ->join('LEFT JOIN','project p' , 'pc.project_id=p.id')
                     ->join('LEFT JOIN','user_collection uc' , 'uc.collection_id=c.id')
                     ->where('uc.status_id=:status_active AND uc.user_id=:user_id')
                     ->addParams([':status_active'=>Types::$status['active']['id'], 

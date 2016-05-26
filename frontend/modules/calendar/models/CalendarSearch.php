@@ -19,7 +19,7 @@ class CalendarSearch extends Calendar
     {
         return [
             [['id', 'collection_id', 'project_option_id', 'allow_overlap_option_id', 'read_only_option_id', 'advance_limit', 'old_id', 'sort_order', 'status_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['title', 'description', 'location', 'start_hour', 'start_min', 'end_hour', 'end_min', 'hex_code'], 'safe'],
+            [['title', 'description', 'location', 'start_time','end_time' 'hex_code'], 'safe'],
         ];
     }
 
@@ -77,10 +77,9 @@ class CalendarSearch extends Calendar
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'description', $this->description])
             ->andFilterWhere(['like', 'location', $this->location])
-            ->andFilterWhere(['like', 'start_hour', $this->start_hour])
-            ->andFilterWhere(['like', 'start_min', $this->start_min])
-            ->andFilterWhere(['like', 'end_hour', $this->end_hour])
-            ->andFilterWhere(['like', 'end_min', $this->end_min])
+            ->andFilterWhere(['like', 'start_time', $this->start_hour])
+            ->andFilterWhere(['like', 'end_time', $this->start_min])
+           
             ->andFilterWhere(['like', 'hex_code', $this->hex_code]);
 
         return $dataProvider;

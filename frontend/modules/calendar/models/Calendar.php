@@ -20,10 +20,8 @@ use yii\behaviors\BlameableBehavior;
  * @property string $title
  * @property string $description
  * @property string $location
- * @property string $start_hour
- * @property string $start_min
- * @property string $end_hour
- * @property string $end_min
+ * @property string $start_time
+ * @property string $end_time
  * @property integer $hex_code
  * @property integer $project_option_id
  * @property integer $allow_overlap_option_id
@@ -62,10 +60,8 @@ class Calendar extends \common\components\XActiveRecord
         {
             $this->project_option_id = Types::$boolean['false']['id']; 
             $this->read_only_option_id = Types::$boolean['false']['id']; 
-            $this->start_hour = '07'; 
-            $this->start_min = '00'; 
-            $this->end_hour = '23'; 
-            $this->end_min = '59'; 
+            $this->start_time = '07:00'; 
+            $this->end_time = '20:00'; 
             $this->hex_code ='#d42300'; 
             $this->advance_limit =90; 
             $this->old_id = 0 ; 
@@ -105,7 +101,7 @@ class Calendar extends \common\components\XActiveRecord
             [['collection_id', 'title', 'description', 'location', 'hex_code'], 'required'],
             [['collection_id', 'project_option_id', 'allow_overlap_option_id', 'read_only_option_id', 'advance_limit', 'old_id', 'sort_order', 'status_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['title', 'description', 'location'], 'string', 'max' => 2048],
-            [['start_hour', 'start_min', 'end_hour', 'end_min'], 'string', 'max' => 4],
+            [['start_time', 'end_time'], 'string', 'max' => 8],
             [['allow_overlap_option_id'], 'exist', 'skipOnError' => true, 'targetClass' => RefBoolean::className(), 'targetAttribute' => ['allow_overlap_option_id' => 'id']],
             [['collection_id'], 'exist', 'skipOnError' => true, 'targetClass' => Collection::className(), 'targetAttribute' => ['collection_id' => 'id']],
             [['hex_code'], 'string', 'max' => 16],
@@ -128,10 +124,8 @@ class Calendar extends \common\components\XActiveRecord
             'title' => Yii::t('app', 'Title'),
             'description' => Yii::t('app', 'Description'),
             'location' => Yii::t('app', 'Location'),
-            'start_hour' => Yii::t('app', 'Start Hour'),
-            'start_min' => Yii::t('app', 'Start Min'),
-            'end_hour' => Yii::t('app', 'End Hour'),
-            'end_min' => Yii::t('app', 'End Min'),
+            'start_time' => Yii::t('app', 'Day starts'),
+            'end_time' => Yii::t('app', 'Day ends'),
             'hex_code' => Yii::t('app', 'Palette Colour'),
             'project_option_id' => Yii::t('app', 'Project Option ID'),
             'allow_overlap_option_id' => Yii::t('app', 'Allow Event Overlap'),

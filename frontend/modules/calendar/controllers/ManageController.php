@@ -65,7 +65,7 @@ class ManageController extends XController
     public function actionCreate()
 	{
         $model = new Calendar();
-
+       
         if ($model->load(\yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {

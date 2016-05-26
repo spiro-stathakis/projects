@@ -9,6 +9,7 @@ namespace common\components;
 
 
 use yii; 
+use common\components\Types; 
 /**
  * Site controller
  */
@@ -30,6 +31,13 @@ abstract class XController extends \yii\web\Controller
         yii::$app->jsconfig->addData('g', yii::$app->user->isGuest); 
         yii::$app->jsconfig->addData('csrfTokenParam',yii::$app->request->csrfParam); 
         yii::$app->jsconfig->addData('csrfToken', yii::$app->request->csrfToken); 
+
+         yii::$app->jsconfig->addData('type_boolean', 
+                [
+                    'true'=>Types::$boolean['true']['id'],
+                    'false'=>Types::$boolean['false']['id']
+                ]);
+          yii::$app->jsconfig->addData('csrfToken', yii::$app->request->csrfToken); 
         
         yii::$app->language = 'en-gb'; 
         $this->collectionComponent = \yii::$app->CollectionComponent;

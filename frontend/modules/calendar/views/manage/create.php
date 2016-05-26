@@ -6,16 +6,17 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model frontend\modules\calendar\models\Calendar */
 
-$this->title = Yii::t('app', 'Create Calendar');
+$this->title = Yii::t('app', 'Create a calendar');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Calendars'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="calendar-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
-
+          <ul class="nav nav-sidebar">
+         	 <?= $this->render('_form', [
+        		'model' => $model,
+    		]); ?>
+   		</ul> 
 </div>

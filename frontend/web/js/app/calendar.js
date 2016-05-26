@@ -13,6 +13,21 @@ AppPackageCalendar.prototype = {
   /* ********************************************************** */    
     
     init:function() { //default function
+       
+       /*** set up calendar - project relationship ******/ 
+        $('#calendar_id').change(function(){
+            var cal_id=$(this).val();  
+            var project_option = false; 
+              for (var i =0 ; i>$.app.mc.myCalendars.length ; i++ )
+                  if (cal_id == $.app.mc.myCalendars[i].calendar_id)        
+                      if ($.app.mc.myCalendars[i].project_option_id == $.app.mc.types_boolean.true)
+                          project_option = true;
+              
+            $('#project_id').prop('disabled', ! project_option); 
+             
+        });
+
+        /*** set up tree view  ******/ 
         $('#tree').treeview({
             showCheckbox:true, 
             data: $.app.mc.tree,
@@ -26,6 +41,7 @@ AppPackageCalendar.prototype = {
               $.app.cal.unsubscribe(data); 
             }
         });
+         $('#project_id').prop('disabled', true); 
         return true;
 
     	// do some init like set the fields to an initial value
@@ -36,6 +52,9 @@ AppPackageCalendar.prototype = {
             '_csrf' : $.app.mc.csrfToken 
           };
     } ,
+  
+  /* ********************************************************** */
+
   /* ********************************************************** */  
     subscribe:function(data){
           var form = this.getDataForm(); 
@@ -81,6 +100,7 @@ AppPackageCalendar.prototype = {
         $('#start_date').val(this.selectedDate);
         $('#start_time').val(this.selectedTime);
         $('#end_time').val(date.add(1, 'hours').format('LT'));
+        $('#booking-title').val(''); 
         $('#eventModal').modal(); 
 		
     }, 

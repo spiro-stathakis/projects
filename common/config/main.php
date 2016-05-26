@@ -58,7 +58,7 @@ return [
             'class'=>'common\components\CollectionComponent', 
         ],
 
-        'project'=> [
+        'ProjectComponent'=> [
             'class'=>'common\components\ProjectComponent', 
         ], 
          

@@ -1,8 +1,12 @@
 <?php
 
-use yii\helpers\Html;
-use yii\widgets\ActiveForm;
 use kartik\color\ColorInput;
+
+use yii\bootstrap\Html;
+use kartik\form\ActiveForm;
+use kartik\builder\Form;
+use kartik\widgets\SwitchInput;
+use yii\helpers\Url; 
 
 /* @var $this yii\web\View */
 /* @var $model frontend\modules\calendar\models\Calendar */
@@ -10,39 +14,100 @@ use kartik\color\ColorInput;
 ?>
 
 <div class="calendar-form">
+    <div class="row">
+            <div class="col-sm-6-offset col-sm-offset-2 col-md-7 col-md-offset-2 main">
+            <div></div>
+            <h2><?= Html::encode($this->title) ?></h2>
+                    <?php $form = ActiveForm::begin(); ?>
+                    <?=Form::widget([
+                            'model'=>$model,
+                            'form'=>$form,
+                            'columns'=>2,
+                            'attributes'=>[       // 2 column layout
+                                'title'=>['type'=>Form::INPUT_TEXT, 'options'=>['placeholder'=>'Calendar title...']],
+                                'location'=>['type'=>Form::INPUT_TEXT, 
+                                                'options'=>['placeholder'=>'Calendar location'],
+                                                ]
+                                        ]
+                    ]);?> 
 
-    <?php $form = ActiveForm::begin(); ?>
+                    <?=Form::widget([
+                            'model'=>$model,
+                            'form'=>$form,
+                            'columns'=>3,
+                            'attributes'=>[       // 2 column layout
+                                'description'=>['type'=>Form::INPUT_TEXTAREA, 
+                                                'options'=>['placeholder'=>'Calendar description'],
+                                                'columnOptions'=>['colspan'=>3],
+                                                ]
+                                        ]
+                    ]);?>
 
-   
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+                   <?=Form::widget([     // nesting attributes together (without labels for children)
+                       'model'=>$model,
+                       'form'=>$form,
+                       'columns'=>3,
+                       'attributes'=>[
+                            'start_time'=>[
+                                        'type'=>Form::INPUT_WIDGET, 
+                                        'widgetClass'=>'\kartik\time\TimePicker', 
+                                        'options'=>[
+                                                    'pluginOptions'=>['showMeridian'=>false], 
+                                                    'options'=>['id'=>'start_time'],
+                                                    ], 
 
-    <?= $form->field($model, 'location')->textInput(['maxlength' => true]) ?>
+                                       
+                                        ],
+                           'end_time'=>[
+                                        'type'=>Form::INPUT_WIDGET, 
+                                        'widgetClass'=>'\kartik\time\TimePicker', 
+                                        'options'=>[
+                                                    'pluginOptions'=>['showMeridian'=>false], 
+                                                    'options'=>['id'=>'end_time'],
+                                                    ], 
 
-    <?= $form->field($model, 'collection_id')->dropDownList($model->collectionOptions , []) ?> 
+                                       
+                                        ],
+                             'advance_limit'=>['type'=>Form::INPUT_TEXT, 
+                                                  'options'=>['placeholder'=>'Decide an advance limit']
+                                            ],
+                                        
+                            ]
+                    ]);?>
 
-    <?= $form->field($model, 'start_hour')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'start_min')->textInput(['maxlength' => true]) ?>
+                     <?=Form::widget([
+                            'model'=>$model,
+                            'form'=>$form,
+                            'columns'=>4,
+                            'attributes'=>[       // 2 column layout
+                                'collection_id'=>['type'=>Form::INPUT_DROPDOWN_LIST,
+                                                    'items'=>$model->collectionOptions, 
+                                                    ],
+                                'allow_overlap_option_id'=>['type'=>Form::INPUT_DROPDOWN_LIST, 
+                                                        'items'=>$model->booleanOptions,
+                                                    ],
+                                'read_only_option_id'=>['type'=>Form::INPUT_DROPDOWN_LIST, 
+                                                        'items'=>$model->booleanOptions,
+                                                    ],
+                                'hex_code'=>['type'=>Form::INPUT_WIDGET,
+                                            'widgetClass'=>'\kartik\color\ColorInput', 
+                                             'options'=>['options'=>['placeholder'=>'Select colour']]        
+                                            ],
+                                  ]      
 
-    <?= $form->field($model, 'end_hour')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'end_min')->textInput(['maxlength' => true]) ?>
+                    ]);?> 
+                    
 
-    
-    <?= $form->field($model, 'hex_code')->widget(ColorInput::classname(), ['options' => ['placeholder' => 'Select color ...'],]);?>
-
-    <?= $form->field($model, 'allow_overlap_option_id')->dropDownList($model->booleanOptions, []) ?>
-    <?= $form->field($model, 'read_only_option_id')->dropDownList($model->booleanOptions, []) ?>
-   
-
-    <?= $form->field($model, 'advance_limit')->textInput() ?>
-
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-    </div>
-
-    <?php ActiveForm::end(); ?>
-
+                    
+                    <div class="form-group">
+                        <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+                    </div>
+                    <?php ActiveForm::end(); ?>
+            </div>
+     
+            
+    </div>     
 </div>
