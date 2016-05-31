@@ -31,7 +31,7 @@ class DefaultController  extends \common\components\XController
                         'class' => AccessControl::className(),
                         'rules' => [
                                     ['actions' => ['index'], 'allow' => true, 'roles' => ['@'],], 
-                                    ['actions' => ['members'], 'allow' => true, 'roles' => ['@'],], 
+                                    ['actions' => ['manage'], 'allow' => true, 'roles' => ['@'],], 
                                     
                                     ],
                         ],
@@ -62,7 +62,7 @@ class DefaultController  extends \common\components\XController
      	return $this->render('index' , ['memberProvider'=>$memberProvider,'managerProvider'=>$managerProvider]);
     }
     /* *********************************************************************************************************************** */ 
-    public function actionMembers($id)
+    public function actionManage($id)
     {
 
       
@@ -82,7 +82,7 @@ class DefaultController  extends \common\components\XController
          throw new \yii\web\HttpException(404, yii::t('app', 'Cannot find collection.')); 
 
 
-    	return $this->render('members' , ['collectionModel'=>$collectionModel]); 
+    	return $this->render('manage' , ['collectionModel'=>$collectionModel]); 
     }
 
 

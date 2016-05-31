@@ -23,7 +23,16 @@ abstract class XActiveRecord extends \yii\db\ActiveRecord
             return parent::init(); 
 
         }
-/* ************************************************************************************************************ */ 
+/* ******************************************************************************************************** */ 
+        public function getBooleanOptions()
+            {
+                return [
+                        Types::$boolean['true']['id']=>Types::$boolean['true']['code'], 
+                        Types::$boolean['false']['id']=>Types::$boolean['false']['code'], 
+                ];
+            }
+/* ********************************************************************************************************* */ 
+
     	public function behaviors()
     	{
     		return [

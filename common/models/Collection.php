@@ -4,7 +4,8 @@ namespace common\models;
 
 use Yii;
 use common\components\Types; 
-
+use frontend\modules\calendar\models\Calendar; 
+use frontend\modules\calendar\models\Project; 
 
 /**
  * This is the model class for table "collection".
@@ -45,13 +46,24 @@ class Collection extends \common\components\XActiveRecord
         return 'collection';
     }
 
+    public function init()
+    {
+        if ($this->isNewRecord)
+        {
+            $this->member_count =0 ; 
+            $this->manager_count =0; 
+            $this->membership_duration = 0; 
+            $this->status_id = Types::$status['active']['id'];
+        }
+        return parent::init(); 
+    }
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['title', 'alias', 'collection_type_id', 'public_option_id'], 'required'],
+            [['title', 'alias', 'collection_type_id', 'public_option_id', 'membership_duration'], 'required'],
             [['collection_type_id', 'membership_duration', 'member_count', 'manager_count', 'sort_order', 'status_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['title', 'alias'], 'string', 'max' => 255],
             [['description'], 'string', 'max' => 4096],
@@ -60,6 +72,15 @@ class Collection extends \common\components\XActiveRecord
         ];
     }
 
+    public function getCollectionTypeOptions()
+    {
+
+        return [
+                Types::$collection_type['resource']['id']=>Types::$collection_type['resource']['name'],
+                Types::$collection_type['project']['id']=>Types::$collection_type['project']['name'],
+                Types::$collection_type['group']['id']=>Types::$collection_type['group']['name'],
+            ]; 
+    }
     /**
      * @inheritdoc
      */
@@ -136,6 +157,12 @@ class Collection extends \common\components\XActiveRecord
         return $this->hasMany(ProjectCollection::className(), ['collection_id' => 'id']);
     }
 
+
+    public function getProjects()
+    {
+         return $this->hasMany(Collection::className(), ['id' => 'id']);
+
+    }
     /**
      * @return \yii\db\ActiveQuery
      */

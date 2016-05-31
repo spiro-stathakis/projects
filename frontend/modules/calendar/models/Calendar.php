@@ -82,13 +82,7 @@ class Calendar extends \common\components\XActiveRecord
 
 
     /* ********************************************************************************************** */ 
-    public function getBooleanOptions()
-    {
-        return [
-                Types::$boolean['true']['id']=>Types::$boolean['true']['code'], 
-                Types::$boolean['false']['id']=>Types::$boolean['false']['code'], 
-        ];
-    }
+    
 
 
     /* ********************************************************************************************** */ 
@@ -98,7 +92,7 @@ class Calendar extends \common\components\XActiveRecord
     public function rules()
     {
         return [
-            [['collection_id', 'title', 'description', 'location', 'hex_code'], 'required'],
+            [['collection_id', 'title',   'hex_code'], 'required'],
             [['collection_id', 'project_option_id', 'allow_overlap_option_id', 'read_only_option_id', 'advance_limit', 'old_id', 'sort_order', 'status_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['title', 'description', 'location'], 'string', 'max' => 2048],
             [['start_time', 'end_time'], 'string', 'max' => 8],
@@ -163,7 +157,7 @@ class Calendar extends \common\components\XActiveRecord
    public function getCollectionOptions()
    {
         $return = []; 
-        foreach ( \yii::$app->CollectionComponent->CalendarCollections as $rec)
+        foreach ( \yii::$app->CollectionComponent->theCollections as $rec)
                 $return[$rec['collection_id']] = $rec['collection_title']; 
 
         return $return; 

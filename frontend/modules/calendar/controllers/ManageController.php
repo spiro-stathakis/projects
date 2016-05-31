@@ -62,12 +62,14 @@ class ManageController extends XController
     }
     /* ********************************************************************** */ 
     
-    public function actionCreate()
+    public function actionCreate($col = null)
 	{
         $model = new Calendar();
-       
+        if ($col !== null) 
+            $model->collection_id = $col ; 
+        
         if ($model->load(\yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['/collections/default/manage', 'id' => $model->collection_id]);
         } else {
             return $this->render('create', [
                 'model' => $model,

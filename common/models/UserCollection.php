@@ -3,7 +3,7 @@
 namespace common\models;
 
 use Yii;
-
+use common\components\Types; 
 /**
  * This is the model class for table "user_collection".
  *
@@ -26,6 +26,18 @@ use Yii;
  */
 class UserCollection extends \common\components\XActiveRecord
 {
+    
+
+    public function init()
+    {
+
+        parent::init();
+        if ($this->isNewRecord)
+        {
+            $this->status_id = Types::$status['active']['id']; 
+        }
+         
+    }
     /**
      * @inheritdoc
      */

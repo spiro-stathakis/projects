@@ -83,7 +83,7 @@ use yii\helpers\Url;
                             'columns'=>4,
                             'attributes'=>[       // 2 column layout
                                 'collection_id'=>['type'=>Form::INPUT_DROPDOWN_LIST,
-                                                    'items'=>$model->collectionOptions, 
+                                                    'items'=>yii::$app->CollectionComponent->myManagerList, 
                                                     ],
                                 'allow_overlap_option_id'=>['type'=>Form::INPUT_DROPDOWN_LIST, 
                                                         'items'=>$model->booleanOptions,

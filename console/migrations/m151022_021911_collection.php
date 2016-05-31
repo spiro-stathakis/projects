@@ -25,7 +25,7 @@ class m151022_021911_collection extends XMigration
                 [
                     'id'=>$this->primaryKey(),
                     'title'=>$this->string(255)->notNull(),
-                    'alias'=>$this->string(255)->notNull(),
+                    'alias'=>$this->string(255),
                     'description'=>$this->string(4096),
                     'collection_type_id' => $this->integer()->notNull(),
                     'public_option_id' => $this->integer()->notNull(),
