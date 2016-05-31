@@ -35,7 +35,12 @@ select2.prototype = {
     /* **************************************************** */ 
     addRecord:function(e)
     {
-    		var formData = {id:e.params.data.id, col:$.app.mc.collectionId,mem:$.app.mc.memberType }; 
+    		var formData = {
+                        id:e.params.data.id, 
+                        col:$.app.mc.collectionId,
+                        mem:$.app.mc.memberType,
+                        _csrf:$.app.mc.csrfToken 
+                      }; 
     		$.ajax({
   				type: "POST",
   				url: $.app.mc.addUri,
@@ -48,7 +53,12 @@ select2.prototype = {
     /* **************************************************** */ 
     removeRecord:function(e)
     {
-			var formData = {id:e.params.data.id, col:$.app.mc.collectionId,mem:$.app.mc.memberType }; 
+			var formData = {
+                      id:e.params.data.id, 
+                      col:$.app.mc.collectionId,
+                      mem:$.app.mc.memberType,
+                      _csrf:$.app.mc.csrfToken 
+                    }; 
     		$.ajax({
   				type: "POST",
   				url: $.app.mc.removeUri,

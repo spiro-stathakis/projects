@@ -13,7 +13,7 @@ getMyCalendarList: Return array ['id'=>'name'] of items that is appropriate to u
 getTheCalendarList: Return array ['id'=>'name'] of items that is appropriate to user context 
 getMyCalendars: Return array of records that is appropriate to user context 
 hasConflict: Returns boolean 
-
+calendarRecord: Retrieves a single calendar record 
 */ 
 class CalendarComponent extends Object
 {
@@ -125,9 +125,40 @@ class CalendarComponent extends Object
 	
     /* ******************************************************************************************************* */ 
     
+    public function calendarRecord($calendar_id)
+    {
+        $rec = false; 
+        foreach($this->theCalendarList as $cal)
+            if ($cal['calendar_id'] == $calendar_id )
+                $rec = $cal; 
+        return $rec; 
 
+    }     
 
+    /* ******************************************************************************************************* */ 
+    
+    public function allowOverlapOption($calendar_id)
+    {
+       $out = false; 
+        foreach($this->myCalendars as $cal)
+            if ($cal['calendar_id'] == $calendar_id)
+                if ($cal['allow_overlap_option_id'] == Types::$boolean['true']['id'])
+                    $out = true;
+        return $out;  
+   
+    }
+    /* ******************************************************************************************************* */ 
+    
+    public function projectOption($calendar_id)
+    {
+        $out = false; 
+        foreach($this->myCalendars as $cal)
+            if ($cal['calendar_id'] == $calendar_id)
+                if ($cal['project_option_id'] == Types::$boolean['true']['id'])
+                    $out = true;
+        return $out;  
 
+    }
 
 
     /* ******************************************************************************************************* */ 

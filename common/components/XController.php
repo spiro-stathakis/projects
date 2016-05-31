@@ -18,7 +18,7 @@ abstract class XController extends \yii\web\Controller
     /**
      * @inheritdoc
      */
-    protected $collectionComponent;
+
   
     /* ******************************************************************************************************* */ 
    
@@ -32,7 +32,7 @@ abstract class XController extends \yii\web\Controller
         yii::$app->jsconfig->addData('csrfTokenParam',yii::$app->request->csrfParam); 
         yii::$app->jsconfig->addData('csrfToken', yii::$app->request->csrfToken); 
 
-         yii::$app->jsconfig->addData('type_boolean', 
+         yii::$app->jsconfig->addData('types_boolean', 
                 [
                     'true'=>Types::$boolean['true']['id'],
                     'false'=>Types::$boolean['false']['id']
@@ -40,8 +40,7 @@ abstract class XController extends \yii\web\Controller
           yii::$app->jsconfig->addData('csrfToken', yii::$app->request->csrfToken); 
         
         yii::$app->language = 'en-gb'; 
-        $this->collectionComponent = \yii::$app->CollectionComponent;
-        $this->enableCsrfValidation = false;
+        $this->enableCsrfValidation = true;
         return parent::init(); 
     }
     /* ******************************************************************************************************* */ 

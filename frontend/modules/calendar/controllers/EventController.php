@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\modules\calendar\controllers;
+namespace app\modules\calendar\controllers;
 
 use Yii;
 use frontend\modules\calendar\models\Event;

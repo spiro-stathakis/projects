@@ -43,14 +43,64 @@ class Booking extends Model
 
     public function rules()
     {
+        
         return [
-            [['title','start_time','end_time','start_date', 'calendar_id'], 'required'],
+            [['start_timestamp','end_timestamp','title','start_time','end_time','start_date', 'calendar_id'], 'required'],
             [['start_timestamp','end_timestamp'], 'integer'],
+            [['start_datetime_uk','end_datetime_uk'] , 'date', 'format'=>'dd-MM-yyyy H:m'],
             [['start_timestamp'] , 'validateSlot'], 
             [['start_timestamp'] , 'validateStartEnd'], 
-            [['start_datetime_uk','end_datetime_uk'] , 'date', 'format'=>'dd-MM-yyyy H:m'],
+            [['project_id'] , 'validateProject'], 
             [['project_id']  , 'safe'], 
         ];
+    }
+    
+    /* ************************************************************************************************ */ 
+    
+     public function beforeValidate()
+    {
+        
+        $dateObj =\yii::$app->DateComponent; 
+        $this->start_datetime_uk  = sprintf('%s %s', $this->start_date, $this->start_time); 
+        $this->end_datetime_uk  = sprintf('%s %s', $this->start_date, $this->end_time); 
+        $this->start_timestamp = $dateObj->ukDateTimeToTimestamp($this->start_datetime_uk);
+        $this->end_timestamp = $dateObj->ukDateTimeToTimestamp($this->end_datetime_uk);
+        return parent::beforeValidate();
+        
+    }
+    
+    /* ************************************************************************************************ */ 
+    /* ************************************************************************************************ */ 
+    public function afterValidate()
+    {
+        
+        $dateObj =\yii::$app->DateComponent; 
+        if ($this->all_day_option_id == Types::$boolean['true']['id']) 
+            $this->jsObject['allDay'] = true;  
+        else 
+            $this->jsObject['allDay'] = false;
+
+        $this->jsObject['start'] = $dateObj->timeStampToIsoDateTime($this->start_timestamp);
+        $this->jsObject['end'] = $dateObj->timeStampToIsoDateTime($this->end_timestamp);
+        $this->jsObject['className'] = sprintf('calendar-%s', $this->calendar_id); 
+        $this->jsObject['title'] = $this->title; 
+        $this->jsObject['description'] = $this->description; 
+        $this->jsObject['project_id'] = $this->project_id ; 
+        $this->jsObject['calendar_id'] = $this->calendar_id; 
+        return parent::afterValidate();   
+    }
+    /* ************************************************************************************************ */ 
+    public function validateProject($attribute, $params)
+    {
+        $validator = new yii\validators\NumberValidator(); 
+        $validator->min = 1; 
+        $projectRequired = yii::$app->CalendarComponent->projectOption($this->calendar_id); 
+        if ($projectRequired)
+            if (! $validator->validate($this->$attribute))
+            {
+                $this->addError($attribute, 'A project is required for this event');
+            }
+
     }
     /* ************************************************************************************************ */ 
 
@@ -65,9 +115,13 @@ class Booking extends Model
 
     public function validateSlot($attribute, $params)
     {
-        $conflicts =yii::$app->CalendarComponent->hasConflict($this->start_timestamp, $this->end_timestamp, $this->calendar_id);
+        $allowOverlap = yii::$app->CalendarComponent->allowOverlapOption($this->calendar_id); 
+        if (! $allowOverlap)
+        {
+            $conflicts =yii::$app->CalendarComponent->hasConflict($this->start_timestamp, $this->end_timestamp, $this->calendar_id);
             if ($conflicts)
                 $this->addError($attribute, 'This slot has already been booked.');
+        }
             
             
     }
@@ -81,37 +135,10 @@ class Booking extends Model
                 ]; 
 
     }
-    /* ************************************************************************************************ */ 
-    public function afterValidate()
-    {
-
-        $dateObj =\yii::$app->DateComponent; 
-        if ($this->all_day_option_id == Types::$boolean['true']['id']) 
-            $this->jsObject['allDay'] = true;  
-        else 
-            $this->jsObject['allDay'] = false;
-
-        $this->jsObject['start'] = $dateObj->timeStampToIsoDateTime($this->start_timestamp);
-        $this->jsObject['end'] = $dateObj->timeStampToIsoDateTime($this->end_timestamp);
-        $this->jsObject['className'] = sprintf('calendar-%s', $this->calendar_id); 
-        $this->jsObject['title'] = $this->title; 
-        $this->jsObject['description'] = $this->description; 
-        
-        return parent::afterValidate(); 
-    }
-    /* ************************************************************************************************ */ 
+   
     
     /* ************************************************************************************************ */ 
-    public function beforeValidate()
-    {
-        $dateObj =\yii::$app->DateComponent; 
-        $this->start_datetime_uk  = sprintf('%s %s', $this->start_date, $this->start_time); 
-        $this->end_datetime_uk  = sprintf('%s %s', $this->start_date, $this->end_time); 
-        $this->start_timestamp = $dateObj->ukDateTimeToTimestamp($this->start_datetime_uk);
-        $this->end_timestamp = $dateObj->ukDateTimeToTimestamp($this->end_datetime_uk);
-        
-        return parent::beforeValidate(); 
-    }
+   
     /* ************************************************************************************************ */ 
     public function attributeLabels()
     {

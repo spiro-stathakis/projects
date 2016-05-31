@@ -60,8 +60,13 @@ class DefaultController extends XController
     private function _getTree()
     {
         $tree = []; 
-        foreach(yii::$app->CollectionComponent->myList as $collection)
-            $tree[] = $this->_getTreeSection($collection);
+        $found = []; 
+        foreach(yii::$app->CollectionComponent->theCollections as $collection)
+        {
+           if (! in_array($collection['collection_id'] , $found ))
+                $tree[] = $this->_getTreeSection($collection);
+           $found[] = $collection['collection_id']; 
+        }
         
         return $tree; 
 
@@ -71,20 +76,25 @@ class DefaultController extends XController
     {
         $checked = false; 
         $nodes = []; 
+        $found = []; 
         foreach(yii::$app->CalendarComponent->myCalendars as $calendar)
         {
             $checked = false; 
             if ($calendar['collection_id'] == $collection['collection_id'])
             {
-                if (array_key_exists( $calendar['calendar_id'], yii::$app->CalendarComponent->myCalendarList))
-                    $checked = true; 
-                            $nodes[] = [
-                                'text'=>$calendar['calendar_title'], 
-                                'cal_id'=>$calendar['calendar_id'], 
-                                'state'=>['checked'=>$checked], 
-                            ];
-
+                if (! in_array($calendar['calendar_id'],$found ))
+                {
+                    if (array_key_exists( $calendar['calendar_id'], yii::$app->CalendarComponent->myCalendarList))
+                        $checked = true; 
+                        
+                        $nodes[] = [
+                            'text'=>$calendar['calendar_title'], 
+                            'cal_id'=>$calendar['calendar_id'], 
+                            'state'=>['checked'=>$checked], 
+                        ];
+                }
             }
+            $found[] = $calendar['calendar_id']; 
         }
         return [
                 'text'=>$collection['collection_title'], 

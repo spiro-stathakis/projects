@@ -18,7 +18,7 @@ AppPackageCalendar.prototype = {
         $('#calendar_id').change(function(){
             var cal_id=$(this).val();  
             var project_option = false; 
-              for (var i =0 ; i>$.app.mc.myCalendars.length ; i++ )
+              for (var i =0 ; i<$.app.mc.myCalendars.length ; i++ )
                   if (cal_id == $.app.mc.myCalendars[i].calendar_id)        
                       if ($.app.mc.myCalendars[i].project_option_id == $.app.mc.types_boolean.true)
                           project_option = true;

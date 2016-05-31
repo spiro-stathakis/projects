@@ -20,8 +20,8 @@ use yii\helpers\Html;
             'hover'=>true,
             'condensed'=>true, 
             'columns' => [
-                'title',
-                ['attribute' => 'description'],
+                'collection_title',
+                ['attribute' => 'collection_description'],
                 ['attribute' => 'collection_type_name', 'header'=>'Type'] ,
                 ['header'=>'Options' , 'format'=>'raw', 
                             'value'=>function($model){
@@ -45,8 +45,8 @@ use yii\helpers\Html;
             'hover'=>true,
             'condensed'=>true, 
             'columns' => [
-                'title',
-                ['attribute' => 'description'],
+                'collection_title',
+                ['attribute' => 'collection_description'],
                 ['attribute' => 'collection_type_name', 'header'=>'Type'] ,
              ],
         ]);

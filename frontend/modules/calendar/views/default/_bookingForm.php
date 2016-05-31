@@ -27,7 +27,7 @@ use frontend\packages\BootstrapTreeviewAsset;
 			    'attributes'=>[       // 2 column layout
 			        'title'=>['type'=>Form::INPUT_TEXT, 'options'=>['placeholder'=>'Event title...']],
 			        'description'=>['type'=>Form::INPUT_TEXTAREA, 
-			        				'options'=>['placeholder'=>'Enter username...'],
+			        				'options'=>['placeholder'=>'Event description...'],
 			        				'columnOptions'=>['colspan'=>2],
 									]
 							]

@@ -3,6 +3,7 @@
 namespace app\modules\collections\controllers;
 use yii\filters\AccessControl; 
 use yii\data\ArrayDataProvider; 
+use yii\helpers\Url; 
 use common\components\Types; 
 use common\models\Collection; 
 use common\models\UserCollection; 
@@ -12,8 +13,7 @@ use yii;
  */
 class DefaultController  extends \common\components\XController
 {
-   
-
+  
 	
 
 	/* ****************************************************************************************************************** */ 
@@ -32,10 +32,7 @@ class DefaultController  extends \common\components\XController
                         'rules' => [
                                     ['actions' => ['index'], 'allow' => true, 'roles' => ['@'],], 
                                     ['actions' => ['members'], 'allow' => true, 'roles' => ['@'],], 
-                                    ['actions' => ['ajaxsearchusers'], 'allow' => true, 'roles' => ['@'],], 
-                                    ['actions' => ['ajaxadduser'], 'allow' => true, 'roles' => ['@'],], 
-                                    ['actions' => ['ajaxremoveuser'], 'allow' => true, 'roles' => ['@'],], 
-                                   
+                                    
                                     ],
                         ],
         ];
@@ -43,9 +40,9 @@ class DefaultController  extends \common\components\XController
     }
 
 
-    /* ********************************************************************************************************************** */ 
+    /* ****************************************************************************************************************** */ 
     
-    /* *********************************************************************************************************************** */ 
+    /* ****************************************************************************************************************** */ 
     
     /**
      * Renders the index view for the module
@@ -54,11 +51,11 @@ class DefaultController  extends \common\components\XController
     public function actionIndex()
     {
     	$memberProvider  =  new ArrayDataProvider([
-    			'allModels' =>yii::$app->CollectionComponent->myMemberList,
+    			'allModels' =>yii::$app->CollectionComponent->myMemberCollections,
     			'pagination'=>false, 
     	]);
     	$managerProvider  =  new ArrayDataProvider([
-    			'allModels' =>yii::$app->CollectionComponent->myManagerList,
+    			'allModels' =>yii::$app->CollectionComponent->myManagerCollections,
     			'pagination'=>false, 
     	]);
 
@@ -68,7 +65,16 @@ class DefaultController  extends \common\components\XController
     public function actionMembers($id)
     {
 
-    	if (yii::$app->CollectionComponent->isManager($id) === false) 
+      
+      \yii::$app->jsconfig->addData('searchUri', Url::to(['ajax/searchusers'])); 
+      \yii::$app->jsconfig->addData('targetId', '#member-select'); 
+      \yii::$app->jsconfig->addData('collectionId', $id); 
+      \yii::$app->jsconfig->addData('addUri', Url::to(['ajax/adduser'])); 
+      \yii::$app->jsconfig->addData('removeUri', Url::to(['ajax/removeuser'])); 
+      \yii::$app->jsconfig->addData('memberType', Types::$member_type['member']['id']); 
+    	
+
+      if (yii::$app->CollectionComponent->isManager($id) === false) 
     		 throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access collection.'));
     	
       $collectionModel = Collection::findOne($id); 
@@ -81,77 +87,12 @@ class DefaultController  extends \common\components\XController
 
 
     /* *********************************************************************************************************************** */ 
-    public function actionAjaxsearchusers($q=null, $id=null)
-    {
-          \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-            return \yii::$app->UserComponent->ajaxSearchActiveUsers($q);
-           
-    }
+   
     /* *********************************************************************************************************************** */ 
-    public function actionAjaxadduser() //$collection_id, $member_type, $user_id
-    {
-          
-          \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-          $user_id = \yii::$app->request->post('id'); 
-          $collection_id = \yii::$app->request->post('col');
-          $member_type_id = \yii::$app->request->post('mem');
-
-          if (yii::$app->CollectionComponent->isManager($collection_id ) === false) 
-              throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access collection.'));
-
-          
-          $userCollectionModel = UserCollection::findOne(
-                                          ['user_id'=>$user_id, 
-                                          'collection_id'=>$collection_id , 
-                                          'member_type_id'=>$member_type_id]);
-          if ($userCollectionModel === null)
-          {
-              $userCollectionModel = new UserCollection(); 
-              $userCollectionModel->user_id  = $user_id; 
-              $userCollectionModel->collection_id = $collection_id; 
-              $userCollectionModel->member_type_id = $member_type_id; 
-
-          } 
-          $userCollectionModel->status_id = Types::$status['active']['id']; 
-          if ($userCollectionModel->save() === false)
-              return  $userCollectionModel->getErrors(); 
-
-
-
-
-
-
-
-    }
+    
     /* *********************************************************************************************************************** */ 
     /* *********************************************************************************************************************** */ 
-    public function actionAjaxremoveuser()
-    {
-          
-           \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-          $user_id = \yii::$app->request->post('id'); 
-          $collection_id = \yii::$app->request->post('col');
-          $member_type_id = \yii::$app->request->post('mem');
-
-          if (yii::$app->CollectionComponent->isManager($collection_id ) === false) 
-              throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access collection.'));
-
-          
-          $userCollectionModel = UserCollection::findOne(
-                                          ['user_id'=>$user_id, 
-                                          'collection_id'=>$collection_id , 
-                                          'member_type_id'=>$member_type_id]);
-          if ($userCollectionModel !== null)
-          {
-            $userCollectionModel->status_id = Types::$status['inactive']['id'];  
-            $userCollectionModel->save();
-          }
-
-          
-         
-          
-
-    }
+   
     /* *********************************************************************************************************************** */ 
    
     /* *********************************************************************************************************************** */ 
