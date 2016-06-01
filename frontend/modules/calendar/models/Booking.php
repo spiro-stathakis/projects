@@ -51,7 +51,7 @@ class Booking extends Model
             [['start_timestamp'] , 'validateSlot'], 
             [['start_timestamp'] , 'validateStartEnd'], 
             [['project_id'] , 'validateProject'], 
-            [['project_id']  , 'safe'], 
+            [['project_id', 'all_day_option_id']  , 'safe'], 
         ];
     }
     
@@ -149,6 +149,7 @@ class Booking extends Model
             'start_time' => Yii::t('app', 'Start'),
             'end_time' => Yii::t('app', 'End'),
             'start_date' => Yii::t('app', 'Date'),
+            'all_day_option_id'=> Yii::t('app','All day event')
               
         ];
 

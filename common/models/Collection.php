@@ -54,6 +54,7 @@ class Collection extends \common\components\XActiveRecord
             $this->manager_count =0; 
             $this->membership_duration = 0; 
             $this->status_id = Types::$status['active']['id'];
+            $this->public_option_id = Types::$boolean['false']['id'];
         }
         return parent::init(); 
     }

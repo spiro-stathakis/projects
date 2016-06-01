@@ -130,7 +130,6 @@ class AjaxController extends XController
                     {
 
                         $transaction = \yii::$app->db->beginTransaction();
-                   
                         $eventModel->save(false);
                         $eventEntryModel->load(['EventEntry'=>$bookingModel->attributes]); 
                         $eventEntryModel->event_id = $eventModel->primaryKey; 

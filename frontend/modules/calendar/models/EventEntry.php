@@ -48,12 +48,13 @@ class EventEntry extends XActiveRecord
 
     public function init()
     {
+        parent::init();
         if ($this->isNewRecord)
         {
             $this->booking_status_id = Types::$bookingStatus['confirmed']['id']; 
             $this->all_day_option_id = Types::$boolean['false']['id']; 
         } 
-        return parent::init(); 
+          
     }
     /**
      * @inheritdoc
