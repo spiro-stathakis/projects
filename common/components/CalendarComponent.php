@@ -112,7 +112,16 @@ class CalendarComponent extends Object
     }
 
     /* ******************************************************************************************************* */ 
-    
+    public function getManagementList()
+    {
+        $out = []; 
+        foreach($this->myCalendars as $cal)
+            if ($cal['member_type_id'] == Types::$member_type['manager']['id'])
+                $out[$cal['calendar_id']] = $cal['calendar_title']; 
+
+        return $out; 
+
+    }
     /* ******************************************************************************************************* */ 
     
     public function  getMyCalendars()

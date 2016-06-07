@@ -27,6 +27,7 @@ class ManageController extends XController
                                     ['actions' => ['create'], 'allow' => true, 'roles' => ['createCalendar'],], 
                                     ['actions' => ['edit'], 'allow' => true, 'roles' => ['editCalendar'],], 
                                     ['actions' => ['view'], 'allow' => true, 'roles' => ['editCalendar'],], 
+                                    ['actions' => ['list'], 'allow' => true, 'roles' => ['editCalendar'],], 
                                     ['actions' => ['index'], 'allow' => true, 'roles' => ['@'],], 
                                 ],
                         ],
@@ -78,7 +79,12 @@ class ManageController extends XController
    
 
 	}
-	
+/* ********************************************************************** */ 
+public function actionList()
+{
+    return $this->render('list', ['managementList'=>yii::$app->CalendarComponent->managementList]);
+    
+}	
 /* ********************************************************************** */ 
 protected function findModel($id)
     {

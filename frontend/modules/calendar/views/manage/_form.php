@@ -47,7 +47,7 @@ use yii\helpers\Url;
                    <?=Form::widget([     // nesting attributes together (without labels for children)
                        'model'=>$model,
                        'form'=>$form,
-                       'columns'=>3,
+                       'columns'=>4,
                        'attributes'=>[
                             'start_time'=>[
                                         'type'=>Form::INPUT_WIDGET, 
@@ -69,9 +69,12 @@ use yii\helpers\Url;
 
                                        
                                         ],
-                             'advance_limit'=>['type'=>Form::INPUT_TEXT, 
+                            'advance_limit'=>['type'=>Form::INPUT_TEXT, 
                                                   'options'=>['placeholder'=>'Decide an advance limit']
                                             ],
+                             'project_option_id'=>['type'=>Form::INPUT_DROPDOWN_LIST, 
+                                                        'items'=>$model->booleanOptions,
+                                                    ],
                                         
                             ]
                     ]);?>
@@ -95,7 +98,9 @@ use yii\helpers\Url;
                                             'widgetClass'=>'\kartik\color\ColorInput', 
                                              'options'=>['options'=>['placeholder'=>'Select colour']]        
                                             ],
-                                  ]      
+                                
+                               
+                                  ],
 
 
                     ]);?> 
