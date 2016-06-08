@@ -181,6 +181,7 @@ class AjaxController extends XController
         foreach ( $list as $e)
         {
             $model = new CalEvent(); 
+
             $model->id = $e['event_entry_id']; 
             $model->cal_id = $e['calendar_id']; 
             if (strlen($e['event_entry_title']) > 0)
@@ -190,6 +191,8 @@ class AjaxController extends XController
 
             $model->start = yii::$app->DateComponent->timestampToIsoDateTime($e['start_timestamp']) ;
             $model->end =  yii::$app->DateComponent->timestampToIsoDateTime($e['end_timestamp']) ;
+            $model->create_name = $e['create_name']; 
+            $model->created_at = yii::$app->DateComponent->timestampToUkDateTime($e['created_at']); 
             if ($e['all_day_option_id'] == Types::$boolean['true']['id'])
                 $model->allDay = true; 
             else 
@@ -197,7 +200,7 @@ class AjaxController extends XController
             //$model->backgroundcolor = $e['hex_code']; 
             $model->className = sprintf('calendar-%s' , $e['calendar_id']); 
 
-
+            $model->editable=true; 
             $events[]  = $model ;         
 
         }  

@@ -15,7 +15,7 @@ use yii\helpers\Url;
 
 <div class="calendar-form">
     <div class="row">
-            <div class="col-sm-6-offset col-sm-offset-2 col-md-7 col-md-offset-2 main">
+            <div class="col-sm-6 col-sm-offset-2 col-md-7 col-md-offset-2 main">
             <div></div>
             <h2><?= Html::encode($this->title) ?></h2>
                     <?php $form = ActiveForm::begin(); ?>

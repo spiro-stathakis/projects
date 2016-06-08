@@ -105,9 +105,14 @@ AppPackageCalendar.prototype = {
 		
     }, 
 /* ********************************************************** */    
-    eventClick:function(date, jsEvent, view)
+    eventClick:function(event, jsEvent, view)
     {
-        $('#eventModal').modal(); 
+        
+        alert(event.title); 
+        $('#span-event-title').val(event.title); 
+        $('#span-event-description').val(event.description); 
+        $('#eventShowModal').modal(); 
+        
         
     },
 /* ********************************************************** */    
@@ -156,7 +161,7 @@ AppPackageCalendar.prototype = {
         $('#full-calendar').fullCalendar('renderEvent', data.message); 
     } 
     $('#spanTitle').html(title);  
-     $('#spanResponse').html(response); 
+    $('#spanResponse').html(response); 
   }
 /* ********************************************************** */
 

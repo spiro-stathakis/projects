@@ -11,6 +11,7 @@ use frontend\modules\calendar\models\Booking;
 
 
 echo $this->render('_bookingModal', ['model'=>$bookingModel]);
+echo $this->render('_bookingShowModal', []);
 ?> 
 <p>&nbsp;</p>
 

@@ -10,7 +10,6 @@
 Select2Asset::register($this); 
 ?> 
 
-
 	
 	<div class="row">
  			

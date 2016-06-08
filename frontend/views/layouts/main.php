@@ -27,11 +27,11 @@ $this->registerJs(" $.app.mc = ". Yii::$app->jsconfig->data. ";", \yii\web\View:
    
    
 
-   <div class="container-fluid" style="padding-top:43px">
+   <div class="container-fluid" style="padding-top:53px">
                
                 <?= Alert::widget() ?>
                 <?= $content ?>
-    </div>
+</div>
 </div>
    
 <footer class="footer">

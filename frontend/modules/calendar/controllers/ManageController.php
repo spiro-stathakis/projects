@@ -25,7 +25,7 @@ class ManageController extends XController
                         'class' => AccessControl::className(),
                         'rules' => [
                                     ['actions' => ['create'], 'allow' => true, 'roles' => ['createCalendar'],], 
-                                    ['actions' => ['edit'], 'allow' => true, 'roles' => ['editCalendar'],], 
+                                    ['actions' => ['update'], 'allow' => true, 'roles' => ['editCalendar'],], 
                                     ['actions' => ['view'], 'allow' => true, 'roles' => ['editCalendar'],], 
                                     ['actions' => ['list'], 'allow' => true, 'roles' => ['editCalendar'],], 
                                     ['actions' => ['index'], 'allow' => true, 'roles' => ['@'],], 
@@ -35,7 +35,9 @@ class ManageController extends XController
         
     }
 
-
+    /* ********************************************************************** */ 
+    
+    /* ********************************************************************** */ 
     public function actionIndex()
     {
 	        
@@ -62,16 +64,41 @@ class ManageController extends XController
         return $this->render('view', ['model'=>$model]); 
     }
     /* ********************************************************************** */ 
-    
+    public function actionUpdate($id)
+    {
+        
+        if (! yii::$app->CalendarComponent->isManager($id))
+            throw new \yii\web\HttpException(403, 'Permission to update this calendar is denied.');
+        
+        $model = $this->findModel($id);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) 
+        {
+            Yii::$app->session->setFlash('success', sprintf('Calendar %s has been updated' , $model->title));
+            return $this->redirect(['/collections/default/manage', 'id' => $model->collection_id]);
+        } 
+        else 
+        {
+            return $this->render('update', [
+                'model' => $model,
+            ]);
+        }
+        return $this->render('update'); 
+    }
+    /* ********************************************************************** */ 
     public function actionCreate($col = null)
 	{
         $model = new Calendar();
         if ($col !== null) 
             $model->collection_id = $col ; 
         
-        if ($model->load(\yii::$app->request->post()) && $model->save()) {
+        if ($model->load(\yii::$app->request->post()) && $model->save()) 
+        {
+             Yii::$app->session->setFlash('success', sprintf('Calendar %s has been created' , $model->title));
             return $this->redirect(['/collections/default/manage', 'id' => $model->collection_id]);
-        } else {
+        } 
+        else 
+        {
             return $this->render('create', [
                 'model' => $model,
             ]);

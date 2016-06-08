@@ -75,6 +75,17 @@ class DateComponent extends Object
             return $date->format($this->_ukDateFormat);
     }
     /* ******************************************************************************************************* */ 
+    public function timestampToUkDateTime($timestamp)
+    {
+        if (! $this->_isTimeStamp($timestamp))
+            throw new \yii\web\HttpException(500, sprintf('Not a valid timestamp %s', $timestamp));
+        $date = new \DateTime();
+        $date->setTimestamp($timestamp);
+        return $date->format($this->_ukDateTimeFormat);
+        
+    }
+    /* ******************************************************************************************************* */ 
+    
     public function isoDateToTimestamp($date)
     {
         if (! $this->_isIsoDate($date))
