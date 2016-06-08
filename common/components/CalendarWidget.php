@@ -43,12 +43,7 @@ class CalendarWidget extends Widget{
                 'timeFormat'=>'H(:mm)', // uppercase H for 24-hour clock
                 'aspectRatio'=>1.4, 
                 'id'=>'full-calendar', 
-
-                
-
-
-                
-         ] , 
+            ] , 
          
          'clientOptions'=>[ 
 

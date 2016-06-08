@@ -14,6 +14,8 @@ AppPackageCalendar.prototype = {
     
     init:function() { //default function
        
+
+      
        /*** set up calendar - project relationship ******/ 
         $('#calendar_id').change(function(){
             var cal_id=$(this).val();  
@@ -108,7 +110,6 @@ AppPackageCalendar.prototype = {
     eventClick:function(event, jsEvent, view)
     {
         
-        alert(event.title); 
         $('#span-event-title').val(event.title); 
         $('#span-event-description').val(event.description); 
         $('#eventShowModal').modal(); 

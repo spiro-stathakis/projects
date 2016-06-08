@@ -79,6 +79,11 @@ class m311244_134921_rbac extends Migration
             $auth->assign($admin_role, $user);
 
 
+        $user = $this->_getUserId('sapam10'); 
+        if ($user)
+            $auth->assign($admin_role, $user);
+
+
         $user = $this->_getUserId('sapss8'); 
         if ($user)
             $auth->assign($tech_role, $user);
@@ -87,10 +92,25 @@ class m311244_134921_rbac extends Migration
         if ($user)
             $auth->assign($tech_role, $user);
 
+        
+
         $user = $this->_getUserId('sapje1'); 
         if ($user)
             $auth->assign($lab_manager_role, $user);
 
+        $user = $this->_getUserId('sapjs12'); 
+        if ($user)
+            $auth->assign($lab_manager_role, $user);
+
+
+
+
+        $user = $this->_getUserId('sapcb6'); 
+        if ($user)
+        {
+            $auth->assign($admin_manager_role, $user);
+            $auth->assign($director_role, $user);
+        }
 
         //$auth->assign($admin, 1);
          //   $auth->assign($authorRole, $user->getId());
