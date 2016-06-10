@@ -125,7 +125,7 @@ AppPackageCalendar.prototype = {
      var div = this._popoverDiv(event);
      $("body").append(div);
     $(that).mouseover(function(e) {
-          $(that).css('z-index', 10000);
+         // $(that).css('z-index', 10000);
           $('.popover').fadeIn('10');
           $('.popover').fadeTo('10', 1.9);
       }).mousemove(function(e) {
