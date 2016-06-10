@@ -25,5 +25,6 @@ class CalendarJsAsset extends AssetBundle
     ];
     public $depends = [
         'frontend\packages\AppJsAsset',
+         
     ];
 }

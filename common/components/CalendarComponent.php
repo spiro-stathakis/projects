@@ -23,7 +23,7 @@ class CalendarComponent extends Object
     private $_myCalendars; 
     private $_myCalendarList; 
     private $_theCalendarList; 
-
+    private $_allCalendars; 
     
 	
 	/* ******************************************************************************************************* */ 
@@ -158,7 +158,15 @@ class CalendarComponent extends Object
    
     }
     /* ******************************************************************************************************* */ 
-    
+    public function getAllCalendars()
+    {
+
+        if ($this->_allCalendars == null)
+             $this->_allCalendars = $this->_getAllCalendars(); 
+
+         return $this->_allCalendars; 
+    }
+    /* ******************************************************************************************************* */ 
     public function projectOption($calendar_id)
     {
         $out = false; 
@@ -213,10 +221,11 @@ class CalendarComponent extends Object
                 ->select([
                     'e.id as event_id' , 'e.title as event_title',
                     'e.description as event_description' , 'e.calendar_id', 
-                    'e.project_id' , 'ifnull(p.title," No project ") as project_title', 
+                    'e.project_id' , 'IFNULL(col.title," No project ") as project_collection_title', 
                     'ee.id as event_entry_id' , 'ee.title as event_entry_title', 
                     'ee.description as event_entry_description', 'ee.booking_status_id', 
                     'ee.start_timestamp' , 'ee.end_timestamp' , 'ee.all_day_option_id' , 
+                    'c.title as calendar_title', 
                     'c.hex_code','u.created_by', 'u.created_at',
                     'concat(u.first_name," " , u.last_name) as create_name' 
                     ])
@@ -226,6 +235,7 @@ class CalendarComponent extends Object
                 ->join('LEFT JOIN','ref_booking_status rbs', 'ee.booking_status_id=rbs.id')
                 ->join('LEFT JOIN', 'calendar_subscription cs' , 'cs.calendar_id=c.id')
                 ->join('LEFT JOIN' , 'project p', 'p.id=e.project_id')
+                ->join('LEFT JOIN' , 'collection col' , 'c.id=p.collection_id')
                 ->join('LEFT JOIN' , 'user u', 'u.id=e.created_by')
                 ->where(
                         '(ee.start_timestamp >= :start AND ee.end_timestamp <= :end)
@@ -242,27 +252,47 @@ class CalendarComponent extends Object
 
         }
     /* ******************************************************************************************************* */ 
-   
+   private function _getAllCalendars()
+   {
+
+            $select =  ['cal.id as calendar_id', 'cal.collection_id', 
+            'cal.title as calendar_title',
+            'col.title  as collection_title',
+            'cal.project_option_id', 
+            'cal.allow_overlap_option_id', 
+            'cal.read_only_option_id', 
+            'cal.hex_code']; 
+            $query   = (new \yii\db\Query())
+                    ->select($select)
+                    ->from('calendar cal')
+                    ->join('INNER JOIN','collection col' , 'cal.collection_id=col.id')
+                   
+                    ->where('(cal.status_id=:calendar_active)')
+                    ->addParams([':calendar_active'=>Types::$status['active']['id']])
+                    ->all();
+            return  $query; 
+    }
     /* ******************************************************************************************************* */ 
     
+    /* ******************************************************************************************************* */ 
     private function _getMyCalendars()
     {
 
-        $select =       ['cal.id as calendar_id', 'cal.collection_id', 
-                        'cal.title as calendar_title',
-                        'col.title  as collection_title',
-                        'cal.project_option_id', 
-                        'cal.allow_overlap_option_id', 
-                        'cal.read_only_option_id', 
-                        'uc.member_type_id','cs.display_option_id',
-                        'cal.hex_code']; 
+            $select =  ['cal.id as calendar_id', 'cal.collection_id', 
+            'cal.title as calendar_title',
+            'col.title  as collection_title',
+            'cal.project_option_id', 
+            'cal.allow_overlap_option_id', 
+            'cal.read_only_option_id', 
+            'uc.member_type_id','cs.display_option_id',
+            'cal.hex_code']; 
 
             $query   = (new \yii\db\Query())
                     ->select($select)
                     ->from('calendar cal')
                     ->join('INNER JOIN','collection col' , 'cal.collection_id=col.id')
                     ->join('INNER JOIN','user_collection uc', 'uc.collection_id=col.id')
-                    ->join('LEFT JOIN','calendar_subscription cs', 'cs.calendar_id=cal.id')
+                  ->join('LEFT JOIN','calendar_subscription cs', 'cs.calendar_id=cal.id')
                     ->where('(uc.status_id=:status_active) 
                             AND 
                             (cal.status_id=:calendar_active)

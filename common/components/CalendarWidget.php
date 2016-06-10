@@ -18,7 +18,7 @@ class CalendarWidget extends Widget{
 		parent::init();
 		
 
-        foreach(\yii::$app->CalendarComponent->myCalendars as $cal)
+        foreach(\yii::$app->CalendarComponent->allCalendars as $cal)
             $this->_css .= sprintf('.calendar-%s, *  fc-time-grid-event fc-v-event fc-event fc-start fc-end , 
                 .calendar-%s a {background-color:%s;border-color:%s;opacity: 1;} 
                 .calendar-%s  .fc-time{opacity:2;background-color:%s}' , 
@@ -44,7 +44,10 @@ class CalendarWidget extends Widget{
                 'aspectRatio'=>1.4, 
                 'id'=>'full-calendar', 
             ] , 
-         
+        
+   
+
+
          'clientOptions'=>[ 
 
                         'weekends' => true,
@@ -52,7 +55,8 @@ class CalendarWidget extends Widget{
         				'editable' => false,
                         'dayClick' => new JsExpression("function(date, jsEvent, view){ $.app.cal.dayClick(date, jsEvent, view)}"),
                         'eventClick' => new JsExpression("function(event, jsEvent, view){ $.app.cal.eventClick(event, jsEvent, view)}"),
-                        'eventMouseover' => new JsExpression("function(event, jsEvent, view){ $.app.cal.eventMouseover(event, jsEvent, view)}" ),
+                        'eventMouseover' => new JsExpression("function(event, jsEvent, view){ $.app.cal.eventMouseover(event, jsEvent, view,this)}" ),
+                         'eventMouseout' => new JsExpression("function(event, jsEvent, view){ $.app.cal.eventMouseout(event, jsEvent, view,this)}" ),
 
         					], 
         'header' => [

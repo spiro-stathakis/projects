@@ -6,8 +6,11 @@ use yii\widgets\Pjax;
 use yii\bootstrap\Html; 
 use frontend\modules\calendar\models\Booking; 
 
+use frontend\packages\BootstrapPopoverAsset;
 
 
+
+BootstrapPopoverAsset::register($this);
 
 
 echo $this->render('_bookingModal', ['model'=>$bookingModel]);

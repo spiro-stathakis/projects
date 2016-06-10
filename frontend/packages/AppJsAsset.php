@@ -23,6 +23,7 @@ class AppJsAsset extends AssetBundle
     ];
     public $depends = [
         'frontend\packages\AppAsset',
+         'frontend\packages\MomentJsAsset',
         'yii\web\JqueryAsset'
     ];
 }

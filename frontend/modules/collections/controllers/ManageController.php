@@ -30,7 +30,7 @@ class ManageController extends Controller
                         'class' => AccessControl::className(),
                         'rules' => [
                                     ['actions' => ['create'], 'allow' => true, 'roles' => ['createCalendar'],], 
-                                    ['actions' => ['edit'], 'allow' => true, 'roles' => ['editCalendar'],], 
+                                    ['actions' => ['update'], 'allow' => true, 'roles' => ['editCalendar'],], 
                                     ['actions' => ['view'], 'allow' => true, 'roles' => ['editCalendar'],], 
                                     ['actions' => ['index'], 'allow' => true, 'roles' => ['@'],], 
                                 ],
@@ -93,6 +93,7 @@ class ManageController extends Controller
         }
     }
 
+    /* ************************************************************************************************ */ 
     /**
      * Updates an existing Collection model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -111,7 +112,7 @@ class ManageController extends Controller
             ]);
         }
     }
-
+    /* ************************************************************************************************ */ 
     /**
      * Deletes an existing Collection model.
      * If deletion is successful, the browser will be redirected to the 'index' page.

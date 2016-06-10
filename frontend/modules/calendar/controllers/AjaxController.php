@@ -184,7 +184,11 @@ class AjaxController extends XController
 
             $model->id = $e['event_entry_id']; 
             $model->cal_id = $e['calendar_id']; 
+            $model->calendar_title = $e['calendar_title'];
+            $model->project_collection_title = $e['project_collection_title'];
+            
             if (strlen($e['event_entry_title']) > 0)
+            
                 $model->title =  $e['event_entry_title']; 
             else 
                 $model->title =  $e['event_title'];
@@ -198,7 +202,10 @@ class AjaxController extends XController
             else 
                  $model->allDay = false;
             //$model->backgroundcolor = $e['hex_code']; 
-            $model->className = sprintf('calendar-%s' , $e['calendar_id']); 
+            $model->className = array(
+                                        sprintf('calendar-%s' , $e['calendar_id']), 
+                                        sprintf('entry-%s' , $e['event_entry_id']), 
+                                    ); 
 
             $model->editable=true; 
             $events[]  = $model ;         

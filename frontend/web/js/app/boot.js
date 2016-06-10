@@ -7,7 +7,7 @@ $.app = {
     hexGreen:'#009933',
     hexAmber:'#FFBF00', 
     hexGrey:'#C0C0C0',
-    
+   
     init:function () 
     {
          if ($.app.page !== undefined) 

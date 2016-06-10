@@ -13,5 +13,7 @@ class CalEvent extends \yii2fullcalendar\models\Event
  public $created_by; 
  public $created_at; 
  public $create_name; 
- public $project_name; 
+ public $project_title;
+ public $project_collection_title; 
+ public $calendar_title; 
 }
