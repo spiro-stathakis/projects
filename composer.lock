@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8c9f32ec841b40e301016cc4dd17274c",
-    "content-hash": "0658e44b1c45cd17295ddb7dfa429811",
+    "hash": "24d6aae32ac5573d49dc45a68a9be119",
+    "content-hash": "08b2f3ca17ce6ce386474c7937672260",
     "packages": [
         {
             "name": "behat/gherkin",
@@ -695,19 +695,20 @@
         },
         {
             "name": "facebook/webdriver",
-            "version": "1.1.1",
+            "version": "1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/facebook/php-webdriver.git",
-                "reference": "1c98108ba3eb435b681655764de11502a0653705"
+                "reference": "0b889d7de7461439f8a3bbcca46e0f696cb27986"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facebook/php-webdriver/zipball/1c98108ba3eb435b681655764de11502a0653705",
-                "reference": "1c98108ba3eb435b681655764de11502a0653705",
+                "url": "https://api.github.com/repos/facebook/php-webdriver/zipball/0b889d7de7461439f8a3bbcca46e0f696cb27986",
+                "reference": "0b889d7de7461439f8a3bbcca46e0f696cb27986",
                 "shasum": ""
             },
             "require": {
+                "ext-curl": "*",
                 "php": ">=5.3.19"
             },
             "require-dev": {
@@ -734,7 +735,7 @@
                 "selenium",
                 "webdriver"
             ],
-            "time": "2015-12-31 15:58:49"
+            "time": "2016-06-04 00:02:34"
         },
         {
             "name": "fxp/composer-asset-plugin",
@@ -1214,12 +1215,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-grid.git",
-                "reference": "88c53b55301db8ad1b1d85892a27b35c60d4433c"
+                "reference": "0de680803dbe09baab83b03f1f13037bd19fa4a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-grid/zipball/88c53b55301db8ad1b1d85892a27b35c60d4433c",
-                "reference": "88c53b55301db8ad1b1d85892a27b35c60d4433c",
+                "url": "https://api.github.com/repos/kartik-v/yii2-grid/zipball/0de680803dbe09baab83b03f1f13037bd19fa4a4",
+                "reference": "0de680803dbe09baab83b03f1f13037bd19fa4a4",
                 "shasum": ""
             },
             "require": {
@@ -1255,7 +1256,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2016-06-03 17:17:56"
+            "time": "2016-06-09 10:21:32"
         },
         {
             "name": "kartik-v/yii2-helpers",
@@ -1815,22 +1816,22 @@
         },
         {
             "name": "phpdocumentor/reflection-docblock",
-            "version": "3.0.2",
+            "version": "3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "45ada3e3fd09789fbfbd6d65b3f0901f0030dc61"
+                "reference": "9270140b940ff02e58ec577c237274e92cd40cdd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/45ada3e3fd09789fbfbd6d65b3f0901f0030dc61",
-                "reference": "45ada3e3fd09789fbfbd6d65b3f0901f0030dc61",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/9270140b940ff02e58ec577c237274e92cd40cdd",
+                "reference": "9270140b940ff02e58ec577c237274e92cd40cdd",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.5",
                 "phpdocumentor/reflection-common": "^1.0@dev",
-                "phpdocumentor/type-resolver": "^0.1.5",
+                "phpdocumentor/type-resolver": "^0.2.0",
                 "webmozart/assert": "^1.0"
             },
             "require-dev": {
@@ -1856,20 +1857,20 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2016-06-06 06:44:13"
+            "time": "2016-06-10 09:48:41"
         },
         {
             "name": "phpdocumentor/type-resolver",
-            "version": "0.1.8",
+            "version": "0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/TypeResolver.git",
-                "reference": "9891754231e55d42f0d16988ffb799af39f31a12"
+                "reference": "b39c7a5b194f9ed7bd0dd345c751007a41862443"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/9891754231e55d42f0d16988ffb799af39f31a12",
-                "reference": "9891754231e55d42f0d16988ffb799af39f31a12",
+                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/b39c7a5b194f9ed7bd0dd345c751007a41862443",
+                "reference": "b39c7a5b194f9ed7bd0dd345c751007a41862443",
                 "shasum": ""
             },
             "require": {
@@ -1878,7 +1879,7 @@
             },
             "require-dev": {
                 "mockery/mockery": "^0.9.4",
-                "phpunit/phpunit": "^5.2"
+                "phpunit/phpunit": "^5.2||^4.8.24"
             },
             "type": "library",
             "extra": {
@@ -1903,7 +1904,7 @@
                     "email": "me@mikevanriel.com"
                 }
             ],
-            "time": "2016-03-28 10:02:29"
+            "time": "2016-06-10 07:14:17"
         },
         {
             "name": "phpspec/php-diff",

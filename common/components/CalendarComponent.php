@@ -39,7 +39,17 @@ class CalendarComponent extends Object
     }
     
     /* ******************************************************************************************************* */ 
+    public function canEditEvent($event)
+    {
+        if ($this->isManager($event['calendar_id']))
+            return true; 
+        if ($event['created_by'] == yii::$app->user->id)
+            return true; 
+
+        return false; 
+    }
     
+    /* ******************************************************************************************************* */ 
     public function isManager($calendar_id)
     {
         $return = false; 
@@ -192,7 +202,7 @@ class CalendarComponent extends Object
                 ->join('INNER JOIN','calendar c' , 'e.calendar_id=c.id')
                 ->join('INNER JOIN', 'event_entry ee' , 'ee.event_id=e.id')
                 ->where(
-                        '(c.id = :calendar_id)
+                        '(c.id = :calendar_id AND ee.status_id=:event_entry_status_active)
                          AND 
                         (
                             ( :start >  ee.start_timestamp AND :start < ee.end_timestamp ) 
@@ -206,7 +216,8 @@ class CalendarComponent extends Object
                         )')
                  ->addParams([':start'=>$start, 
                              ':end'=>$end , 
-                             ':calendar_id'=>$calendar_id 
+                             ':calendar_id'=>$calendar_id , 
+                             ':event_entry_status_active'=>Types::$boolean['true']['id']
                         ])
                 ->all();
 
@@ -226,7 +237,7 @@ class CalendarComponent extends Object
                     'ee.description as event_entry_description', 'ee.booking_status_id', 
                     'ee.start_timestamp' , 'ee.end_timestamp' , 'ee.all_day_option_id' , 
                     'c.title as calendar_title', 
-                    'c.hex_code','u.created_by', 'u.created_at',
+                    'c.hex_code','e.created_by', 'e.created_at',
                     'concat(u.first_name," " , u.last_name) as create_name' 
                     ])
                 ->from('event e')
@@ -240,11 +251,14 @@ class CalendarComponent extends Object
                 ->where(
                         '(ee.start_timestamp >= :start AND ee.end_timestamp <= :end)
                             AND 
-                        (cs.display_option_id = :true OR cs.display_option_id IS NULL)'
+                        (cs.display_option_id = :true OR cs.display_option_id IS NULL)
+                            AND
+                         ee.status_id=:event_entry_status_active'
                         )
                  ->addParams([':start'=>$start, 
                              ':end'=>$end , 
-                             ':true'=>Types::$boolean['true']['id'] 
+                             ':true'=>Types::$boolean['true']['id'], 
+                             ':event_entry_status_active'=>Types::$status['active']['id'],  
                         ])
                 ->all();
 

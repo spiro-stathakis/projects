@@ -88,6 +88,7 @@ class Booking extends Model
         $this->jsObject['project_id'] = $this->project_id ; 
         $this->jsObject['calendar_id'] = $this->calendar_id; 
         $this->jsObject['project_collection_title'] = ''; 
+        $this->jsObject['editable'] = true; 
 
         return parent::afterValidate();   
     }

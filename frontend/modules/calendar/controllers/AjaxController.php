@@ -181,7 +181,8 @@ class AjaxController extends XController
         foreach ( $list as $e)
         {
             $model = new CalEvent(); 
-
+            
+            $model->editable = $model->startEditable = $model->durationEditable = yii::$app->CalendarComponent->canEditEvent($e); 
             $model->id = $e['event_entry_id']; 
             $model->cal_id = $e['calendar_id']; 
             $model->calendar_title = $e['calendar_title'];
@@ -202,12 +203,9 @@ class AjaxController extends XController
             else 
                  $model->allDay = false;
             //$model->backgroundcolor = $e['hex_code']; 
-            $model->className = array(
-                                        sprintf('calendar-%s' , $e['calendar_id']), 
-                                        sprintf('entry-%s' , $e['event_entry_id']), 
-                                    ); 
-
-            $model->editable=true; 
+            $model->className = sprintf('calendar-%s' , $e['calendar_id']); 
+                                            
+            
             $events[]  = $model ;         
 
         }  

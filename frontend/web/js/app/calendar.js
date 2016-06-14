@@ -183,7 +183,17 @@ AppPackageCalendar.prototype = {
     $('#spanResponse').html(response); 
   },
 /* ********************************************************** */
- _popoverDiv:function(event)
+ 
+
+  /* ********************************************************** */
+  eventDrop:function(event, delta, revertFunc, jsEvent, ui, view )
+  {
+
+    console.info(event); 
+    revertFunc(); 
+  },
+  /* ********************************************************** */
+  _popoverDiv:function(event)
   {
       var div = ''; 
       var start =moment(event.start).format('LT'); 
@@ -212,9 +222,10 @@ AppPackageCalendar.prototype = {
 
       return div; 
 
-  }, 
+  }
 
 /* ********************************************************** */
+  
 }; 
 
 

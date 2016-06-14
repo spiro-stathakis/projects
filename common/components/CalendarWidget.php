@@ -52,11 +52,13 @@ class CalendarWidget extends Widget{
 
                         'weekends' => true,
         				'defaultView' => 'agendaWeek',
-        				'editable' => false,
+        				'editable' => true,
                         'dayClick' => new JsExpression("function(date, jsEvent, view){ $.app.cal.dayClick(date, jsEvent, view)}"),
                         'eventClick' => new JsExpression("function(event, jsEvent, view){ $.app.cal.eventClick(event, jsEvent, view)}"),
                         'eventMouseover' => new JsExpression("function(event, jsEvent, view){ $.app.cal.eventMouseover(event, jsEvent, view,this)}" ),
-                         'eventMouseout' => new JsExpression("function(event, jsEvent, view){ $.app.cal.eventMouseout(event, jsEvent, view,this)}" ),
+                        'eventMouseout' => new JsExpression("function(event, jsEvent, view){ $.app.cal.eventMouseout(event, jsEvent, view,this)}" ),
+                        'eventDrop' => new JsExpression("function(event, delta, revertFunc, jsEvent, ui, view ){ $.app.cal.eventDrop(event, delta, revertFunc, jsEvent, ui, view)}" ),
+
 
         					], 
         'header' => [
