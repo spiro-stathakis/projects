@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3b7c8b7724b2faf6045eef3430712970",
+    "hash": "c5c658aeb794804ecadfeeaf4c608b2f",
     "content-hash": "08b2f3ca17ce6ce386474c7937672260",
     "packages": [
         {
@@ -166,16 +166,16 @@
         },
         {
             "name": "bower-asset/fullcalendar",
-            "version": "v2.7.3",
+            "version": "v2.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fullcalendar/fullcalendar.git",
-                "reference": "71c63881fc0af4750e1b34988d879a88d8e32ce9"
+                "reference": "69de615e3df29a8ff80f8c359f589dba798c401a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fullcalendar/fullcalendar/zipball/71c63881fc0af4750e1b34988d879a88d8e32ce9",
-                "reference": "71c63881fc0af4750e1b34988d879a88d8e32ce9",
+                "url": "https://api.github.com/repos/fullcalendar/fullcalendar/zipball/69de615e3df29a8ff80f8c359f589dba798c401a",
+                "reference": "69de615e3df29a8ff80f8c359f589dba798c401a",
                 "shasum": ""
             },
             "require": {
@@ -184,9 +184,9 @@
             },
             "require-dev": {
                 "bower-asset/bootstrap": "~3.2.0",
-                "bower-asset/jasmine-fixture": "~1.2.0",
-                "bower-asset/jasmine-jquery": "~2.0.3",
-                "bower-asset/jquery-mockjax": "~2.1.1",
+                "bower-asset/jasmine-fixture": "~2.0.0",
+                "bower-asset/jasmine-jquery": "~2.1.1",
+                "bower-asset/jquery-mockjax": "~2.2.0",
                 "bower-asset/jquery-simulate": "~1.0.1",
                 "bower-asset/jquery-ui": ">=1.11.1",
                 "bower-asset/moment-timezone": "~0.2.1"
@@ -1109,17 +1109,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-detail-view.git",
-                "reference": "ed67fdb154e0c89c1f529f70bb8b4a0d3e028e26"
+                "reference": "65e626c0b55e7cca0db0886410771cd304c1fbd2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-detail-view/zipball/ed67fdb154e0c89c1f529f70bb8b4a0d3e028e26",
-                "reference": "ed67fdb154e0c89c1f529f70bb8b4a0d3e028e26",
+                "url": "https://api.github.com/repos/kartik-v/yii2-detail-view/zipball/65e626c0b55e7cca0db0886410771cd304c1fbd2",
+                "reference": "65e626c0b55e7cca0db0886410771cd304c1fbd2",
                 "shasum": ""
             },
             "require": {
                 "kartik-v/yii2-dialog": "~1.0",
-                "kartik-v/yii2-helpers": "~1.3.5",
+                "kartik-v/yii2-helpers": ">=1.3.5",
                 "kartik-v/yii2-krajee-base": "~1.7"
             },
             "type": "yii2-extension",
@@ -1155,7 +1155,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2016-06-14 13:50:00"
+            "time": "2016-06-22 01:29:56"
         },
         {
             "name": "kartik-v/yii2-dialog",
@@ -1215,12 +1215,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-grid.git",
-                "reference": "0de680803dbe09baab83b03f1f13037bd19fa4a4"
+                "reference": "d36c6a1663d388c8ebf9f493b1dfd667f8c47b5b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-grid/zipball/0de680803dbe09baab83b03f1f13037bd19fa4a4",
-                "reference": "0de680803dbe09baab83b03f1f13037bd19fa4a4",
+                "url": "https://api.github.com/repos/kartik-v/yii2-grid/zipball/d36c6a1663d388c8ebf9f493b1dfd667f8c47b5b",
+                "reference": "d36c6a1663d388c8ebf9f493b1dfd667f8c47b5b",
                 "shasum": ""
             },
             "require": {
@@ -1256,7 +1256,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2016-06-09 10:21:32"
+            "time": "2016-06-22 08:57:25"
         },
         {
             "name": "kartik-v/yii2-helpers",
@@ -2594,16 +2594,16 @@
         },
         {
             "name": "sebastian/exporter",
-            "version": "1.2.1",
+            "version": "1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/exporter.git",
-                "reference": "7ae5513327cb536431847bcc0c10edba2701064e"
+                "reference": "42c4c2eec485ee3e159ec9884f95b431287edde4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/7ae5513327cb536431847bcc0c10edba2701064e",
-                "reference": "7ae5513327cb536431847bcc0c10edba2701064e",
+                "url": "https://api.github.com/repos/sebastianbergmann/exporter/zipball/42c4c2eec485ee3e159ec9884f95b431287edde4",
+                "reference": "42c4c2eec485ee3e159ec9884f95b431287edde4",
                 "shasum": ""
             },
             "require": {
@@ -2611,12 +2611,13 @@
                 "sebastian/recursion-context": "~1.0"
             },
             "require-dev": {
+                "ext-mbstring": "*",
                 "phpunit/phpunit": "~4.4"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.2.x-dev"
+                    "dev-master": "1.3.x-dev"
                 }
             },
             "autoload": {
@@ -2656,7 +2657,7 @@
                 "export",
                 "exporter"
             ],
-            "time": "2015-06-21 07:55:53"
+            "time": "2016-06-17 09:04:28"
         },
         {
             "name": "sebastian/global-state",
