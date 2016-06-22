@@ -65,7 +65,7 @@ BEGIN
 				l_rules_procedure, l_created_by,l_create_date;
 			
 
-			SET l_count = (SELECT COUNT(id) FROM projects.project WHERE old_id=l_study_id);
+			SET l_count = (SELECT COUNT(id) FROM project WHERE old_id=l_study_id);
 			
 			
 			
@@ -87,7 +87,7 @@ BEGIN
 					END CASE;
 
 
-					INSERT INTO projects.collection  
+					INSERT INTO collection  
 					(
 						title,description,alias,collection_type_id,public_option_id,created_by,created_at
 					) 
@@ -107,7 +107,7 @@ BEGIN
 					
 
 					#####################################################################################################
-					INSERT INTO projects.project 
+					INSERT INTO project 
 					(
 						csa_id,pi_id,wefo_id,title,code,collection_id,resource_collection_id,
 						funding_number,funding_code,app_received, 
@@ -168,7 +168,7 @@ BEGIN
 	END REPEAT project_loop; 
 	CLOSE project_csr; 
 	
-	UPDATE projects.project SET code=old_id; 
+	UPDATE project SET code=old_id; 
 	
 	
 	

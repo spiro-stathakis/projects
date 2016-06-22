@@ -36,7 +36,7 @@ BEGIN
 			FETCH subject_csr INTO l_subject_id,l_subject_username,
 			l_subject_firstname, l_subject_lastname,l_subject_email,
 			l_subject_telephone, l_dob,l_gp_option,l_email_option;
-			SET l_count = (SELECT COUNT(id) FROM projects.subject WHERE old_id=l_subject_id);
+			SET l_count = (SELECT COUNT(id) FROM subject WHERE old_id=l_subject_id);
 			
 			IF l_gp_option = 4 THEN 
 				SET l_gp_option = 1; 
@@ -48,7 +48,7 @@ BEGIN
 			
 			SET l_subject_hash = (SELECT(MD5(CONCAT(l_subject_firstname,l_subject_username)))); 
 			IF l_count = 0 THEN 
-					INSERT INTO projects.subject
+					INSERT INTO subject
 					(
 						cubric_id,
 						first_name,
