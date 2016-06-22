@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "24d6aae32ac5573d49dc45a68a9be119",
+    "hash": "3b7c8b7724b2faf6045eef3430712970",
     "content-hash": "08b2f3ca17ce6ce386474c7937672260",
     "packages": [
         {
@@ -1109,12 +1109,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-detail-view.git",
-                "reference": "31b57671ca4072ddad72ac80775abba4cb9b0ddf"
+                "reference": "ed67fdb154e0c89c1f529f70bb8b4a0d3e028e26"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-detail-view/zipball/31b57671ca4072ddad72ac80775abba4cb9b0ddf",
-                "reference": "31b57671ca4072ddad72ac80775abba4cb9b0ddf",
+                "url": "https://api.github.com/repos/kartik-v/yii2-detail-view/zipball/ed67fdb154e0c89c1f529f70bb8b4a0d3e028e26",
+                "reference": "ed67fdb154e0c89c1f529f70bb8b4a0d3e028e26",
                 "shasum": ""
             },
             "require": {
@@ -1155,7 +1155,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2016-05-15 19:15:04"
+            "time": "2016-06-14 13:50:00"
         },
         {
             "name": "kartik-v/yii2-dialog",
@@ -1565,12 +1565,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-select2.git",
-                "reference": "00c29bf2ea42df7be2ae6aa2b2be049807a8134b"
+                "reference": "5ca33a716188422e85560cdce0cb2110a998a618"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/00c29bf2ea42df7be2ae6aa2b2be049807a8134b",
-                "reference": "00c29bf2ea42df7be2ae6aa2b2be049807a8134b",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/5ca33a716188422e85560cdce0cb2110a998a618",
+                "reference": "5ca33a716188422e85560cdce0cb2110a998a618",
                 "shasum": ""
             },
             "require": {
@@ -1610,7 +1610,7 @@
                 "widget",
                 "yii2"
             ],
-            "time": "2016-06-03 10:10:39"
+            "time": "2016-06-14 13:48:39"
         },
         {
             "name": "kartik-v/yii2-widget-switchinput",
@@ -3031,7 +3031,7 @@
         },
         {
             "name": "symfony/browser-kit",
-            "version": "v3.1.0",
+            "version": "v3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/browser-kit.git",
@@ -3088,16 +3088,16 @@
         },
         {
             "name": "symfony/console",
-            "version": "v3.1.0",
+            "version": "v3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "f62db5b8afec27073a4609b8c84b1f9936652259"
+                "reference": "64a4d43b045f07055bb197650159769604cb2a92"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/f62db5b8afec27073a4609b8c84b1f9936652259",
-                "reference": "f62db5b8afec27073a4609b8c84b1f9936652259",
+                "url": "https://api.github.com/repos/symfony/console/zipball/64a4d43b045f07055bb197650159769604cb2a92",
+                "reference": "64a4d43b045f07055bb197650159769604cb2a92",
                 "shasum": ""
             },
             "require": {
@@ -3144,20 +3144,20 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2016-05-30 06:58:39"
+            "time": "2016-06-14 11:18:07"
         },
         {
             "name": "symfony/css-selector",
-            "version": "v3.1.0",
+            "version": "v3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/css-selector.git",
-                "reference": "e17f386efef7258ac671c24e727673abd086b0cf"
+                "reference": "c526d7b3cb4fe1673c6a34e13be2ff63f519df99"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/css-selector/zipball/e17f386efef7258ac671c24e727673abd086b0cf",
-                "reference": "e17f386efef7258ac671c24e727673abd086b0cf",
+                "url": "https://api.github.com/repos/symfony/css-selector/zipball/c526d7b3cb4fe1673c6a34e13be2ff63f519df99",
+                "reference": "c526d7b3cb4fe1673c6a34e13be2ff63f519df99",
                 "shasum": ""
             },
             "require": {
@@ -3197,11 +3197,11 @@
             ],
             "description": "Symfony CssSelector Component",
             "homepage": "https://symfony.com",
-            "time": "2016-03-04 07:56:56"
+            "time": "2016-06-06 11:42:41"
         },
         {
             "name": "symfony/dom-crawler",
-            "version": "v3.1.0",
+            "version": "v3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dom-crawler.git",
@@ -3257,16 +3257,16 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v3.1.0",
+            "version": "v3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
-                "reference": "0343b2cedd0edb26cdc791212a8eb645c406018b"
+                "reference": "f5b7563f67779c6d3d5370e23448e707c858df3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/0343b2cedd0edb26cdc791212a8eb645c406018b",
-                "reference": "0343b2cedd0edb26cdc791212a8eb645c406018b",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/f5b7563f67779c6d3d5370e23448e707c858df3e",
+                "reference": "f5b7563f67779c6d3d5370e23448e707c858df3e",
                 "shasum": ""
             },
             "require": {
@@ -3313,11 +3313,11 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-            "time": "2016-04-12 18:27:47"
+            "time": "2016-06-06 11:42:41"
         },
         {
             "name": "symfony/finder",
-            "version": "v3.1.0",
+            "version": "v3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
@@ -3425,16 +3425,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.1.0",
+            "version": "v3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "eca51b7b65eb9be6af88ad7cc91685f1556f5c9a"
+                "reference": "c5a7e7fc273c758b92b85dcb9c46149ccda89623"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/eca51b7b65eb9be6af88ad7cc91685f1556f5c9a",
-                "reference": "eca51b7b65eb9be6af88ad7cc91685f1556f5c9a",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/c5a7e7fc273c758b92b85dcb9c46149ccda89623",
+                "reference": "c5a7e7fc273c758b92b85dcb9c46149ccda89623",
                 "shasum": ""
             },
             "require": {
@@ -3470,7 +3470,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2016-05-26 21:46:24"
+            "time": "2016-06-14 11:18:07"
         },
         {
             "name": "webmozart/assert",

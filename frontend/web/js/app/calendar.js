@@ -21,9 +21,9 @@ AppPackageCalendar.prototype = {
         $('#calendar_id').change(function(){
             var cal_id=$(this).val();  
             var project_option = false; 
-              for (var i =0 ; i<$.app.mc.myCalendars.length ; i++ )
-                  if (cal_id == $.app.mc.myCalendars[i].calendar_id)        
-                      if ($.app.mc.myCalendars[i].project_option_id == $.app.mc.types_boolean.true)
+              for (var i =0 ; i<$.app.mc.allCalendars.length ; i++ )
+                  if (cal_id == $.app.mc.allCalendars[i].calendar_id)        
+                      if ($.app.mc.allCalendars[i].project_option_id == $.app.mc.types_boolean.true)
                           project_option = true;
               
             $('#project_id').prop('disabled', ! project_option); 
@@ -50,6 +50,8 @@ AppPackageCalendar.prototype = {
     	// do some init like set the fields to an initial value
 
     }, 
+  /* ********************************************************** */
+  
     getDataForm:function(){
       return {
             '_csrf' : $.app.mc.csrfToken 
@@ -57,7 +59,19 @@ AppPackageCalendar.prototype = {
     } ,
   
   /* ********************************************************** */
+  getCalendarRecord:function(cal_id)
+  {
+      var record = {}; 
+      for(var i =0 ; i < $.app.mc.allCalendars.length;i++)
+        if ($.app.mc.allCalendars[i].cal_id == cal_id )
+          record = $.app.mc.allCalendars[i]; 
+       
+      
+      return record; 
 
+  }, 
+  /* ********************************************************** */
+  
   /* ********************************************************** */  
     subscribe:function(data){
           var form = this.getDataForm(); 
@@ -145,6 +159,64 @@ AppPackageCalendar.prototype = {
       $('.popover').remove();
     },
 /* ********************************************************** */
+  eventDrop:function(event, delta, revertFunc, jsEvent, ui, view )
+  {
+
+    var form = this.getDataForm(); 
+    cal = this.getCalendarRecord(event.calendar_id);
+    
+     
+    if (cal.read_only_option_id == $.app.mc.types_boolean.true)
+    {
+        revertFunc(); 
+        return false; 
+    }
+
+   
+
+    event.start.add(event.start._data);
+    event.end.add(event.end._data);
+
+
+    form.start_date = event.start.format($.app.mc.momentUkDateFormat); 
+    form.start_time = event.start.format($.app.mc.momentUkTimeFormat); 
+    form.end_date = event.end.format($.app.mc.momentUkDateFormat); 
+    form.end_time = event.end.format($.app.mc.momentUkTimeFormat); 
+    form.ee_id = event.event_entry_id;    
+     $.ajax({
+              type: "POST",
+              url: $.app.mc.updateEventUri,
+              data: form,
+              success: function(data, textStatus, jqXHR){return $.app.cal._updateEvent( data, textStatus, jqXHR,revertFunc)},
+              dataType: 'JSON'
+            });
+
+
+  },
+  /* ********************************************************** */
+  /* ********************************************************** */
+  eventResize:function(event, delta, revertFunc, jsEvent, ui, view )
+  {
+
+    var form = this.getDataForm();  
+    event.end.add(event.end._data); 
+    
+    form.start_date = event.start.format($.app.mc.momentUkDateFormat); 
+    form.start_time = event.start.format($.app.mc.momentUkTimeFormat); 
+    form.end_date = event.end.format($.app.mc.momentUkDateFormat); 
+    form.end_time = event.end.format($.app.mc.momentUkTimeFormat); 
+    form.ee_id = event.event_entry_id;    
+
+    $.ajax({
+              type: "POST",
+              url: $.app.mc.updateEventUri,
+              data: form,
+              success: function(data, textStatus, jqXHR){return $.app.cal._updateEvent( data, textStatus, jqXHR,revertFunc)},
+              dataType: 'JSON'
+            });
+  },
+  /* ********************************************************** */
+  
     createEvent: function ()
     {
            var values = {};
@@ -156,12 +228,12 @@ AppPackageCalendar.prototype = {
               type: "POST",
               url: $.app.mc.createEventUri,
               data: values,
-              success: function(data, textStatus, jqXHR){return $.app.cal.processCreateEvent( data, textStatus, jqXHR)},
+              success: function(data, textStatus, jqXHR){return $.app.cal._createEvent( data, textStatus, jqXHR)},
               dataType: 'JSON'
             });
     } ,
 /* ********************************************************** */
-  processCreateEvent: function ( data, textStatus, jqXHR)
+  _createEvent: function ( data, textStatus, jqXHR)
   {
     var response = '';
     var title = ''; 
@@ -182,16 +254,32 @@ AppPackageCalendar.prototype = {
     $('#spanTitle').html(title);  
     $('#spanResponse').html(response); 
   },
+  /* ********************************************************** */
+  _updateEvent: function ( data, textStatus, jqXHR,revertFunc)
+  {
+    var type= 'success'; 
+    var message = '';
+    for(var i =0 ; i < data.message.length ; i++)
+        message += data.message[i]; 
+
+    if (data.error)
+    {
+        type = 'danger'
+        revertFunc(); 
+    }  
+        $.bootstrapGrowl(message , {'type':type}, 1000 );
+                
+  },
 /* ********************************************************** */
  
-
-  /* ********************************************************** */
-  eventDrop:function(event, delta, revertFunc, jsEvent, ui, view )
+  drop:function(date, jsEvent, ui, resourceId , that)
   {
+    
 
-    console.info(event); 
-    revertFunc(); 
   },
+  /* ********************************************************** */
+
+  
   /* ********************************************************** */
   _popoverDiv:function(event)
   {

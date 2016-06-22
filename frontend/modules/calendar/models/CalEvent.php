@@ -16,5 +16,6 @@ class CalEvent extends \yii2fullcalendar\models\Event
  public $project_title;
  public $project_collection_title; 
  public $calendar_title;
+ public $event_entry_id; 
  //public $editable;  
 }

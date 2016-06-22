@@ -31,8 +31,12 @@ abstract class XController extends \yii\web\Controller
         yii::$app->jsconfig->addData('g', yii::$app->user->isGuest); 
         yii::$app->jsconfig->addData('csrfTokenParam',yii::$app->request->csrfParam); 
         yii::$app->jsconfig->addData('csrfToken', yii::$app->request->csrfToken); 
-
-         yii::$app->jsconfig->addData('types_boolean', 
+        yii::$app->jsconfig->addData('ukDateTimeFormat', yii::$app->DateComponent->ukDateTimeFormat);
+        yii::$app->jsconfig->addData('momentUkDateTimeFormat', yii::$app->DateComponent->momentUkDateTimeFormat);
+        yii::$app->jsconfig->addData('momentUkDateFormat', yii::$app->DateComponent->momentUkDateFormat);
+        yii::$app->jsconfig->addData('momentUkTimeFormat', yii::$app->DateComponent->momentUkTimeFormat);
+        
+        yii::$app->jsconfig->addData('types_boolean', 
                 [
                     'true'=>Types::$boolean['true']['id'],
                     'false'=>Types::$boolean['false']['id']

@@ -16,8 +16,9 @@ class DefaultController extends XController
     public function init()
     {
         if (! Yii::$app->user->isGuest){
-            yii::$app->jsconfig->addData('myCalendars', yii::$app->CalendarComponent->myCalendars);
+            yii::$app->jsconfig->addData('allCalendars', yii::$app->CalendarComponent->allCalendars);
             yii::$app->jsconfig->addData('createEventUri', Url::to('/calendar/ajax/createevent') );
+            yii::$app->jsconfig->addData('updateEventUri', Url::to('/calendar/ajax/updateevent') );
             yii::$app->jsconfig->addData('subscribeUri', Url::to('/calendar/ajax/subscribe') );
             yii::$app->jsconfig->addData('unsubscribeUri', Url::to('/calendar/ajax/unsubscribe') );
 

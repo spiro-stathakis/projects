@@ -9,6 +9,7 @@ use common\components\Types;
 class Booking extends Model
 {
     public $event_id;
+    public $event_entry_id; 
     public $booking_status_id;
     public $calendar_id; 
 	public $project_id; 
@@ -29,11 +30,13 @@ class Booking extends Model
     public $start_timestamp; 
     public $end_timestamp; 
     public $jsObject; 
+    public $secsInDay; 
    
     /* ************************************************************************************************ */ 
 
     public function init()
     {
+        $this->secsInDay = (60 * 60) * 24; 
         $this->jsObject = []; 
         $this->booking_status_id = Types::$bookingStatus['confirmed']['id']; 
         $this->all_day_option_id = Types::$boolean['false']['id']; 
@@ -45,13 +48,13 @@ class Booking extends Model
     {
         
         return [
-            [['start_timestamp','end_timestamp','title','start_time','end_time','start_date', 'calendar_id'], 'required'],
+            [['start_timestamp','end_timestamp','title','start_time','end_time','start_date', 'end_date','calendar_id'], 'required'],
             [['start_timestamp','end_timestamp'], 'integer'],
             [['start_datetime_uk','end_datetime_uk'] , 'date', 'format'=>'dd-MM-yyyy H:m'],
             [['start_timestamp'] , 'validateSlot'], 
             [['start_timestamp'] , 'validateStartEnd'], 
             [['project_id'] , 'validateProject'], 
-            [['project_id', 'all_day_option_id']  , 'safe'], 
+            [['project_id', 'all_day_option_id','event_id','event_entry_id']  , 'safe'], 
         ];
     }
     
@@ -60,13 +63,21 @@ class Booking extends Model
      public function beforeValidate()
     {
         
+        
+        
         $dateObj =\yii::$app->DateComponent; 
+        if ($this->end_date == null ) 
+            $this->end_date = $this->start_date; 
+
         $this->start_datetime_uk  = sprintf('%s %s', $this->start_date, $this->start_time); 
-        $this->end_datetime_uk  = sprintf('%s %s', $this->start_date, $this->end_time); 
+        $this->end_datetime_uk  = sprintf('%s %s', $this->end_date, $this->end_time); 
         $this->start_timestamp = $dateObj->ukDateTimeToTimestamp($this->start_datetime_uk);
         $this->end_timestamp = $dateObj->ukDateTimeToTimestamp($this->end_datetime_uk);
-        return parent::beforeValidate();
+        if (  ($this->end_timestamp  - $this->start_timestamp ) > $this->secsInDay  )
+            $this->all_day_option_id = Types::$boolean['true']['id']; 
+           
         
+         return parent::beforeValidate();
     }
     
     /* ************************************************************************************************ */ 
@@ -89,7 +100,6 @@ class Booking extends Model
         $this->jsObject['calendar_id'] = $this->calendar_id; 
         $this->jsObject['project_collection_title'] = ''; 
         $this->jsObject['editable'] = true; 
-
         return parent::afterValidate();   
     }
     /* ************************************************************************************************ */ 
@@ -121,7 +131,7 @@ class Booking extends Model
         $allowOverlap = yii::$app->CalendarComponent->allowOverlapOption($this->calendar_id); 
         if (! $allowOverlap)
         {
-            $conflicts =yii::$app->CalendarComponent->hasConflict($this->start_timestamp, $this->end_timestamp, $this->calendar_id);
+            $conflicts =yii::$app->CalendarComponent->hasConflict($this->start_timestamp, $this->end_timestamp, $this->calendar_id, $this->event_entry_id);
             if ($conflicts)
                 $this->addError($attribute, 'This slot has already been booked.');
         }

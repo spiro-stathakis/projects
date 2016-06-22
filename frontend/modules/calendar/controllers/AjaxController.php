@@ -39,6 +39,7 @@ class AjaxController extends XController
                         'class' => AccessControl::className(),
                         'rules' => [
                                     ['actions' => ['createevent',
+                                                    'updateevent', 
                                                     'listcalendars', 
                                                     'listevents', 
                                                     'unsubscribe', 
@@ -109,6 +110,40 @@ class AjaxController extends XController
     }
     /* ****************************************************************************************** */ 
     
+    public function actionUpdateevent()
+    {
+
+        $request = \yii::$app->request; 
+        $eventEntryRecord = yii::$app->CalendarComponent->eventEntryRecord($request->post('ee_id')); 
+        if (! yii::$app->CalendarComponent->canUpdateEvent($eventEntryRecord))
+           throw new \yii\web\HttpException(403, sprintf('Event update not authorized for use'));
+
+        $bookingModel = new Booking; 
+        $bookingModel->attributes = array_merge($eventEntryRecord , $request->post()); 
+        if ($bookingModel->validate()) 
+        {
+            $eventEntryModel = EventEntry::findOne($eventEntryRecord['event_entry_id']); 
+            $eventEntryModel->load(['EventEntry'=>$bookingModel->attributes]); 
+            if ($eventEntryModel->save()) 
+            {
+                 yii::$app->AjaxResponse->error = false; 
+                 yii::$app->AjaxResponse->message = array('Event updated.');     
+            }
+            else
+                yii::$app->AjaxResponse->message = array_values($eventEntryModel->getErrors());  
+
+        }
+        else 
+            yii::$app->AjaxResponse->message = array_values($bookingModel->getErrors());     
+        
+
+        yii::$app->AjaxResponse->sendContent();  
+
+
+    }
+    /* ****************************************************************************************** */ 
+    
+    /* ****************************************************************************************** */ 
     public function actionCreateevent()
     {
         $request = \yii::$app->request; 
@@ -119,6 +154,9 @@ class AjaxController extends XController
 
         $bookingModel->load($request->post()); 
 
+        if (! yii::$app->CalendarComponent->canCreateEvent($bookingModel->calendar_id))
+           throw new \yii\web\HttpException(403, sprintf('Calendar not authorized for use'));
+        
         if ($bookingModel->validate())
         {
              
@@ -182,12 +220,12 @@ class AjaxController extends XController
         {
             $model = new CalEvent(); 
             
-            $model->editable = $model->startEditable = $model->durationEditable = yii::$app->CalendarComponent->canEditEvent($e); 
+            $model->editable = $model->startEditable = $model->durationEditable = yii::$app->CalendarComponent->canUpdateEvent($e); 
             $model->id = $e['event_entry_id']; 
             $model->cal_id = $e['calendar_id']; 
             $model->calendar_title = $e['calendar_title'];
             $model->project_collection_title = $e['project_collection_title'];
-            
+            $model->event_entry_id = $e['event_entry_id']; 
             if (strlen($e['event_entry_title']) > 0)
             
                 $model->title =  $e['event_entry_title']; 

@@ -7,10 +7,12 @@ use yii\bootstrap\Html;
 use frontend\modules\calendar\models\Booking; 
 
 use frontend\packages\BootstrapPopoverAsset;
+use frontend\packages\BootstrapGrowlAsset;
 
 
 
 BootstrapPopoverAsset::register($this);
+BootstrapGrowlAsset::register($this);
 
 
 echo $this->render('_bookingModal', ['model'=>$bookingModel]);

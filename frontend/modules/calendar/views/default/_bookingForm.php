@@ -3,7 +3,7 @@
 use yii\bootstrap\Html;
 use kartik\form\ActiveForm;
 use kartik\builder\Form;
-use kartik\widgets\SwitchInput;
+use kartik\switchinput\SwitchInput;
 use yii\helpers\Url; 
 
 use frontend\packages\BootstrapTreeviewAsset;

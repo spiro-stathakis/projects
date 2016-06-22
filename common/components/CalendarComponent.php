@@ -39,8 +39,25 @@ class CalendarComponent extends Object
     }
     
     /* ******************************************************************************************************* */ 
-    public function canEditEvent($event)
+    public function canCreateEvent($calendar_id)
     {
+        
+        if ($this->isMember($calendar_id))
+            return true; 
+        if ($this->isManager($calendar_id))
+            return true; 
+        
+
+        return false; 
+    }
+    
+    /* ******************************************************************************************************* */ 
+    
+    public function canUpdateEvent($event)
+    {
+        if ($this->isReadOnly($event['calendar_id']))
+            return false; 
+
         if ($this->isManager($event['calendar_id']))
             return true; 
         if ($event['created_by'] == yii::$app->user->id)
@@ -48,6 +65,19 @@ class CalendarComponent extends Object
 
         return false; 
     }
+    
+    /* ******************************************************************************************************* */ 
+    public function isReadOnly($calendar_id)
+    {
+        $return = false; 
+        foreach($this->allCalendars as $rec)
+            if ($rec['read_only_option_id'] == Types::$boolean['true']['id']) 
+                $return = true; 
+        
+        return $return; 
+    }
+    
+    /* ******************************************************************************************************* */ 
     
     /* ******************************************************************************************************* */ 
     public function isManager($calendar_id)
@@ -79,9 +109,18 @@ class CalendarComponent extends Object
     }
     
     /* ******************************************************************************************************* */ 
-    public function hasConflict($start,$end,$calendar_id)
+    public function hasConflict($start,$end,$calendar_id,$event_entry_id = null)
     {
-        return $this->_hasConflict($start,$end,$calendar_id); 
+        $rec =  $this->_hasConflict($start,$end,$calendar_id); 
+        if (count($rec) == 0 ) 
+            return false; 
+        if ($event_entry_id !== null) 
+            if ($rec[0]['event_entry_id'] == $event_entry_id) 
+                return false; 
+
+        return true; 
+
+
     }
     /* ******************************************************************************************************* */ 
     public function getEvents($start,$end)
@@ -177,6 +216,11 @@ class CalendarComponent extends Object
          return $this->_allCalendars; 
     }
     /* ******************************************************************************************************* */ 
+    public function eventEntryRecord($event_entry_id)
+    {
+        return $this->_eventEntryRecord($event_entry_id);
+    }
+    /* ******************************************************************************************************* */ 
     public function projectOption($calendar_id)
     {
         $out = false; 
@@ -220,6 +264,36 @@ class CalendarComponent extends Object
                              ':event_entry_status_active'=>Types::$boolean['true']['id']
                         ])
                 ->all();
+
+         return  $data; 
+
+        }
+    /* ******************************************************************************************************* */ 
+     private function _eventEntryRecord($event_entry_id)
+         {
+            $data   = (new \yii\db\Query())
+                ->select([
+                    'e.id as event_id' , 'ee.title',
+                    'e.description as event_description' , 'e.calendar_id', 
+                    'e.project_id' , 'IFNULL(col.title," No project ") as project_collection_title', 
+                    'ee.id as event_entry_id' , 'ee.title as event_entry_title', 
+                    'ee.description as event_entry_description', 'ee.booking_status_id', 
+                    'ee.start_timestamp' , 'ee.end_timestamp' , 'ee.all_day_option_id' , 
+                    'c.title as calendar_title', 
+                    'c.hex_code','e.created_by', 'e.created_at',
+                    'concat(u.first_name," " , u.last_name) as create_name' 
+                    ])
+                ->from('event e')
+                ->join('LEFT JOIN','calendar c' , 'e.calendar_id=c.id')
+                ->join('LEFT JOIN', 'event_entry ee' , 'ee.event_id=e.id')
+                ->join('LEFT JOIN','ref_booking_status rbs', 'ee.booking_status_id=rbs.id')
+                ->join('LEFT JOIN', 'calendar_subscription cs' , 'cs.calendar_id=c.id')
+                ->join('LEFT JOIN' , 'project p', 'p.id=e.project_id')
+                ->join('LEFT JOIN' , 'collection col' , 'c.id=p.collection_id')
+                ->join('LEFT JOIN' , 'user u', 'u.id=e.created_by')
+                ->where('ee.id = :event_entry_id')
+                 ->addParams([':event_entry_id'=>$event_entry_id])
+                ->one();
 
          return  $data; 
 
