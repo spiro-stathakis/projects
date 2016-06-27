@@ -442,7 +442,7 @@ class CalendarComponent extends Object
                     ->join('INNER JOIN','collection col' , 'cal.collection_id=col.id')
                     ->join('INNER JOIN','user_collection uc', 'uc.collection_id=col.id')
                     ->join('LEFT JOIN','calendar_subscription cs', 'cs.calendar_id=cal.id')
-                    ->where('(uc.status_id=:status_active) 
+                    ->where('((uc.status_id=:status_active) 
                             AND 
                             (cal.status_id=:calendar_active)
                             AND 
@@ -450,12 +450,15 @@ class CalendarComponent extends Object
                             AND 
                             (uc.member_type_id=:mem_type_manager OR uc.member_type_id=:mem_type_member)
                             AND  
-                            uc.user_id=:user_id')
+                            (uc.user_id=:user_id))
+                            OR 
+                            (col.public_option_id = :boolean_true)')
                     ->addParams([':status_active'=>Types::$status['active']['id'], 
                                 ':calendar_active'=>Types::$status['active']['id'], 
                                 ':mem_type_manager'=>Types::$member_type['manager']['id'], 
                                 ':mem_type_member'=>Types::$member_type['member']['id'], 
-                                ':user_id'=>\Yii::$app->user->identity->id 
+                                ':user_id'=>\Yii::$app->user->identity->id ,
+                                ':boolean_true'=>Types::$boolean['true']['id'],
                         ])->all();
 
             

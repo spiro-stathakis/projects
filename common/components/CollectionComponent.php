@@ -174,9 +174,10 @@ calendarRecord: Retrieves a single calendar record
                     ->join('INNER JOIN','ref_collection_type rct', 'c.collection_type_id=rct.id')
                     ->join('INNER JOIN','user_collection uc', 'uc.collection_id=c.id')
                     ->join('INNER JOIN','ref_member_type rmt', 'uc.member_type_id=rmt.id')
-                    ->where('uc.status_id=:status_active AND uc.user_id=:user_id AND (uc.expiry > UNIX_TIMESTAMP() OR uc.expiry=0) ')
+                    ->where('(uc.status_id=:status_active AND uc.user_id=:user_id AND (uc.expiry > UNIX_TIMESTAMP() OR uc.expiry=0)) OR c.public_option_id=:boolean_true ')
                     ->addParams([':status_active'=>Types::$status['active']['id'], 
-                                 ':user_id'=>\Yii::$app->user->id 
+                                 ':user_id'=>\Yii::$app->user->id , 
+                                 ':boolean_true'=>Types::$boolean['true']['id']
                         ])
                     ->all();
 

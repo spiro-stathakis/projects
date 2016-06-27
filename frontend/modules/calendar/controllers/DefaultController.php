@@ -51,6 +51,7 @@ class DefaultController extends XController
     public function actionIndex()
     {
 	 $bookingModel  = new Booking;  
+    
       yii::$app->jsconfig->addData('tree', Json::encode($this->_getTree()));  
 	 return $this->render('index', ['bookingModel'=>$bookingModel]);
 
