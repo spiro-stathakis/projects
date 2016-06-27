@@ -101,9 +101,12 @@ class EventEntryController extends XController
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        $request = yii::$app->request; 
+        $ee_id = $request->post('ee_id'); 
+        $model = $this->findModel($ee_id);
+        $model->status_id = Types::$status['inactive']['id']; 
+        $model->save(); 
+        return $this->redirect(['/calendar/manage/events', 'id'=>$id]);
     }
 
     /**

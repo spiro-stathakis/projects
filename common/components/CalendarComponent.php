@@ -39,9 +39,13 @@ class CalendarComponent extends Object
     }
     
     /* ******************************************************************************************************* */ 
-    public function canCreateEvent($calendar_id)
+    public function canViewEvents($calendar_id)
     {
         
+        
+
+        if ($this->isPublic($calendar_id))
+            return true; 
         if ($this->isMember($calendar_id))
             return true; 
         if ($this->isManager($calendar_id))
@@ -50,16 +54,47 @@ class CalendarComponent extends Object
 
         return false; 
     }
+    /* ******************************************************************************************************* */ 
     
+    public function canCreateEvents($calendar_id)
+    {
+        
+        if ($this->isMember($calendar_id))
+            return true; 
+        if ($this->isReadOnly($calendar_id))
+            return false; 
+        if ($this->isManager($calendar_id))
+            return true; 
+        
+
+        return false; 
+    }
+    
+    /* ******************************************************************************************************* */ 
+   
+    /*
+            Spiro 22/06/2016 
+            **  Warning: ** 
+
+            singular = event 
+            plural = calendar 
+            
+            e.g updateEvent = may a user update an event 
+                updateEvents = may a user update the events within a calendar 
+
+    */ 
     /* ******************************************************************************************************* */ 
     
     public function canUpdateEvent($event)
     {
-        if ($this->isReadOnly($event['calendar_id']))
-            return false; 
+       
 
         if ($this->isManager($event['calendar_id']))
             return true; 
+       
+        if ($this->isReadOnly($event['calendar_id']))
+            return false; 
+        
         if ($event['created_by'] == yii::$app->user->id)
             return true; 
 
@@ -78,7 +113,30 @@ class CalendarComponent extends Object
     }
     
     /* ******************************************************************************************************* */ 
-    
+     public function isPublic($calendar_id)
+    {
+        $out = false; 
+        foreach($this->myCalendars as $cal)
+            if ($cal['calendar_id'] == $calendar_id)
+                if ($cal['public_option_id'] == Types::$boolean['true']['id'])
+                    $out = true;
+        return $out;  
+
+    }
+
+    /* ******************************************************************************************************* */ 
+    public function projectOption($calendar_id)
+    {
+        $out = false; 
+        foreach($this->myCalendars as $cal)
+            if ($cal['calendar_id'] == $calendar_id)
+                if ($cal['project_option_id'] == Types::$boolean['true']['id'])
+                    $out = true;
+        return $out;  
+
+    }
+
+
     /* ******************************************************************************************************* */ 
     public function isManager($calendar_id)
     {
@@ -123,9 +181,9 @@ class CalendarComponent extends Object
 
     }
     /* ******************************************************************************************************* */ 
-    public function getEvents($start,$end)
+    public function getEvents($start,$end,$calendar_id=null)
     {
-        return $this->_getEvents($start, $end); 
+        return $this->_getEvents($start, $end, $calendar_id); 
         
     }
     
@@ -220,19 +278,9 @@ class CalendarComponent extends Object
     {
         return $this->_eventEntryRecord($event_entry_id);
     }
+    
     /* ******************************************************************************************************* */ 
-    public function projectOption($calendar_id)
-    {
-        $out = false; 
-        foreach($this->myCalendars as $cal)
-            if ($cal['calendar_id'] == $calendar_id)
-                if ($cal['project_option_id'] == Types::$boolean['true']['id'])
-                    $out = true;
-        return $out;  
-
-    }
-
-
+   
     /* ******************************************************************************************************* */ 
     
     /*                                          PRIVATE FUNCTIONS                                              */ 
@@ -299,12 +347,34 @@ class CalendarComponent extends Object
 
         }
     /* ******************************************************************************************************* */ 
+    /* ******************************************************************************************************* */ 
     
-    private function _getEvents($start, $end)
+    private function _getEvents($start, $end,$calendar_id = null)
          {
+            $params = [':start'=>$start, 
+                       ':end'=>$end , 
+                       ':true'=>Types::$boolean['true']['id'], 
+                       ':event_entry_status_active'=>Types::$status['active']['id'],
+                       ];
+
+            $where =    '(ee.start_timestamp >= :start AND ee.end_timestamp <= :end)
+                            AND 
+                        (cs.display_option_id = :true OR cs.display_option_id IS NULL)
+                            AND
+                         ee.status_id=:event_entry_status_active' ;
+
+            if ($calendar_id !== null)
+            {
+                $where .= ' AND c.id =:calendar_id'; 
+                $params[':calendar_id']=$calendar_id ; 
+                        
+            }
+
+            
+
             $data   = (new \yii\db\Query())
                 ->select([
-                    'e.id as event_id' , 'e.title as event_title',
+                    'e.id as event_id' , 'e.title as event_title','c.id as calendar_id', 
                     'e.description as event_description' , 'e.calendar_id', 
                     'e.project_id' , 'IFNULL(col.title," No project ") as project_collection_title', 
                     'ee.id as event_entry_id' , 'ee.title as event_entry_title', 
@@ -322,18 +392,8 @@ class CalendarComponent extends Object
                 ->join('LEFT JOIN' , 'project p', 'p.id=e.project_id')
                 ->join('LEFT JOIN' , 'collection col' , 'c.id=p.collection_id')
                 ->join('LEFT JOIN' , 'user u', 'u.id=e.created_by')
-                ->where(
-                        '(ee.start_timestamp >= :start AND ee.end_timestamp <= :end)
-                            AND 
-                        (cs.display_option_id = :true OR cs.display_option_id IS NULL)
-                            AND
-                         ee.status_id=:event_entry_status_active'
-                        )
-                 ->addParams([':start'=>$start, 
-                             ':end'=>$end , 
-                             ':true'=>Types::$boolean['true']['id'], 
-                             ':event_entry_status_active'=>Types::$status['active']['id'],  
-                        ])
+                ->where($where)
+                 ->addParams($params)
                 ->all();
 
          return  $data; 
@@ -372,6 +432,7 @@ class CalendarComponent extends Object
             'cal.project_option_id', 
             'cal.allow_overlap_option_id', 
             'cal.read_only_option_id', 
+            'col.public_option_id', 
             'uc.member_type_id','cs.display_option_id',
             'cal.hex_code']; 
 
@@ -380,7 +441,7 @@ class CalendarComponent extends Object
                     ->from('calendar cal')
                     ->join('INNER JOIN','collection col' , 'cal.collection_id=col.id')
                     ->join('INNER JOIN','user_collection uc', 'uc.collection_id=col.id')
-                  ->join('LEFT JOIN','calendar_subscription cs', 'cs.calendar_id=cal.id')
+                    ->join('LEFT JOIN','calendar_subscription cs', 'cs.calendar_id=cal.id')
                     ->where('(uc.status_id=:status_active) 
                             AND 
                             (cal.status_id=:calendar_active)

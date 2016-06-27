@@ -30,19 +30,12 @@ class ProjectComponent extends Object
     /* ******************************************************************************************************* */ 
     public function getMyProjects()
 	{
-        $arr = [ Types::$member_type['manager']['id']=>[],
-                    Types::$member_type['member']['id']=>[],
-                    Types::$member_type['collab']['id']=>[], 
-                    Types::$member_type['assoc']['id']=>[], 
-                ]; 
         if ($this->_myProjects === null)
                 $this->_myProjects = $this->_myProjects(); 
         
-        foreach ($this->_myProjects as $row)
-            $arr[ $row['member_type_id'] ][] = $row;  
         
 
-        return $arr; 
+        return $this->_myProjects;
 
 
 	}
@@ -87,8 +80,11 @@ class ProjectComponent extends Object
             $list = $this->allProjects; 
         else 
             $list = $this->myProjects; 
-        foreach ($list as $project) 
-            $out[$project['project_id']] = $project['project_title']; 
+
+        
+        if (count($list) > 0)
+            foreach ($list as $project) 
+                $out[$project['project_id']] = $project['project_title']; 
 
         return $out; 
         
@@ -134,6 +130,7 @@ class ProjectComponent extends Object
                              ])
                     ->from('collection c')
                     ->join('LEFT JOIN','user_collection uc' , 'uc.collection_id=c.id')
+                    ->join('INNER JOIN','project p' , 'p.collection_id=c.id')
                     ->where('uc.status_id=:status_active AND uc.user_id=:user_id')
                     ->addParams([':status_active'=>Types::$status['active']['id'], 
                                  ':user_id'=>$this->_userId 

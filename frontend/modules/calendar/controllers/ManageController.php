@@ -7,7 +7,7 @@ use common\components\Types;
 use app\modules\calendar\models\Event; 
 use yii\filters\AccessControl;
 use frontend\modules\calendar\models\Calendar;  
-
+use yii\data\ArrayDataProvider; 
 class ManageController extends XController
 {
 
@@ -29,6 +29,7 @@ class ManageController extends XController
                                     ['actions' => ['view'], 'allow' => true, 'roles' => ['editCalendar'],], 
                                     ['actions' => ['list'], 'allow' => true, 'roles' => ['editCalendar'],], 
                                     ['actions' => ['index'], 'allow' => true, 'roles' => ['@'],], 
+                                    ['actions' => ['events'], 'allow' => true, 'roles' => ['@'],], 
                                 ],
                         ],
         ];
@@ -75,7 +76,7 @@ class ManageController extends XController
         if ($model->load(Yii::$app->request->post()) && $model->save()) 
         {
             Yii::$app->session->setFlash('success', sprintf('Calendar %s has been updated' , $model->title));
-            return $this->redirect(['/collections/default/manage', 'id' => $model->collection_id]);
+            return $this->redirect(['/calendar/manage/list']);
         } 
         else 
         {
@@ -107,9 +108,33 @@ class ManageController extends XController
 
 	}
 /* ********************************************************************** */ 
+public function actionEvents($id)
+{
+    $events =yii::$app->CalendarComponent->getEvents(
+                                            time() - (10 * yii::$app->DateComponent->secsInDay),
+                                            time() + (3650 * yii::$app->DateComponent->secsInDay),  
+                                            $id); 
+    
+    
+    $dataProvider =  new ArrayDataProvider(['allModels'=>$events]);
+    return $this->render('events', ['dataProvider'=>$dataProvider]);
+    
+}   
+/* ********************************************************************** */     
 public function actionList()
 {
-    return $this->render('list', ['managementList'=>yii::$app->CalendarComponent->managementList]);
+    $myCalendars = [];
+    $a = [];  
+    foreach (yii::$app->CalendarComponent->myCalendars as $cal)
+    
+        if (! in_array($cal['calendar_id'] , $a))
+        {
+            $myCalendars[] = $cal; 
+            $a[] =$cal['calendar_id'];
+        }
+    
+    $dataProvider =  new ArrayDataProvider(['allModels'=>$myCalendars]);
+    return $this->render('list', ['dataProvider'=>$dataProvider]);
     
 }	
 /* ********************************************************************** */ 

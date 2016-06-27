@@ -154,7 +154,7 @@ class AjaxController extends XController
 
         $bookingModel->load($request->post()); 
 
-        if (! yii::$app->CalendarComponent->canCreateEvent($bookingModel->calendar_id))
+        if (! yii::$app->CalendarComponent->canCreateEvents($bookingModel->calendar_id))
            throw new \yii\web\HttpException(403, sprintf('Calendar not authorized for use'));
         
         if ($bookingModel->validate())
@@ -227,23 +227,22 @@ class AjaxController extends XController
             $model->project_collection_title = $e['project_collection_title'];
             $model->event_entry_id = $e['event_entry_id']; 
             if (strlen($e['event_entry_title']) > 0)
-            
                 $model->title =  $e['event_entry_title']; 
             else 
                 $model->title =  $e['event_title'];
 
-            $model->start = yii::$app->DateComponent->timestampToIsoDateTime($e['start_timestamp']) ;
-            $model->end =  yii::$app->DateComponent->timestampToIsoDateTime($e['end_timestamp']) ;
+            $model->start = yii::$app->DateComponent->timestampToIsoDateTime($e['start_timestamp']);
+            $model->end =  yii::$app->DateComponent->timestampToIsoDateTime($e['end_timestamp']);
             $model->create_name = $e['create_name']; 
             $model->created_at = yii::$app->DateComponent->timestampToUkDateTime($e['created_at']); 
             if ($e['all_day_option_id'] == Types::$boolean['true']['id'])
                 $model->allDay = true; 
             else 
-                 $model->allDay = false;
+                $model->allDay = false;
             //$model->backgroundcolor = $e['hex_code']; 
             $model->className = sprintf('calendar-%s' , $e['calendar_id']); 
-                                            
             
+
             $events[]  = $model ;         
 
         }  
