@@ -23,7 +23,7 @@ calendarRecord: Retrieves a single calendar record
 	private $_collectionUserData; 
     private $_theCollections; 
     private $_theCollectionList; 
-   
+    private $_thePublicCollections; 
 
 	
 	/* ******************************************************************************************************* */ 
@@ -69,7 +69,17 @@ calendarRecord: Retrieves a single calendar record
     public function getTheCollections()
     {
         if ($this->_theCollections === null)
-            $this->_getTheCollections(); 
+            $this->_theCollections = $this->_getTheCollections();
+        if ($this->_thePublicCollections === null)
+        {
+            $this->_thePublicCollections = $this->_getThePublicCollections(); 
+            foreach ($this->_thePublicCollections as $col)
+            {
+                 $col['member_type_id'] = Types::$member_type['member']['id']; 
+                 $this->_theCollections[] = $col;  
+            }
+        
+        }
 
         return $this->_theCollections; 
     }
@@ -160,10 +170,26 @@ calendarRecord: Retrieves a single calendar record
 
         return $this->_collectionUserData  ; 
     }
+    /* ******************************************************************************************************* */
+    private function _getThePublicCollections()
+    {
+         return  (new \yii\db\Query())
+                    ->select(['c.id as collection_id','c.title as collection_title' , 'c.description as collection_description',
+                        'rct.name as collection_type_name',  
+                        'rct.id as collection_type_id'])
+                    ->from('collection c')
+                    ->join('INNER JOIN','ref_collection_type rct', 'c.collection_type_id=rct.id')
+                    ->where('c.public_option_id=:boolean_true AND c.status_id=:status_active')
+                    ->addParams([
+                            ':status_active'=>Types::$status['active']['id'],
+                            ':boolean_true'=>Types::$boolean['true']['id'], 
+                     ])
+                    ->all();
+    }
     /* ******************************************************************************************************* */ 
     private function _getTheCollections()
     {
-            $this->_theCollections   = (new \yii\db\Query())
+           return  (new \yii\db\Query())
                     ->select(['c.id as collection_id','c.title as collection_title' , 'c.description as collection_description',
                         'rct.name as collection_type_name',  
                         'rct.id as collection_type_id', 
@@ -174,14 +200,14 @@ calendarRecord: Retrieves a single calendar record
                     ->join('INNER JOIN','ref_collection_type rct', 'c.collection_type_id=rct.id')
                     ->join('INNER JOIN','user_collection uc', 'uc.collection_id=c.id')
                     ->join('INNER JOIN','ref_member_type rmt', 'uc.member_type_id=rmt.id')
-                    ->where('(uc.status_id=:status_active AND uc.user_id=:user_id AND (uc.expiry > UNIX_TIMESTAMP() OR uc.expiry=0)) OR c.public_option_id=:boolean_true ')
+                    ->where('(uc.status_id=:status_active AND uc.user_id=:user_id AND (uc.expiry > UNIX_TIMESTAMP() OR uc.expiry=0)) ')
                     ->addParams([':status_active'=>Types::$status['active']['id'], 
                                  ':user_id'=>\Yii::$app->user->id , 
-                                 ':boolean_true'=>Types::$boolean['true']['id']
+                                 
                         ])
                     ->all();
 
-            return $this->_theCollections; 
+           
     }
     
 

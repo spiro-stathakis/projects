@@ -151,13 +151,17 @@ class AjaxController extends XController
         $bookingModel = new Booking; 
         $eventModel = new Event; 
         $eventEntryModel = new EventEntry; 
+        $validate = false; 
 
         $bookingModel->load($request->post()); 
 
-        if (! yii::$app->CalendarComponent->canCreateEvents($bookingModel->calendar_id))
-           throw new \yii\web\HttpException(403, sprintf('Calendar not authorized for use'));
+        if (yii::$app->CalendarComponent->canCreateEvents($bookingModel->calendar_id))
+            $validate = true; 
+        else 
+            $bookingModel->addError('event_id', 'Cannot use this calendar. Double check the read only setting - ' . $bookingModel->calendar_id);
         
-        if ($bookingModel->validate())
+        
+        if ($validate && $bookingModel->validate())
         {
              
             
@@ -226,6 +230,7 @@ class AjaxController extends XController
             $model->calendar_title = $e['calendar_title'];
             $model->project_collection_title = $e['project_collection_title'];
             $model->event_entry_id = $e['event_entry_id']; 
+            $model->created_by = $e['created_by']; 
             if (strlen($e['event_entry_title']) > 0)
                 $model->title =  $e['event_entry_title']; 
             else 

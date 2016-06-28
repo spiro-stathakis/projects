@@ -40,12 +40,12 @@ use frontend\packages\BootstrapTreeviewAsset;
 			    'attributes'=>[    
 			        
 			    	'calendar_id'=>[	'type'=>Form::INPUT_DROPDOWN_LIST, 
-            							'items'=>array_merge(['0'=>''],yii::$app->CalendarComponent->myCalendarList), 
+            							'items'=>['0'=>''] +  yii::$app->CalendarComponent->myCalendarList, 
             							'options'=>['id'=>'calendar_id','placeholder'=>'Select a calendar'], 
             							
             					], 
 			     	'project_id'=>['type'=>Form::INPUT_DROPDOWN_LIST, 
-			     						'items'=>array_merge(['0'=>''],yii::$app->ProjectComponent->myProjectList),
+			     						'items'=>['0'=>''] + yii::$app->ProjectComponent->myProjectList,
 			     						'options'=>['id'=>'project_id','placeholder'=>'Select a project'],    
 			    				]
 			    			]
@@ -101,7 +101,7 @@ use frontend\packages\BootstrapTreeviewAsset;
 				
 			]);
 
-
+			
 
 
 

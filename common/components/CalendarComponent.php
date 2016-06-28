@@ -21,11 +21,11 @@ class CalendarComponent extends Object
 	
 
     private $_myCalendars; 
+    private $_publicCalendars; 
     private $_myCalendarList; 
     private $_theCalendarList; 
     private $_allCalendars; 
     
-	
 	/* ******************************************************************************************************* */ 
     /* ******************************************************************************************************* */ 
     /* ******************************************************************************************************* */ 
@@ -59,12 +59,15 @@ class CalendarComponent extends Object
     public function canCreateEvents($calendar_id)
     {
         
-        if ($this->isMember($calendar_id))
-            return true; 
-        if ($this->isReadOnly($calendar_id))
-            return false; 
         if ($this->isManager($calendar_id))
             return true; 
+        if ($this->isReadOnly($calendar_id))
+         return false; 
+    
+        
+        if ($this->isMember($calendar_id))
+            return true; 
+       
         
 
         return false; 
@@ -90,13 +93,15 @@ class CalendarComponent extends Object
        
 
         if ($this->isManager($event['calendar_id']))
-            return true; 
-       
-        if ($this->isReadOnly($event['calendar_id']))
-            return false; 
+             return true; 
         
+       if ($this->isReadOnly($event['calendar_id']))
+            return false; 
+      
+       
         if ($event['created_by'] == yii::$app->user->id)
             return true; 
+    
 
         return false; 
     }
@@ -234,9 +239,21 @@ class CalendarComponent extends Object
     public function  getMyCalendars()
 	{
 
+        
+
         if ($this->_myCalendars == null) 
             $this->_myCalendars = $this->_getMyCalendars(); 
-
+        if ($this->_publicCalendars == null)
+        {
+           
+            $this->_publicCalendars = $this->_getPublicCalendars(); 
+           foreach($this->_publicCalendars as $cal)
+           {   
+                $cal['member_type_id'] = Types::$member_type['member']['id']; 
+                 $this->_myCalendars[] = $cal;  
+            }
+        }
+        
         return $this->_myCalendars; 
     }
 	
@@ -426,23 +443,27 @@ class CalendarComponent extends Object
     private function _getMyCalendars()
     {
 
-            $select =  ['cal.id as calendar_id', 'cal.collection_id', 
-            'cal.title as calendar_title',
-            'col.title  as collection_title',
+            $select =  ['cal.id as calendar_id', 
+            'cal.collection_id', 
             'cal.project_option_id', 
             'cal.allow_overlap_option_id', 
             'cal.read_only_option_id', 
+            'cal.title as calendar_title',
+            'cal.hex_code', 
+            'col.title  as collection_title',
             'col.public_option_id', 
-            'uc.member_type_id','cs.display_option_id',
-            'cal.hex_code']; 
+            'cs.display_option_id',
+            'uc.member_type_id',
+            ]; 
 
+            
             $query   = (new \yii\db\Query())
                     ->select($select)
                     ->from('calendar cal')
-                    ->join('INNER JOIN','collection col' , 'cal.collection_id=col.id')
-                    ->join('INNER JOIN','user_collection uc', 'uc.collection_id=col.id')
+                    ->join(' JOIN','collection col' , 'cal.collection_id=col.id')
+                    ->join(' JOIN','user_collection uc', 'uc.collection_id=col.id')
                     ->join('LEFT JOIN','calendar_subscription cs', 'cs.calendar_id=cal.id')
-                    ->where('((uc.status_id=:status_active) 
+                    ->where('(uc.status_id=:status_active) 
                             AND 
                             (cal.status_id=:calendar_active)
                             AND 
@@ -450,14 +471,50 @@ class CalendarComponent extends Object
                             AND 
                             (uc.member_type_id=:mem_type_manager OR uc.member_type_id=:mem_type_member)
                             AND  
-                            (uc.user_id=:user_id))
-                            OR 
-                            (col.public_option_id = :boolean_true)')
+                            (uc.user_id=:user_id)
+                            ')
                     ->addParams([':status_active'=>Types::$status['active']['id'], 
                                 ':calendar_active'=>Types::$status['active']['id'], 
                                 ':mem_type_manager'=>Types::$member_type['manager']['id'], 
                                 ':mem_type_member'=>Types::$member_type['member']['id'], 
                                 ':user_id'=>\Yii::$app->user->identity->id ,
+                        ])
+                    ->all();
+           
+              
+
+             return  $query; 
+         
+
+    }
+    /* ******************************************************************************************************* */ 
+    private function _getPublicCalendars()
+    {
+
+
+            $select =  ['cal.id as calendar_id', 'cal.collection_id', 
+            'cal.title as calendar_title',
+            'col.title  as collection_title',
+            'cal.project_option_id', 
+            'cal.allow_overlap_option_id', 
+            'cal.read_only_option_id', 
+            'col.public_option_id', 
+            'cs.display_option_id',
+            'cal.hex_code']; 
+
+            $query   = (new \yii\db\Query())
+                    ->select($select)
+                    ->from('calendar cal')
+                    ->join(' JOIN','collection col' , 'cal.collection_id=col.id')
+                    ->join('LEFT JOIN','calendar_subscription cs', 'cs.calendar_id=cal.id')
+                    ->where('cal.status_id=:calendar_active
+                            AND 
+                            col.status_id=:status_active 
+                            AND 
+                            col.public_option_id = :boolean_true
+                            ')
+                    ->addParams([':status_active'=>Types::$status['active']['id'], 
+                                ':calendar_active'=>Types::$status['active']['id'], 
                                 ':boolean_true'=>Types::$boolean['true']['id'],
                         ])->all();
 
@@ -465,8 +522,6 @@ class CalendarComponent extends Object
               
 
              return  $query; 
-         
-
     }
     /* ******************************************************************************************************* */ 
 
