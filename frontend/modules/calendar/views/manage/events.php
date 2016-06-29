@@ -1,7 +1,7 @@
 <?php use yii\helpers\Url; ?> 
 <?php use yii\bootstrap\Html; ?> 
 <?php use yii\grid\GridView; ?> 
-<?php print_r($dataProvider); ?> 
+
  <div class="row">
             <div class="col-sm-6-offset col-sm-offset-2 col-md-7 col-md-offset-2 main">
             	<h4> Please select a calendar to update:</h4>
@@ -51,10 +51,10 @@
                         ],
                         'urlCreator' => function ($action, $model, $key, $index) {
                                 if ($action === 'update') {
-                                    return Url::to(['evententry/update', 'ee_id'=>$model['event_entry_id']]);
+                                    return Url::to(['event-entry/update', 'ee_id'=>$model['event_entry_id']]);
                                 }
                                 if ($action === 'delete') {
-                                    return Url::to(['evententry/delete', 'ee_id'=>$model['event_entry_id']]);
+                                    return Url::to(['event-entry/delete', 'ee_id'=>$model['event_entry_id']]);
                                 }
                             }
                         ],

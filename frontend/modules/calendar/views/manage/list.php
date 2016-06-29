@@ -1,7 +1,6 @@
 <?php use yii\helpers\Url; ?> 
 <?php use yii\bootstrap\Html; ?> 
 <?php use yii\grid\GridView; ?> 
-<?php print_r($dataProvider); ?> 
  <div class="row">
             <div class="col-sm-6-offset col-sm-offset-2 col-md-7 col-md-offset-2 main">
             	<h4> Please select a calendar to update:</h4>

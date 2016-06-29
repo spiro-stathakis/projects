@@ -166,12 +166,7 @@ AppPackageCalendar.prototype = {
     cal = this.getCalendarRecord(event.calendar_id);
     
      
-    if (cal.read_only_option_id == $.app.mc.types_boolean.true)
-    {
-        revertFunc(); 
-        return false; 
-    }
-
+    
    
 
     event.start.add(event.start._data);

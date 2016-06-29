@@ -6,6 +6,7 @@ use Yii;
 use frontend\modules\calendar\models\EventEntry;
 use frontend\modules\calendar\models\EventEntrySearch;
 use common\components\XController;
+use common\components\Types; 
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -29,6 +30,7 @@ class EventEntryController extends XController
         ];
     }
 
+    /* ********************************************************************** */ 
     /**
      * Lists all EventEntry models.
      * @return mixed
@@ -43,7 +45,7 @@ class EventEntryController extends XController
             'dataProvider' => $dataProvider,
         ]);
     }
-
+    /* ********************************************************************** */ 
     /**
      * Displays a single EventEntry model.
      * @param integer $id
@@ -55,7 +57,7 @@ class EventEntryController extends XController
             'model' => $this->findModel($id),
         ]);
     }
-
+    /* ********************************************************************** */ 
     /**
      * Creates a new EventEntry model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -73,25 +75,26 @@ class EventEntryController extends XController
             ]);
         }
     }
-
+    /* ********************************************************************** */ 
     /**
      * Updates an existing EventEntry model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionUpdate($ee_id)
     {
-        $model = $this->findModel($id);
+        $eventEntryModel = $this->findModel($ee_id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($eventEntryModel->load(Yii::$app->request->post()) && $eventEntryModel->save()) {
+            return $this->redirect(['view', 'id' => $eventEntryModel->id]);
         } else {
             return $this->render('update', [
-                'model' => $model,
+                'eventEntryModel' => $eventEntryModel,
             ]);
         }
     }
+    /* ********************************************************************** */ 
 
     /**
      * Deletes an existing EventEntry model.
@@ -99,16 +102,15 @@ class EventEntryController extends XController
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+    public function actionDelete($ee_id)
     {
         $request = yii::$app->request; 
-        $ee_id = $request->post('ee_id'); 
         $model = $this->findModel($ee_id);
         $model->status_id = Types::$status['inactive']['id']; 
         $model->save(); 
-        return $this->redirect(['/calendar/manage/events', 'id'=>$id]);
+        return $this->redirect(['/calendar/manage/events', 'id'=>$model->event->calendar_id]);
     }
-
+    /* ********************************************************************** */ 
     /**
      * Finds the EventEntry model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
