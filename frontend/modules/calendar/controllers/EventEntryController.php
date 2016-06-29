@@ -58,23 +58,8 @@ class EventEntryController extends XController
         ]);
     }
     /* ********************************************************************** */ 
-    /**
-     * Creates a new EventEntry model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new EventEntry();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
-    }
+    
+    
     /* ********************************************************************** */ 
     /**
      * Updates an existing EventEntry model.
@@ -85,8 +70,12 @@ class EventEntryController extends XController
     public function actionUpdate($ee_id)
     {
         $eventEntryModel = $this->findModel($ee_id);
+        $eventModel = Event::findOne($eventEntryModel->event->id);
+        $bookingModel = new Booking;
 
-        if ($eventEntryModel->load(Yii::$app->request->post()) && $eventEntryModel->save()) {
+        $bookingModel->attributes  =  array_merge($eventEntryModel->attributes , $eventModel->attributes);
+
+        if ($bookingModel->load(Yii::$app->request->post()) && $eventEntryModel->save()) {
             return $this->redirect(['view', 'id' => $eventEntryModel->id]);
         } else {
             return $this->render('update', [

@@ -6,8 +6,9 @@ use kartik\builder\Form;
 use kartik\widgets\SwitchInput;
 use yii\helpers\Url; 
 
-use frontend\packages\BootstrapTreeviewAsset;
-
+//use frontend\packages\BootstrapTreeviewAsset;
+use frontend\packages\BootstrapEditableAsset; 
+BootstrapEditableAsset::register($this);
 ?>
 
 <div class="row">
@@ -16,6 +17,7 @@ use frontend\packages\BootstrapTreeviewAsset;
       </div>
       <div class="col-sm-3 col-md-2">
       	<span id='span-event-title'></span>
+
       </div>
       <div class="col-sm-3 col-md-2">
       	Description 

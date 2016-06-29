@@ -111,23 +111,37 @@ class AjaxController extends XController
     /* ****************************************************************************************** */ 
     
     public function actionUpdateevent()
+    //event entries can be updated via form,  drag or resize events 
+
     {
 
         $request = \yii::$app->request; 
-        $eventEntryRecord = yii::$app->CalendarComponent->eventEntryRecord($request->post('ee_id')); 
+        if (yii::$app->CalendarComponent->eventEntryRecord($request->post('pk') !== null))
+             $post = $request->post('pk'); 
+        
+
+
+        $eventEntryRecord = yii::$app->CalendarComponent->eventEntryRecord($post['ee_id']); 
         if (! yii::$app->CalendarComponent->canUpdateEvent($eventEntryRecord))
            throw new \yii\web\HttpException(403, sprintf('Event update not authorized for use'));
 
         $bookingModel = new Booking; 
-        $bookingModel->attributes = array_merge($eventEntryRecord , $request->post()); 
+        $bookingModel->attributes = array_merge($eventEntryRecord , $post); 
+        
+        // check to see if we are doing an update via form and not resize or drag
+        if ($request->post('name'))
+            $bookingModel->{$request->post('name')} = $request->post('value'); 
+
+           
+
         if ($bookingModel->validate()) 
         {
             $eventEntryModel = EventEntry::findOne($eventEntryRecord['event_entry_id']); 
             $eventEntryModel->load(['EventEntry'=>$bookingModel->attributes]); 
             if ($eventEntryModel->save()) 
             {
-                 yii::$app->AjaxResponse->error = false; 
-                 yii::$app->AjaxResponse->message = array('Event updated.');     
+                yii::$app->AjaxResponse->error = false; 
+                yii::$app->AjaxResponse->message = $bookingModel->jsObject;     
             }
             else
                 yii::$app->AjaxResponse->message = array_values($eventEntryModel->getErrors());  

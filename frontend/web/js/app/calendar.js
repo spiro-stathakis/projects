@@ -122,15 +122,7 @@ AppPackageCalendar.prototype = {
 		
     }, 
 /* ********************************************************** */    
-    eventClick:function(event, jsEvent, view)
-    {
-        
-        $('#span-event-title').html(event.title); 
-        $('#span-event-description').html(event.description); 
-        $('#eventShowModal').modal(); 
-        
-        
-    },
+    
 /* ********************************************************** */    
     eventMouseover:function(event, jsEvent, view,that)
     {
@@ -162,22 +154,11 @@ AppPackageCalendar.prototype = {
   eventDrop:function(event, delta, revertFunc, jsEvent, ui, view )
   {
 
-    var form = this.getDataForm(); 
     cal = this.getCalendarRecord(event.calendar_id);
-    
-     
-    
-   
-
     event.start.add(event.start._data);
     event.end.add(event.end._data);
-
-
-    form.start_date = event.start.format($.app.mc.momentUkDateFormat); 
-    form.start_time = event.start.format($.app.mc.momentUkTimeFormat); 
-    form.end_date = event.end.format($.app.mc.momentUkDateFormat); 
-    form.end_time = event.end.format($.app.mc.momentUkTimeFormat); 
-    form.ee_id = event.event_entry_id;    
+    var form = this._buildUpdateEventForm(event); 
+    
      $.ajax({
               type: "POST",
               url: $.app.mc.updateEventUri,
@@ -189,19 +170,27 @@ AppPackageCalendar.prototype = {
 
   },
   /* ********************************************************** */
+  
+  _buildUpdateEventForm: function(event)
+  {
+      var form ={}; 
+      form.pk = this.getDataForm();
+      form.pk.start_date = event.start.format($.app.mc.momentUkDateFormat); 
+      form.pk.start_time = event.start.format($.app.mc.momentUkTimeFormat); 
+      form.pk.end_date = event.end.format($.app.mc.momentUkDateFormat); 
+      form.pk.end_time = event.end.format($.app.mc.momentUkTimeFormat); 
+      form.pk.ee_id = event.event_entry_id;    
+      return form; 
+  }, 
+
   /* ********************************************************** */
   eventResize:function(event, delta, revertFunc, jsEvent, ui, view )
   {
 
-    var form = this.getDataForm();  
-    event.end.add(event.end._data); 
-    
-    form.start_date = event.start.format($.app.mc.momentUkDateFormat); 
-    form.start_time = event.start.format($.app.mc.momentUkTimeFormat); 
-    form.end_date = event.end.format($.app.mc.momentUkDateFormat); 
-    form.end_time = event.end.format($.app.mc.momentUkTimeFormat); 
-    form.ee_id = event.event_entry_id;    
+    event.end.add(event.end._data);     
+    var form = this._buildUpdateEventForm(event); 
 
+    
     $.ajax({
               type: "POST",
               url: $.app.mc.updateEventUri,
@@ -211,7 +200,31 @@ AppPackageCalendar.prototype = {
             });
   },
   /* ********************************************************** */
-  
+  eventClick:function(event, jsEvent, view)
+    {
+        
+        $('#span-event-title').html(event.title); 
+        $('#span-event-description').html(event.description); 
+        var form = this._buildUpdateEventForm(event).pk; 
+
+           $('#span-event-title').editable({
+              type: 'text',
+              value: event.title, 
+              pk: form,
+              name:'title',
+              url: $.app.mc.updateEventUri,
+              title: 'Event title',
+              success: function(response, newValue) {
+                  $('#full-calendar').fullCalendar('refetchEvents'); 
+              }
+          });
+
+
+        $('#eventShowModal').modal(); 
+        
+        
+    },
+    /* ********************************************************** */
     createEvent: function ()
     {
            var values = {};
