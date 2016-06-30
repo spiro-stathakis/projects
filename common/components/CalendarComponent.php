@@ -61,13 +61,16 @@ class CalendarComponent extends Object
         
         if ($this->isManager($calendar_id))
             return true; 
+        
         if ($this->isReadOnly($calendar_id))
-         return false; 
-    
+            return false; 
         
         if ($this->isMember($calendar_id))
             return true; 
-       
+        
+        if ($this->isPublic($calendar_id))
+            return true; 
+        
         
 
         return false; 
@@ -110,9 +113,10 @@ class CalendarComponent extends Object
     public function isReadOnly($calendar_id)
     {
         $return = false; 
-        foreach($this->allCalendars as $rec)
-            if ($rec['read_only_option_id'] == Types::$boolean['true']['id']) 
-                $return = true; 
+        foreach($this->allCalendars as $cal)
+            if ($cal['calendar_id'] == $calendar_id)
+                if ($cal['read_only_option_id'] == Types::$boolean['true']['id']) 
+                    $return = true; 
         
         return $return; 
     }
@@ -120,12 +124,12 @@ class CalendarComponent extends Object
     /* ******************************************************************************************************* */ 
      public function isPublic($calendar_id)
     {
-        $out = false; 
-        foreach($this->myCalendars as $cal)
+        $return = false; 
+        foreach($this->allCalendars as $cal)
             if ($cal['calendar_id'] == $calendar_id)
                 if ($cal['public_option_id'] == Types::$boolean['true']['id'])
-                    $out = true;
-        return $out;  
+                    $return = true;
+        return $return;  
 
     }
 
@@ -342,7 +346,9 @@ class CalendarComponent extends Object
                     'e.description as event_description' , 'e.calendar_id', 
                     'e.project_id' , 'IFNULL(col.title," No project ") as project_collection_title', 
                     'ee.id as event_entry_id' , 'ee.title as event_entry_title', 
-                    'ee.description as event_entry_description', 'ee.booking_status_id', 
+                    'ee.description as event_entry_description',
+                    'ee.description',
+                    'ee.booking_status_id', 
                     'ee.start_timestamp' , 'ee.end_timestamp' , 'ee.all_day_option_id' , 
                     'c.title as calendar_title', 
                     'c.hex_code','e.created_by', 'e.created_at',

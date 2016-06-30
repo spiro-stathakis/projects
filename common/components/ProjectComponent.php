@@ -31,14 +31,14 @@ class ProjectComponent extends Object
     public function getMyProjects()
 	{
         if ($this->_myProjects === null)
-                $this->_myProjects = $this->_myProjects(); 
-        
-        
-
+        {
+              if (Yii::$app->user->can('core_staff_role'))
+                    $this->_myProjects = $this->allProjects; 
+              else 
+                    $this->_myProjects = $this->myProjects; 
+        }
         return $this->_myProjects;
-
-
-	}
+    }
 	/* ******************************************************************************************************* */ 
     public function canUse($project_id)
     {

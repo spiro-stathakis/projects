@@ -118,39 +118,48 @@ class AjaxController extends XController
         $request = \yii::$app->request; 
         if (yii::$app->CalendarComponent->eventEntryRecord($request->post('pk') !== null))
              $post = $request->post('pk'); 
+       
+       // check to see if we are doing an update via form and not resize or drag
+        if ($request->post('name'))
+            $post[$request->post('name')] = $request->post('value'); 
+ 
+
+       $eventEntryRecord = yii::$app->CalendarComponent->eventEntryRecord($post['ee_id']); 
+       $eventEntryModel = EventEntry::findOne($post['ee_id']); 
+       $eventModel = Event::findOne($eventEntryModel->event->id);
+       
         
-
-
-        $eventEntryRecord = yii::$app->CalendarComponent->eventEntryRecord($post['ee_id']); 
-        if (! yii::$app->CalendarComponent->canUpdateEvent($eventEntryRecord))
+        if (! yii::$app->CalendarComponent->canUpdateEvent(array_merge($eventEntryRecord, $post)))
            throw new \yii\web\HttpException(403, sprintf('Event update not authorized for use'));
 
-        $bookingModel = new Booking; 
-        $bookingModel->attributes = array_merge($eventEntryRecord , $post); 
-        
-        // check to see if we are doing an update via form and not resize or drag
-        if ($request->post('name'))
-            $bookingModel->{$request->post('name')} = $request->post('value'); 
 
-           
+       
+        $bookingModel = new Booking; 
+        $bookingModel->attributes = array_merge($eventEntryRecord , $eventModel->attributes, $post); 
+        
+
 
         if ($bookingModel->validate()) 
         {
-            $eventEntryModel = EventEntry::findOne($eventEntryRecord['event_entry_id']); 
+            
+            
             $eventEntryModel->load(['EventEntry'=>$bookingModel->attributes]); 
-            if ($eventEntryModel->save()) 
+            $eventModel->load(['Event'=>$bookingModel->attributes]);
+
+            if ($eventEntryModel->validate() && $eventModel->validate()) 
             {
+                $eventEntryModel->save();
+                $eventModel->save(); 
                 yii::$app->AjaxResponse->error = false; 
                 yii::$app->AjaxResponse->message = $bookingModel->jsObject;     
             }
             else
-                yii::$app->AjaxResponse->message = array_values($eventEntryModel->getErrors());  
-
+                yii::$app->AjaxResponse->message = array_values($eventEntryModel->getErrors() + $eventModel->getErrors());  
         }
         else 
             yii::$app->AjaxResponse->message = array_values($bookingModel->getErrors());     
         
-
+        
         yii::$app->AjaxResponse->sendContent();  
 
 
@@ -172,7 +181,7 @@ class AjaxController extends XController
         if (yii::$app->CalendarComponent->canCreateEvents($bookingModel->calendar_id))
             $validate = true; 
         else 
-            $bookingModel->addError('event_id', 'Cannot use this calendar. Double check the read only setting - ' . $bookingModel->calendar_id);
+            $bookingModel->addError('event_id', 'Cannot use this calendar. Double check the read only setting - ');
         
         
         if ($validate && $bookingModel->validate())
@@ -242,6 +251,7 @@ class AjaxController extends XController
             $model->id = $e['event_entry_id']; 
             $model->cal_id = $e['calendar_id']; 
             $model->calendar_title = $e['calendar_title'];
+            $model->event_entry_description = $e['event_entry_description'];
             $model->project_collection_title = $e['project_collection_title'];
             $model->event_entry_id = $e['event_entry_id']; 
             $model->created_by = $e['created_by']; 

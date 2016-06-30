@@ -54,7 +54,7 @@ class Booking extends Model
             [['start_timestamp'] , 'validateSlot'], 
             [['start_timestamp'] , 'validateStartEnd'], 
             [['project_id'] , 'validateProject'], 
-            [['project_id', 'all_day_option_id','event_id','event_entry_id']  , 'safe'], 
+            [['project_id', 'all_day_option_id','event_id','event_entry_id', 'description']  , 'safe'], 
         ];
     }
     

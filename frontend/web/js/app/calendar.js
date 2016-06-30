@@ -203,23 +203,110 @@ AppPackageCalendar.prototype = {
   eventClick:function(event, jsEvent, view)
     {
         
-        $('#span-event-title').html(event.title); 
-        $('#span-event-description').html(event.description); 
-        var form = this._buildUpdateEventForm(event).pk; 
+        $('#span-event-title').editable('destroy');
+        $('#span-event-description').editable('destroy');
+        $('#span-event-calendar').editable('destroy'); 
 
+        $('#span-event-title').html(event.title); 
+        $('#span-event-description').html(event.description);
+        
+        var form = this._buildUpdateEventForm(event).pk; 
            $('#span-event-title').editable({
               type: 'text',
               value: event.title, 
               pk: form,
               name:'title',
+              placement:'bottom', 
               url: $.app.mc.updateEventUri,
               title: 'Event title',
+              disabled: ! (event.editable),
               success: function(response, newValue) {
                   $('#full-calendar').fullCalendar('refetchEvents'); 
               }
           });
+           $('#span-event-description').editable({
+              type: 'textarea',
+              value: event.event_entry_description, 
+              pk: form,
+              name:'description',
+              placement:'bottom',
+              url: $.app.mc.updateEventUri,
+              disabled: ! (event.editable),
+              title: 'Event description',
+              success: function(response, newValue) {
+                  $('#full-calendar').fullCalendar('refetchEvents'); 
+                 
+              }
+          });
+           $('#span-event-calendar').editable({
+              type: 'select',
+              value: event.cal_id, 
+              pk: form,
+              source: function()
+              {
+                  var a = [];
+                  for (var i =0 ; i < $.app.mc.myCalendars.length ; i++ )
+                    a.push({'value': $.app.mc.myCalendars[i].calendar_id , 'text':$.app.mc.myCalendars[i].calendar_title }); 
+                  return a; 
+              },
+              name:'calendar_id',
+              placement:'bottom',
+              url: $.app.mc.updateEventUri,
+              disabled: ! (event.editable),
+              title: 'Event Calendar',
+              success: function(response, newValue) {
+                   response = jQuery.parseJSON( response );
+                   if (response.error)
+                    {
+                      var title = 'There is a problem: ';
+                      var message = ''; 
+                      for(var i=0 ; i < response.message.length ; i++)
+                        message += response.message[i] + '  '; 
+                        
+                        $('#spanShowResponse').css('color','#990000'); 
+                        $('#spanShowTitle').html(title); 
+                        $('#spanShowResponse').html(message); 
+                    }
+                    else 
+                          $('#full-calendar').fullCalendar('refetchEvents'); 
+              }
+          });
+           $('#span-event-project').editable({
+              type: 'select',
+              value: event.project_id, 
+              pk: form,
+              source: function()
+              {
+                  var a = [];
+                  for (var i =0 ; i < $.app.mc.myProjects.length ; i++ )
+                    a.push({'value': $.app.mc.myProjects[i].project_id , 'text':$.app.mc.myProjects[i].project_title }); 
+                  return a; 
+              },
+              name:'project_id',
+              placement:'bottom',
+              url: $.app.mc.updateEventUri,
+              disabled: ! (event.editable),
+              title: 'Event Project',
+              success: function(response, newValue) {
+                   response = jQuery.parseJSON( response );
+                   if (response.error)
+                    {
+                      var title = 'There is a problem: ';
+                      var message = ''; 
+                      for(var i=0 ; i < response.message.length ; i++)
+                        message += response.message[i] + '  '; 
+                        
+                        $('#spanShowResponse').css('color','#990000'); 
+                        $('#spanShowTitle').html(title); 
+                        $('#spanShowResponse').html(message); 
+                    }
+                    else 
+                          $('#full-calendar').fullCalendar('refetchEvents'); 
+              }
+            });
+           
 
-
+        
         $('#eventShowModal').modal(); 
         
         
@@ -251,13 +338,14 @@ AppPackageCalendar.prototype = {
       title = 'There is a problem: ';
       for(var i=0 ; i < data.message.length ; i++)
         response += data.message[i] + '  '; 
-      $('#spanResponse').css('color','#990000'); 
+        $('#spanResponse').css('color','#990000'); 
       
     }
     if (! data.error)
     { 
         $('#eventModal').modal('hide');   
         $('#full-calendar').fullCalendar('renderEvent', data.message); 
+        response = 'Event updated.'; 
     } 
     $('#spanTitle').html(title);  
     $('#spanResponse').html(response); 
@@ -275,6 +363,8 @@ AppPackageCalendar.prototype = {
         type = 'danger'
         revertFunc(); 
     }  
+    else 
+        message = 'Event updated'; 
         $.bootstrapGrowl(message , {'type':type}, 1000 );
                 
   },
