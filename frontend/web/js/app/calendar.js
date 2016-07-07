@@ -209,6 +209,9 @@ AppPackageCalendar.prototype = {
 
         $('#span-event-title').html(event.title); 
         $('#span-event-description').html(event.description);
+        $('#span-event-date').html(moment(event.start).format('L')); 
+        
+        console.info(event); 
         
         var form = this._buildUpdateEventForm(event).pk; 
            $('#span-event-title').editable({
@@ -255,20 +258,8 @@ AppPackageCalendar.prototype = {
               disabled: ! (event.editable),
               title: 'Event Calendar',
               success: function(response, newValue) {
-                   response = jQuery.parseJSON( response );
-                   if (response.error)
-                    {
-                      var title = 'There is a problem: ';
-                      var message = ''; 
-                      for(var i=0 ; i < response.message.length ; i++)
-                        message += response.message[i] + '  '; 
-                        
-                        $('#spanShowResponse').css('color','#990000'); 
-                        $('#spanShowTitle').html(title); 
-                        $('#spanShowResponse').html(message); 
-                    }
-                    else 
-                          $('#full-calendar').fullCalendar('refetchEvents'); 
+                    $.app.cal._eventClick(response, newValue)
+              
               }
           });
            $('#span-event-project').editable({
@@ -288,23 +279,25 @@ AppPackageCalendar.prototype = {
               disabled: ! (event.editable),
               title: 'Event Project',
               success: function(response, newValue) {
-                   response = jQuery.parseJSON( response );
-                   if (response.error)
-                    {
-                      var title = 'There is a problem: ';
-                      var message = ''; 
-                      for(var i=0 ; i < response.message.length ; i++)
-                        message += response.message[i] + '  '; 
-                        
-                        $('#spanShowResponse').css('color','#990000'); 
-                        $('#spanShowTitle').html(title); 
-                        $('#spanShowResponse').html(message); 
-                    }
-                    else 
-                          $('#full-calendar').fullCalendar('refetchEvents'); 
+                    $.app.cal._eventClick(response, newValue)
               }
             });
            
+
+             $('#span-event-date').editable({
+                    type:'date',
+                    placement:'bottom',  
+                    format: 'yyyy-mm-dd', 
+                    url: $.app.mc.updateEventUri,
+                    disabled: true, //! (event.editable),   
+                    viewformat: 'dd/mm/yyyy',   
+                    success: function(response, newValue) {
+                       $.app.cal._eventClick(response, newValue)
+                    },  
+                    datepicker: {
+                        weekStart: 1
+                    }
+              });
 
         
         $('#eventShowModal').modal(); 
@@ -312,6 +305,27 @@ AppPackageCalendar.prototype = {
         
     },
     /* ********************************************************** */
+    _eventClick:function(response , newValue )
+    {
+           response = jQuery.parseJSON( response );
+            if (response.error)
+            {
+              var title = 'There is a problem: ';
+              var message = ''; 
+              for(var i=0 ; i < response.message.length ; i++)
+                  message += response.message[i] + '  '; 
+              
+              $('#spanShowResponse').css('color','#990000'); 
+              $('#spanShowTitle').html(title); 
+              $('#spanShowResponse').html(message); 
+            }
+            else 
+                $('#full-calendar').fullCalendar('refetchEvents'); 
+
+            return true; 
+            
+    }, 
+    /* ********************************************************** */ 
     createEvent: function ()
     {
            var values = {};

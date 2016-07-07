@@ -43,7 +43,7 @@ class CalendarWidget extends Widget{
                 'timeFormat'=>'H(:mm)', // uppercase H for 24-hour clock
                 'aspectRatio'=>1.4, 
                 'id'=>'full-calendar', 
-                'nextDayThreshold'=>'00:00:00', 
+                
             ] , 
         
    
@@ -52,6 +52,7 @@ class CalendarWidget extends Widget{
          'clientOptions'=>[ 
 
                         'weekends' => true,
+                        'firstHour'=>date('H'), 
         				'defaultView' => 'agendaWeek',
         				'editable' => false,
                         'dayClick' => new JsExpression("function(date, jsEvent, view){ $.app.cal.dayClick(date, jsEvent, view)}"),

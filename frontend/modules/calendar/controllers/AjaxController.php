@@ -255,6 +255,7 @@ class AjaxController extends XController
             $model->project_collection_title = $e['project_collection_title'];
             $model->event_entry_id = $e['event_entry_id']; 
             $model->created_by = $e['created_by']; 
+            $model->project_id = $e['project_id']; 
             if (strlen($e['event_entry_title']) > 0)
                 $model->title =  $e['event_entry_title']; 
             else 

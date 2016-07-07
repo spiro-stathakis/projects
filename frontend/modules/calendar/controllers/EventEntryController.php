@@ -93,7 +93,10 @@ class EventEntryController extends XController
      */
     public function actionDelete($ee_id)
     {
-        $request = yii::$app->request; 
+        $request = yii::$app->request;
+        $eventEntryRecord = yii::$app->CalendarComponent->eventEntryRecord($ee_id);  
+        if (! yii::$app->CalendarComponent->canUpdateEvent($eventEntryRecord))
+           throw new \yii\web\HttpException(403, sprintf('Event delete not authorized for use'));
         $model = $this->findModel($ee_id);
         $model->status_id = Types::$status['inactive']['id']; 
         $model->save(); 

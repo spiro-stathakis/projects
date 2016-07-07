@@ -51,11 +51,14 @@
                         ],
                         'urlCreator' => function ($action, $model, $key, $index) {
                                 if ($action === 'update') {
-                                    return Url::to(['event-entry/update', 'ee_id'=>$model['event_entry_id']]);
+                                    if (yii::$app->CalendarComponent->canUpdateEvent($model))
+                                        return Url::to(['event-entry/update', 'ee_id'=>$model['event_entry_id']]);
                                 }
                                 if ($action === 'delete') {
-                                    return Url::to(['event-entry/delete', 'ee_id'=>$model['event_entry_id']]);
+                                    if (yii::$app->CalendarComponent->canUpdateEvent($model))
+                                        return Url::to(['event-entry/delete', 'ee_id'=>$model['event_entry_id']]);
                                 }
+                                return ''; 
                             }
                         ],
 
