@@ -30,7 +30,7 @@ class UserController extends XController
                         'rules' => [
                                     ['actions' => ['create',
                                                  ], 
-                                        'allow' => true, 'roles' => ['@'],], 
+                                        'allow' => true, 'roles' => ['admin_role'],], 
                         ],
             ],
         ];

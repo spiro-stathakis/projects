@@ -37,7 +37,7 @@ class AjaxController extends XController
                                                    'createuser',
                                                 ], 
 
-                                                'allow' => true, 'roles' => ['@'],], 
+                                                'allow' => true, 'roles' => ['admin_role'],], 
                         ],
             ],
         ];
