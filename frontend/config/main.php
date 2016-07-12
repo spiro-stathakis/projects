@@ -17,6 +17,10 @@ return [
             'class'=>'yii/gii/Module', 
             'allowedIPs'=>['*']
         ],
+        'admin' => [
+            'class' => 'app\modules\admin\Module',
+         
+        ],
         'calendar' => [
             'class' => 'app\modules\calendar\Module',
          
