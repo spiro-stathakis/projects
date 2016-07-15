@@ -1,8 +1,8 @@
 <?php
 use yii\bootstrap\Html;
 use yii\widgets\Breadcrumbs;
-use frontend\packages\AppAsset;
-use frontend\packages\AppJsAsset;
+use common\packages\AppAsset;
+use common\packages\AppJsAsset;
 use common\widgets\Alert;
 AppAsset::register($this);
 AppJsAsset::register($this);

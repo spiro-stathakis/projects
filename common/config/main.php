@@ -2,9 +2,43 @@
 return [
  	'bootstrap' => ['log'],
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
+     'modules'=>[
+            'gii'=>[
+                'class'=>'yii/gii/Module', 
+                'allowedIPs'=>['*']
+            ],
+            'admin' => [
+                'class' => 'app\modules\admin\Module',
+             
+            ],
+            'calendar' => [
+                'class' => 'app\modules\calendar\Module',
+             
+            ],
+            'datecontrol' =>  [
+                'class' => '\kartik\datecontrol\Module'
+            ], 
+            'screening' => [
+                'class' => 'app\modules\screening\Module',
+            ],
+            'collections' => [
+                'class' => 'app\modules\collections\Module',
+            ],
+            'gridview' =>  [
+                'class' => '\kartik\grid\Module'
+            ],
+    ],
+    
     'components' => [
 
-         
+        'user' => [
+            'identityClass' => 'common\models\UserIdentity',
+            'enableAutoLogin' => true,
+        ],
+
+        
+
+    
     
         'log' => [
             'targets' => [

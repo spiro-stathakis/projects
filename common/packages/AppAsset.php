@@ -5,7 +5,7 @@
  * @license http://www.yiiframework.com/license/
  */
 
-namespace frontend\packages;
+namespace common\packages;
 
 use yii\web\AssetBundle;
 
@@ -13,17 +13,18 @@ use yii\web\AssetBundle;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class AppJsAsset extends AssetBundle
+class AppAsset extends AssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
-    public $css = [];
+    public $css = [
+        'css/site.css',
+    ];
     public $js = [
-        'js/app/boot.js'
     ];
     public $depends = [
-        'frontend\packages\AppAsset',
-         'frontend\packages\MomentJsAsset',
-        'yii\web\JqueryAsset'
+        'common\packages\AppJsAsset',
+        'yii\web\YiiAsset',
+        'yii\bootstrap\BootstrapAsset',
     ];
 }

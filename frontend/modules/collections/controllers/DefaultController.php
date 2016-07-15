@@ -67,11 +67,13 @@ class DefaultController  extends \common\components\XController
 
       
       \yii::$app->jsconfig->addData('searchUri', Url::to(['ajax/searchusers'])); 
-      \yii::$app->jsconfig->addData('targetId', '#member-select'); 
+      \yii::$app->jsconfig->addData('memberTargetId', '#member-select'); 
+      \yii::$app->jsconfig->addData('managerTargetId', '#manager-select'); 
       \yii::$app->jsconfig->addData('collectionId', $id); 
       \yii::$app->jsconfig->addData('addUri', Url::to(['ajax/adduser'])); 
       \yii::$app->jsconfig->addData('removeUri', Url::to(['ajax/removeuser'])); 
       \yii::$app->jsconfig->addData('memberType', Types::$member_type['member']['id']); 
+      \yii::$app->jsconfig->addData('managerType', Types::$member_type['manager']['id']); 
     	
 
       if (yii::$app->CollectionComponent->isManager($id) === false) 

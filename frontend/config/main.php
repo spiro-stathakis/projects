@@ -12,40 +12,11 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
-    'modules'=>[
-        'gii'=>[
-            'class'=>'yii/gii/Module', 
-            'allowedIPs'=>['*']
-        ],
-        'admin' => [
-            'class' => 'app\modules\admin\Module',
-         
-        ],
-        'calendar' => [
-            'class' => 'app\modules\calendar\Module',
-         
-        ],
-        'datecontrol' =>  [
-            'class' => '\kartik\datecontrol\Module'
-        ], 
-        'screening' => [
-            'class' => 'app\modules\screening\Module',
-        ],
-        'collections' => [
-            'class' => 'app\modules\collections\Module',
-        ],
-        'gridview' =>  [
-            'class' => '\kartik\grid\Module'
-        ],
-
-    ], 
+    
     'components' => [
 
         //'request'=>['enableCsrfValidation'=>false],        
-        'user' => [
-            'identityClass' => 'common\models\UserIdentity',
-            'enableAutoLogin' => true,
-        ],
+       
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [

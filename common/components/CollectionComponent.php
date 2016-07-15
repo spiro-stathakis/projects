@@ -100,8 +100,21 @@ calendarRecord: Retrieves a single calendar record
 
     
     /* ******************************************************************************************************* */ 
-    
+    public function managerList($collection_id)
+    {
+        
+        $out = array(); 
+        $data = $this->_getCollectionUsers($collection_id); 
+        if ($data)
+            foreach ( $data as $c)
+                if ($c['member_type_id']  == Types::$member_type['manager']['id'])
+                        $out[$c['user_id']]  = sprintf('%s %s (%s)', $c['first_name'] , $c['last_name'] , $c['user_name']); 
+                   
+        return $out; 
 
+    }    
+     /* ******************************************************************************************************* */ 
+   
      public function  getMyManagerCollections()
     {
         $out = [];

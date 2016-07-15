@@ -17,7 +17,7 @@ class AdminAsset  extends AssetBundle
 	]; 
 	public $depends =[
 		'yii\web\YiiAsset', 
-		'frontend\packages\AppJsAsset',
+		'common\packages\AppJsAsset',
 		'frontend\packages\BootstrapGrowlAsset',
 	]; 
 

@@ -19,7 +19,7 @@ class BootstrapTreeviewAsset  extends AssetBundle
 	public $depends =[
 		'yii\web\YiiAsset', 
 		'yii\bootstrap\BootstrapAsset',
-		'frontend\packages\AppJsAsset',
+		'common\packages\AppJsAsset',
 		
 	]; 
 

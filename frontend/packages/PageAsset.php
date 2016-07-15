@@ -20,6 +20,6 @@ class PageAsset extends AssetBundle
     public $css = [];
     public $js = [];
     public $depends = [
-        'frontend\packages\AppJsAsset',
+        'common\packages\AppJsAsset',
     ];
 }

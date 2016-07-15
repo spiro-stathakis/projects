@@ -18,7 +18,7 @@ class Select2Asset  extends AssetBundle
 	]; 
 	public $depends =[
 		'yii\web\YiiAsset', 
-		'frontend\packages\AppJsAsset',
+		'common\packages\AppJsAsset',
 	]; 
 
 

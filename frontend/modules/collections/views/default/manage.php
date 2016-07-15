@@ -31,10 +31,16 @@ Select2Asset::register($this);
 					<?=$this->render('_projects',['collectionModel'=>$collectionModel]); ?>
 					
 			</div>
-            <div class="col-sm-6  col-md-6 ">
+            
+			 <div class="col-sm-6  col-md-6 ">
                  
+						<?=$this->render('_managers',['collectionModel'=>$collectionModel]); ?> 
 						<?=$this->render('_members',['collectionModel'=>$collectionModel]); ?> 
 			</div>
+            
+                 
+						
+			
 			<div class="col-sm-3 col-md-3" style="border-left:1px solid #c0c0c0;">
 					<?=$this->render('_calendars',['collectionModel'=>$collectionModel]); ?>
 					<?=$this->render('_electronicforms',['collectionModel'=>$collectionModel]); ?> 

@@ -18,7 +18,7 @@ class SignatureAsset  extends AssetBundle
 	]; 
 	public $depends =[
 		'yii\web\YiiAsset', 
-		'frontend\packages\AppJsAsset',
+		'common\packages\AppJsAsset',
 	]; 
 
 

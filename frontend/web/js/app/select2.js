@@ -14,18 +14,32 @@ select2.prototype = {
          this.searchUri = $.app.mc.searchUri; 
         
          $(document).ready(function() {
-  				$($.app.mc.targetId).select2({
+  				
+
+          $($.app.mc.memberTargetId).select2({
 					theme: "classic",
 					ajax: {
     					url: $.app.mc.searchUri,
     				}
   				})
 				.on("select2:select", function(e) {
-          				return $.app.page.addRecord(e);
+          				return $.app.page.addRecord(e,$.app.mc.memberType);
           		})
         		.on("select2:unselect", function(e) {
-          				return $.app.page.removeRecord(e);
+          				return $.app.page.removeRecord(e,$.app.mc.memberType);
         		}); // end ajax 
+            $($.app.mc.managerTargetId).select2({
+          theme: "classic",
+          ajax: {
+              url: $.app.mc.searchUri,
+            }
+          })
+        .on("select2:select", function(e) {
+                  return $.app.page.addRecord(e,$.app.mc.managerType);
+              })
+            .on("select2:unselect", function(e) {
+                  return $.app.page.removeRecord(e,$.app.mc.managerType);
+            }); // end ajax 
 		});   // end jquery
         
 
@@ -33,12 +47,12 @@ select2.prototype = {
     }, 
     
     /* **************************************************** */ 
-    addRecord:function(e)
+    addRecord:function(e,type)
     {
     		var formData = {
                         id:e.params.data.id, 
                         col:$.app.mc.collectionId,
-                        mem:$.app.mc.memberType,
+                        mem:type,
                         _csrf:$.app.mc.csrfToken 
                       }; 
     		$.ajax({
@@ -51,12 +65,12 @@ select2.prototype = {
     		
     }, 
     /* **************************************************** */ 
-    removeRecord:function(e)
+    removeRecord:function(e,type)
     {
 			var formData = {
                       id:e.params.data.id, 
                       col:$.app.mc.collectionId,
-                      mem:$.app.mc.memberType,
+                      mem:type,
                       _csrf:$.app.mc.csrfToken 
                     }; 
     		$.ajax({
