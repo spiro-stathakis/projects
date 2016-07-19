@@ -408,13 +408,14 @@ class CalendarComponent extends Object
                     'concat(u.first_name," " , u.last_name) as create_name' 
                     ])
                 ->from('event e')
-                ->join('LEFT JOIN',  'calendar c' , 'e.calendar_id=c.id')
-                ->join('LEFT JOIN',  'event_entry ee' , 'ee.event_id=e.id')
-                ->join('LEFT JOIN',  'ref_booking_status rbs', 'ee.booking_status_id=rbs.id')
+                ->distinct()
+                ->join('INNER JOIN',  'calendar c' , 'e.calendar_id=c.id')
+                ->join('INNER JOIN',  'event_entry ee' , 'ee.event_id=e.id')
+                ->join('INNER JOIN',  'ref_booking_status rbs', 'ee.booking_status_id=rbs.id')
                 ->join('LEFT JOIN',  'calendar_subscription cs' , 'cs.calendar_id=c.id')
                 ->join('LEFT JOIN' , 'project p', 'p.id=e.project_id')
                 ->join('LEFT JOIN' , 'collection col' , 'c.id=p.collection_id')
-                ->join('LEFT JOIN' , 'user u', 'u.id=e.created_by')
+                ->join('INNER JOIN' , 'user u', 'u.id=e.created_by')
                 ->where($where)
                  ->addParams($params)
                 ->all();
