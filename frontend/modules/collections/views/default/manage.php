@@ -1,6 +1,6 @@
 <?php use yii\web\JsExpression;?> 
 <?php use yii\bootstrap\Html; ?> 
-<?php use frontend\packages\Select2Asset; ?> 
+<?php use common\packages\Select2Asset; ?> 
 <?php use yii\helpers\Url;?> 
 
 
