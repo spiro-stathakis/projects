@@ -35,7 +35,7 @@ class ProjectComponent extends Object
               if (Yii::$app->user->can('core_staff_role'))
                     $this->_myProjects = $this->allProjects; 
               else 
-                    $this->_myProjects = $this->myProjects; 
+                    $this->_myProjects = $this->_myProjects();  
         }
         return $this->_myProjects;
     }

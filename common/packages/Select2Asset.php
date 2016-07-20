@@ -1,14 +1,13 @@
 <?php 
 
-namespace frontend\packages;
+namespace common\packages;
 
 use yii\web\AssetBundle;
 
 class Select2Asset  extends AssetBundle 
 {
 	
-	public $basePath = '@webroot';
-    public $baseUrl = '@web';
+	public $sourcePath = '@common/web';
 	public $css = [
 		'css/select2.css'
 	]; 
