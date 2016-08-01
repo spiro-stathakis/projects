@@ -30,6 +30,18 @@ AppPackageCalendar.prototype = {
              
         });
 
+
+        $('#booking-all_day_option_id').change(function(){
+            var cal_id = $('#calendar_id').val(); 
+             
+            if (cal_id != 0 )
+            {
+              var r = $.app.cal.getCalendarRecord(cal_id); 
+              
+            }
+        }); 
+        
+
         /*** set up tree view  ******/ 
         $('#tree').treeview({
             showCheckbox:true, 
@@ -63,7 +75,7 @@ AppPackageCalendar.prototype = {
   {
       var record = {}; 
       for(var i =0 ; i < $.app.mc.allCalendars.length;i++)
-        if ($.app.mc.allCalendars[i].cal_id == cal_id )
+        if ($.app.mc.allCalendars[i].calendar_id == cal_id )
           record = $.app.mc.allCalendars[i]; 
        
       

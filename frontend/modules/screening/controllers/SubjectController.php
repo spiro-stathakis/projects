@@ -36,13 +36,13 @@ class SubjectController extends ScreeningController
                 $this->redirect('index'); 
 
 
-        if (! \Yii::$app->project->canUse($project_id))
+        if (! \Yii::$app->ProjectComponent->canUse($project_id))
              throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access page.'));
 
         if (! \yii::$app->ScreeningForm->canUse($this->getScreeningSession('screening_form_id')))
              throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access page.'));
         
-        if (! \yii::$app->resourcecomponent->canUse($this->getScreeningSession('resource_id')))
+        if (! \yii::$app->ResourceComponent->canUse($this->getScreeningSession('resource_id')))
              throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access page.'));
         
         $this->setScreeningSession('project_id', $project_id); 

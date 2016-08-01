@@ -68,7 +68,7 @@ class PdfComponent extends Object
         
         $pdf->SetFont($this->_font, '',12);
         $pdf->SetXY(10,14);
-        $pdf->MultiCell(150,3 ,yii::$app->datecomponent->timestampToUkDate($screening_entry_model->created_at), 0, 'R'); 
+        $pdf->MultiCell(150,3 ,yii::$app->DateComponent->timestampToUkDate($screening_entry_model->created_at), 0, 'R'); 
         
         $pdf->MultiCell(100,3 ,$screening_entry_model->screening_form_title, 0,'' ); 
         $pdf->Ln(); 
@@ -80,7 +80,7 @@ class PdfComponent extends Object
                                  
                                  $screening_entry_model->subject->first_name,
                                   $screening_entry_model->subject->last_name,
-                                  yii::$app->datecomponent->isoToUkDate($screening_entry_model->subject->dob)
+                                  yii::$app->DateComponent->isoToUkDate($screening_entry_model->subject->dob)
 
                                   ) );
       
@@ -160,7 +160,7 @@ class PdfComponent extends Object
        //$document = new \SetaPDF_Core_Reader_File($pdf->Output(), $writer);
       
 
-      $writer = new \SetaPDF_Core_Writer_File("/tmp/myPDF.pdf");
+      $writer = new \SetaPDF_Core_Writer_File("/Users/Spiro/tmp/myPDF.pdf");
       $document = \SetaPDF_Core_Document::loadByString($pdf->Output("S"), $writer); 
 
         // let's prepare the temporary file writer:

@@ -43,15 +43,18 @@ class ProjectComponent extends Object
     public function canUse($project_id)
     {
 
-            return ($this->isMember($project_id) || $this->isManager($project_id)); 
+            if (Yii::$app->user->can('core_staff_role'))
+                return true; 
+            else 
+                return ($this->isMember($project_id) || $this->isManager($project_id)); 
     }
     /* ******************************************************************************************************* */ 
     public function isMember($project_id)
     {
 
         $return  = false; 
-        foreach($this->myProjects[Types::$member_type['member']['id']] as $project)
-            if ( $project['project_id'] == $project_id) 
+        foreach($this->myProjects as $project)
+            if ( $project['project_id'] == $project_id ) 
                 $return = true; 
 
         return true; 

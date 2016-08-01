@@ -78,12 +78,12 @@ class DefaultController extends ScreeningController
       
       if (! \yii::$app->ScreeningForm->canUse($this->getScreeningSession('screening_form_id')))
              throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access screening form.'));
-      if (! \Yii::$app->resourcecomponent->canUse($resource_id))
+      if (! \Yii::$app->ResourceComponent->canUse($resource_id))
               throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access resource.'));
 
      
       $this->setScreeningSession('resource_id', $resource_id);
-      return $this->render('project', ['projectList'=>$this->_projectList()]);
+      return $this->render('project', ['projectList'=>$this->_projectList($resource_id)]);
     
     }
     /* ********************************************************************************************************************** */ 
@@ -98,13 +98,13 @@ class DefaultController extends ScreeningController
     public function actionCreate($subject)   // step 5 of screening process 
     {
 
-          if (! \Yii::$app->project->canUse($this->getScreeningSession('project_id')))
+          if (! \Yii::$app->ProjectComponent->canUse($this->getScreeningSession('project_id')))
                throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access page.'));
 
           if (! \yii::$app->ScreeningForm->canUse($this->getScreeningSession('screening_form_id')))
                throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access page.'));
           
-          if (! \yii::$app->resourcecomponent->canUse($this->getScreeningSession('resource_id')))
+          if (! \yii::$app->ResourceComponent->canUse($this->getScreeningSession('resource_id')))
                throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access page.'));
 
           $subject_model = Subject::findOne(['hash'=>$subject]);
@@ -287,12 +287,17 @@ public function actionUpdate()   // step 6 of screening process
     /* PRIVATE FUNCTIONS */ 
 	
     /* ************************************************************************************************************************* */ 
-    private function _projectList()
+    private function _projectList($resource_id)
     {
         
-        //* NOTE THIS NEEDS TO CHANGE ONCE THE PERMISSIONS ARE IN PLACE *// 
-        return \Yii::$app->project->allProjects;
+        $resourceModel = Resource::findOne($resource_id); 
+        if ($resourceModel == null)
+           throw new \yii\web\HttpException(404, yii::t('app', 'Cannot find page.'));
 
+        if (\yii::$app->CollectionComponent->isManager($resourceModel->collection_id)) 
+          return \Yii::$app->ProjectComponent->allProjects;
+        else 
+          return \Yii::$app->ProjectComponent->myProjects;
     }
     /* ************************************************************************************************************************* */ 
     private function _screeningList()
@@ -313,7 +318,7 @@ public function actionUpdate()   // step 6 of screening process
     private function _resourceList($collection_id = 0)
     {
       $return = []; 
-      foreach (\Yii::$app->resourcecomponent->myResources as $res) 
+      foreach (\Yii::$app->ResourceComponent->myResources as $res) 
           if ($collection_id == 0 ||  $collection_id == $res['collection_id']) 
                 $return[$res['collection_title']][] = [
                           'resource_title'=>$res['resource_title'], 

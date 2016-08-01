@@ -8,9 +8,9 @@ use frontend\modules\calendar\models\Booking;
 
 use frontend\packages\BootstrapPopoverAsset;
 use frontend\packages\BootstrapGrowlAsset;
+use frontend\packages\BootstrapDatePickerAsset; 
 
-
-
+BootstrapDatePickerAsset::register($this); 
 BootstrapPopoverAsset::register($this);
 BootstrapGrowlAsset::register($this);
 

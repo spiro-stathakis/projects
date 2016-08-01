@@ -73,6 +73,9 @@ return [
          'PdfComponent'=> [
             'class'=>'common\components\PdfComponent', 
         ], 
+        'CurlComponent'=> [
+            'class'=>'common\components\CurlComponent', 
+        ], 
         'AjaxResponse'=> [
             'class'=>'common\components\AjaxResponse', 
         ], 
@@ -82,7 +85,7 @@ return [
         'CalendarComponent'=> [
             'class'=>'common\components\CalendarComponent', 
         ],  
-        'resourcecomponent'=> [
+        'ResourceComponent'=> [
             'class'=>'common\components\ResourceComponent', 
         ],   
         'DateComponent'=> [
