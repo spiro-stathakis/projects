@@ -1,7 +1,8 @@
 
 <?php use yii\helpers\Json; ?> 
+<?php use \common\components\LdapComponent;?> 
 <?php 
-
+/*
 $curl = Yii::$app->CurlComponent; 
 
 $curl->useAuth(true); 
@@ -17,3 +18,6 @@ foreach ($data as $s)
 
 } 
 	
+*/ 
+
+

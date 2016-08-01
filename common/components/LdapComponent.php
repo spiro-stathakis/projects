@@ -50,6 +50,22 @@ class LdapComponent extends \common\components\XComponent
 		} 
 
 		/* #################################################################### */
+		/* #################################################################### */ 
+		public function groupSearch($s){
+					$statement = sprintf('(&(objectClass=group)(cn=%s))',$s);
+					$_search =ldap_search($this->_ldapCnx,$this->_baseDn,$statement,['uniquemember']);
+					$_arr=  ldap_get_entries($this->_ldapCnx,$_search); 
+					$_arr = $_arr[0]['uniquemember']; 
+					$ret = []; 
+					foreach ($_arr as $k=>$v)
+						if ($k !== 'count')
+							$ret[] = $v; 
+
+					return $ret; 
+
+		} 
+		/* #################################################################### */ 
+
 		public function search($statement){  //returns false if there is a problem
 			
 			$results = array(); 
