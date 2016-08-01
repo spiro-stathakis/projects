@@ -5,8 +5,16 @@ use yii\bootstrap\Html;
 use yii\helpers\Url; 
 
 ?> 
-<?php echo $this->render('../default/_stepBar' , ['activeElement'=>4]);?> 
-<p>&nbsp; </p> 
+<div class="row">
+            <div class="col-sm-7-offset col-sm-offset-1 col-md-8 col-md-offset-1 main">
+				<?php echo $this->render('../default/_stepBar' , ['activeElement'=>4]);?> 
+			</div>
+</div 
+
+<p>&nbsp;</p>
+
+<div class="row">
+            <div class="col-sm-6-offset col-sm-offset-2 col-md-7 col-md-offset-2 main">
 <?= DetailView::widget([
         'model' => $subject_model,
         'attributes' => [
@@ -63,3 +71,6 @@ use yii\helpers\Url;
 
 <?php echo Html::submitButton(); ?> 
 <?php echo Html::endForm(); ?> 
+
+</div>
+</div>

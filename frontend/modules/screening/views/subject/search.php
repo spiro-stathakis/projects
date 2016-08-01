@@ -7,10 +7,17 @@ use yii\bootstrap\ActiveForm;
 /* @var $model common\models\SubjectsSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
+<div class="row">
+            <div class="col-sm-7-offset col-sm-offset-1 col-md-8 col-md-offset-1 main">
+                <?php echo $this->render('../default/_stepBar' , ['activeElement'=>3]);?> 
+            <div>
+<div>
 
-<?php echo $this->render('../default/_stepBar' , ['activeElement'=>3]);?> 
-<div class="subject-search">
- <p>
+
+
+<div class="row">
+            <div class="col-sm-6-offset col-sm-offset-2 col-md-7 col-md-offset-2 main">
+    <p>
        Please ensure details are entered in exactly as they should be. The search will not return partial or near matches.  
     </p>
     <?php $form = ActiveForm::begin([
@@ -26,34 +33,15 @@ use yii\bootstrap\ActiveForm;
     <?= $form->field($model, 'first_name') ?>
 
     <?= $form->field($model, 'last_name') ?>
+
+    <?= Html::tag('label', 'Date of Birth') ?>
     <?= Html::activeDropDownList( $model, 'dob_yyyy' ,  $model->years , []); ?> 
+     <?= Html::tag('label', '/') ?>
     <?= Html::activeDropDownList($model,  'dob_mm',  $model->months , []); ?> 
+     <?= Html::tag('label', '/') ?>
     <?= Html::activeDropDownList( $model, 'dob_dd',  $model->days , []); ?> 
-    
-
-    <?php // echo $form->field($model, 'email') ?>
-
-    <?php // echo $form->field($model, 'telephone') ?>
-
-    <?php // echo $form->field($model, 'address') ?>
-
-    <?php // echo $form->field($model, 'gp_opt_id') ?>
-
-    <?php // echo $form->field($model, 'email_opt_id') ?>
-
-    <?php // echo $form->field($model, 'sex_id') ?>
-
-    <?php // echo $form->field($model, 'sort_order') ?>
-
-    <?php // echo $form->field($model, 'status_id') ?>
-
-    <?php // echo $form->field($model, 'created_at') ?>
-
-    <?php // echo $form->field($model, 'updated_at') ?>
-
-    <?php // echo $form->field($model, 'created_by') ?>
-
-    <?php // echo $form->field($model, 'updated_by') ?>
+     <?= Html::tag('label', '(YYYY/MM/DD)') ?>
+    <p>&nbsp;</p>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('app', 'Search'), ['class' => 'btn btn-primary']) ?>
@@ -63,4 +51,5 @@ use yii\bootstrap\ActiveForm;
 
     <?php ActiveForm::end(); ?>
 
+</div>
 </div>
