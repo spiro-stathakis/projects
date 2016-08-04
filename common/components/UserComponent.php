@@ -2,6 +2,9 @@
 namespace common\components; 
 use Yii; 
 use yii\base\Object;
+use common\components\LdapComponent; 
+use common\models\User;
+use common\components\Types; 
 
 
 class UserComponent extends Object
@@ -21,11 +24,73 @@ class UserComponent extends Object
       
         return parent::init(); 
     }
-    /* ******************************************************************************************************* */ 
-    
-    /* ******************************************************************************************************* */ 
-    /* ******************************************************************************************************* */ 
-    
+ /* ********************************************************************** */ 
+  /* ********************************************************************** */ 
+    public function import()
+     {
+        /*
+        $ldap = new LdapComponent;
+        $members = $ldap->groupSearch('cubric-int'); 
+        $newList =[]; 
+        
+        User::updateAll(['status_id'=>Types::$status['inactive']['id']] , 
+            'status_id=' . Types::$status['active']['id']);
+        
+        foreach($members as $dn) {
+            $user_name = $this->_parseUserDn($dn);
+            //echo sprintf('%s <br/>',  $user_name);
+            $userModel = User::findOne(['user_name'=>$user_name]); 
+            $rec = $ldap->search(sprintf('uid=%s',$user_name)); 
+            $rec =$rec['data'][0]; 
+            if ($userModel === null)
+            {
+                $userModel = new User;
+                $userModel->user_name = $user_name; 
+                $newList[] = [  'user_name'=>$user_name, 
+                                'first_name'=>$rec['givenname'][0] ,
+                                'last_name'=>$rec['sn'][0] 
+                            ]; 
+            }
+            
+            //if (array_key_exists('telephonenumber', $rec))
+                //    echo ($rec['telephonenumber'][0]) . "<br/>";
+            if (array_key_exists('mail', $rec))
+                    $userModel->email = $rec['mail'][0];
+
+            $userModel->first_name =  $rec['givenname'][0];
+            $userModel->last_name =  $rec['sn'][0];
+            $userModel->gid = $rec['gidnumber'][0];
+            $userModel->uid = $rec['uidnumber'][0];
+            $userModel->dn = $dn; 
+            $userModel->status_id =Types::$status['active']['id']; 
+            $userModel->save(); 
+        }
+
+*/ 
+     Yii::$app->mail->compose('welcome-html', ['user_name'=>'Spiro'])
+     ->setFrom('noreply@cf.ac.uk.com')
+     ->setTo('spiro@cardiff.ac.uk')
+     ->setSubject('Advanced email from Yii2-SwiftMailer')
+     ->send();
+        return $newList; 
+    }
+    /* ********************************************************************** */ 
+    private function _processNewUser()
+    {
+
+    }
+    /* ********************************************************************** */ 
+    private function _parseUserDn($dn)
+    {
+        $arr = explode(",", $dn); 
+        return (substr($arr[0],3,strlen($arr[0])));
+
+    }
+   /* ********************************************************************** */ 
+   /* ********************************************************************** */ 
+   /* ********************************************************************** */ 
+   /* ********************************************************************** */ 
+   /* ********************************************************************** */ 
     public function getAllUsers()
     {
             if ($this->_allUsers == null) 

@@ -12,6 +12,12 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'console\controllers',
     'components' => [
+
+        'user' => [
+            'class' => 'common\models\UserIdentity',
+            
+        ],
+
         'log' => [
             'targets' => [
                 [

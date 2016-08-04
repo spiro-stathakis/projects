@@ -11,15 +11,14 @@ public static $status = [
 			'inactive'=>['id'=>3,'code'=>'inactive','name'=>'Inactive' , 'description'=>'An inactive piece of information'] ,
 	]; 
 
-	/* ******************************************************************************************************************* */ 
-    
+	/* ******************************************************************************************** */ 
 	public static $boolean = [
 			'null'=>['id'=>1,'code'=>'n','name'=>'no value' , 'description'=>'No value'] ,
 			'true'=>['id'=>2,'code'=>'true','name'=>'True' , 'description'=>'Yes'] ,
 			'false'=>['id'=>3,'code'=>'false','name'=>'False' , 'description'=>'No'] ,
 	]; 
 
-	/* ******************************************************************************************************************** */ 
+	/* ******************************************************************************************** */ 
 	public static $auth_type = [
 			'null'=>['id'=>1,'code'=>'null','name'=>'no value' , 'description'=>'No value'] ,
 			'ldap'=>['id'=>2,'code'=>'ldap','name'=>'LDAP' , 'description'=>'LDAP authentication'] ,
@@ -27,7 +26,7 @@ public static $status = [
 	]; 
 
 
-    /* ******************************************************************************************************************** */ 
+    /* ******************************************************************************************** */ 
 	public static $member_type = [
 			'null'=>['id'=>1,'code'=>'null','name'=>'no value' , 'description'=>'No value'] ,
 			'manager'=>['id'=>2,'code'=>'manager','name'=>'Manager' , 'description'=>'Manager of a collection'] ,
@@ -47,7 +46,7 @@ public static $status = [
 	]; 
 
 
-    /* ********************************************************************************************************************* */ 
+    /* ******************************************************************************************** */ 
 	public static $input_type = [
 			'null'=>['id'=>1,'code'=>'null','name'=>'no value' , 'description'=>'No value'] ,
 			'small_text'=>['id'=>2,'code'=>'small_text','name'=>'Small text' , 'description'=>'Small text field'] ,
@@ -61,15 +60,27 @@ public static $status = [
 			
 	]; 
 
-    /* ******************************************************************************************************************** */ 
+    /* ******************************************************************************************** */ 
     public static $progress = [
     		'null'=>['id'=>1,'code'=>'null','name'=>'no value' , 'description'=>'No value'] ,
 			'in_progress'=>['id'=>2,'code'=>'in_progress','name'=>'In progress' , 'description'=>'Small text field'] ,
 			'published'=>['id'=>3,'code'=>'published','name'=>'Published' , 'description'=>'Published'] ,
 			
     ];
-    /* ****************************************************************************************************************** */ 
-    /* ******************************************************************************************************************** */ 
+    
+	/* ******************************************************************************************** */ 
+	public static $systemEvent = [
+		'null'=>['id'=>1,'code'=>'null','name'=>'no value' , 'description'=>'No value'] ,
+		'user_activated'=>['id'=>2,'code'=>'user_activated','name'=>'User activated','description'=>'User activated'],
+		'user_deactivated'=>['id'=>3,'code'=>'user_deactivated','name'=>'User deactivated','description'=>'User deactivated'],
+			
+	];
+	/* ******************************************************************************************** */ 
+/* ******************************************************************************************** */ 
+/* ******************************************************************************************** */ 
+/* ******************************************************************************************** */ 
+
+
     public static $bookingStatus = [
     		'null'=>['id'=>1,'code'=>'null','name'=>'no value' , 'description'=>'No value'] ,
 			'pending'=>['id'=>2,'code'=>'pending','name'=>'Pending' , 'description'=>'Pending'] ,

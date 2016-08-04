@@ -19,6 +19,7 @@ return [
     ],
     'components' => [
         
+        
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
