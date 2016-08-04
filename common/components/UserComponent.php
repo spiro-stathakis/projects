@@ -28,10 +28,11 @@ class UserComponent extends Object
   /* ********************************************************************** */ 
     public function import()
      {
+        $newList =[]; 
         /*
         $ldap = new LdapComponent;
         $members = $ldap->groupSearch('cubric-int'); 
-        $newList =[]; 
+        
         
         User::updateAll(['status_id'=>Types::$status['inactive']['id']] , 
             'status_id=' . Types::$status['active']['id']);
