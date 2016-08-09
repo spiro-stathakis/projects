@@ -70,7 +70,7 @@ class UserComponent extends Object
 */ 
      Yii::$app->mail->compose(['html'=>'welcome-html',
                                'text'=>'welcome-text',  
-                                    ['user_name'=>'Spiro']
+                               'user_name'=>'Spiro' 
                               ])
      ->setFrom('noreply@cardiff.ac.uk')
      ->setTo('spiro@cardiff.ac.uk')

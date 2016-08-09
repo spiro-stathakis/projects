@@ -8,7 +8,7 @@ Dear <?=$user_name?>,
 
 You have been registered with the CUBRIC projects database.  You can access the system here: 
 <p>
-<?=Html::a(Url::to('/'),'https'),Url::to('/'),'https'));?> 
+<?=Html::a(Url::to('/','https'),Url::to('/','https'));?> 
 </p>
 
 
