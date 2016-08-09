@@ -68,9 +68,10 @@ class UserComponent extends Object
         }
 
 */ 
-     Yii::$app->mail->compose('welcome-html', ['user_name'=>'Spiro'])
+     Yii::$app->mail->compose()
      ->setFrom('noreply@cardiff.ac.uk')
      ->setTo('spiro@cardiff.ac.uk')
+     ->setHtmlBody('welcome-html', ['user_name'=>'Spiro'])
      ->setSubject('Advanced email from Yii2-SwiftMailer')
      ->send();
         return $newList; 
