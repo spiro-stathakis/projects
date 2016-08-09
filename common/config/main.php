@@ -58,7 +58,7 @@ return [
             'viewPath' => '@common/mail',
             'transport' => [
                  'class' => 'Swift_SmtpTransport',
-                 'host' => 'courier.cf.ac.uk',  // e.g. smtp.mandrillapp.com or smtp.gmail.com
+                 'host' => '127.0.0.1',  // e.g. smtp.mandrillapp.com or smtp.gmail.com
                  'username' => '',
                  'password' => '',
                  'port' => '25', // Port 25 is a very common port too
