@@ -344,7 +344,7 @@ class CalendarComponent extends Object
                 ->select([
                     'e.id as event_id' , 'ee.title',
                     'e.description as event_description' , 'e.calendar_id', 
-                    'e.project_id' , 'IFNULL(col.title," No project ") as project_collection_title', 
+                    'e.project_id' , 'IFNULL(col.title,"") as project_collection_title', 
                     'ee.id as event_entry_id' , 'ee.title as event_entry_title', 
                     'ee.description as event_entry_description',
                     'ee.description',
@@ -399,7 +399,7 @@ class CalendarComponent extends Object
                 ->select([
                     'e.id as event_id' , 'e.title as event_title','c.id as calendar_id', 
                     'e.description as event_description' , 'e.calendar_id', 
-                    'e.project_id' , 'IFNULL(col.title," No project ") as project_collection_title', 
+                    'e.project_id' , 'IFNULL(col.title,"") as project_collection_title', 
                     'ee.id as event_entry_id' , 'ee.title as event_entry_title', 
                     'ee.description as event_entry_description', 'ee.booking_status_id', 
                     'ee.start_timestamp' , 'ee.end_timestamp' , 'ee.all_day_option_id' , 
