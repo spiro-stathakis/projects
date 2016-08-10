@@ -89,6 +89,7 @@ class AjaxController extends XController
                 {
                      yii::$app->AjaxResponse->error = false; 
                      yii::$app->AjaxResponse->message = ['User has been created']; 
+                     yii::$app->UserComponent->sendWelcomeEmail($userModel->first_name, $userModel->email);
                 }
                 else 
                     yii::$app->AjaxResponse->message = array_values($userModel->getErrors());  

@@ -73,6 +73,7 @@ public static $status = [
 		'null'=>['id'=>1,'code'=>'null','name'=>'no value' , 'description'=>'No value'] ,
 		'user_activated'=>['id'=>2,'code'=>'user_activated','name'=>'User activated','description'=>'User activated'],
 		'user_deactivated'=>['id'=>3,'code'=>'user_deactivated','name'=>'User deactivated','description'=>'User deactivated'],
+		'email_send'=>['id'=>4,'code'=>'Send e-mail','name'=>'Send e-mail','description'=>'Send an e-mail'],
 			
 	];
 	/* ******************************************************************************************** */ 

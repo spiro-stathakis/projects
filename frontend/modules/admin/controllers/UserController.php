@@ -49,7 +49,12 @@ class UserController extends XController
     return parent::init(); 
  }
 /* ********************************************************************** */ 
- 
+ public function actionImport()
+ {
+    $newUsers = yii::$app->UserComponent->import(); 
+    return $this->render('import' , ['newUsers'=>$newUsers]);
+     
+ }
 /* ********************************************************************** */ 
 
  public function actionCreate()

@@ -107,6 +107,10 @@ return [
             'class'=>'common\components\ProjectComponent', 
         ], 
          
+        'LogComponent'=> [
+            'class'=>'common\components\LogComponent', 
+        ],  
+        
         'ScreeningForm'=> [
             'class'=>'common\components\ScreeningFormComponent', 
         ], 

@@ -22,7 +22,7 @@ class m160803_133938_log extends XMigration
                         'id'=>$this->primaryKey(),
                         'sys_event_id'=>$this->integer()->notNull(),
                         'user_id'=>$this->integer()->notNull(),
-                        'description'=>$this->string(255)->notNull(),
+                        'description'=>$this->string(255),
                         'sort_order'=> $this->integer()->notNull()->defaultValue(100),
                         'status_id'=>$this->integer()->notNull(),
                         'created_at' => $this->integer()->notNull(),

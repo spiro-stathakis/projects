@@ -3,7 +3,7 @@
 <?php use \common\components\LdapComponent;?> 
 <?php 
 
-yii::$app->UserComponent->import(); 
+
 
 
 

@@ -24,39 +24,54 @@ class UserComponent extends Object
       
         return parent::init(); 
     }
- /* ********************************************************************** */ 
-  /* ********************************************************************** */ 
+    /* ********************************************************************** */ 
+    public function idFromUsername($username)
+    {
+        $userModel = User::findOne(['user_name'=>$username]);
+        if ($userModel == null)
+            return false; 
+        else 
+            return $userModel->id; 
+        
+
+    }
+    /* ********************************************************************** */ 
     public function import()
      {
         $newList =[]; 
-        /*
+        
         $ldap = new LdapComponent;
         $members = $ldap->groupSearch('cubric-int'); 
-        
+        $email = ''; 
         
         User::updateAll(['status_id'=>Types::$status['inactive']['id']] , 
             'status_id=' . Types::$status['active']['id']);
         
-        foreach($members as $dn) {
+        foreach($members as $dn) 
+        {
             $user_name = $this->_parseUserDn($dn);
-            //echo sprintf('%s <br/>',  $user_name);
             $userModel = User::findOne(['user_name'=>$user_name]); 
             $rec = $ldap->search(sprintf('uid=%s',$user_name)); 
             $rec =$rec['data'][0]; 
             if ($userModel === null)
             {
+                if (array_key_exists('email', $rec))
+                    $email = $rec['mail'][0];
+                else 
+                    $email = sprintf('%s@cardiff.ac.uk', $user_name); 
+                
                 $userModel = new User;
                 $userModel->user_name = $user_name; 
+                $userModel->email = $email; 
                 $newList[] = [  'user_name'=>$user_name, 
                                 'first_name'=>$rec['givenname'][0] ,
-                                'last_name'=>$rec['sn'][0] 
+                                'last_name'=>$rec['sn'][0], 
+                                'email'=>$email  
                             ]; 
             }
             
             //if (array_key_exists('telephonenumber', $rec))
                 //    echo ($rec['telephonenumber'][0]) . "<br/>";
-            if (array_key_exists('mail', $rec))
-                    $userModel->email = $rec['mail'][0];
 
             $userModel->first_name =  $rec['givenname'][0];
             $userModel->last_name =  $rec['sn'][0];
@@ -65,22 +80,44 @@ class UserComponent extends Object
             $userModel->dn = $dn; 
             $userModel->status_id =Types::$status['active']['id']; 
             $userModel->save(); 
+             
         }
 
-*/ 
-     Yii::$app->mail->compose(['html'=>'welcome-html',
-                               'text'=>'welcome-text',  
-                              ], 
-                              ['user_name'=>'Spiro'
-                              ] 
-                              )
-     ->setFrom('noreply@cardiff.ac.uk')
-     ->setTo('spiro@cardiff.ac.uk')
-     ->setSubject('Advanced email from Yii2-SwiftMailer')
-     ->send();
+
+        foreach($newList as $u)
+        {
+            yii::$app->LogComponent->newUser($u['user_name'],sprintf('Adding user: %s %s',
+                $u['first_name'],
+                $u['last_name'])
+            ); 
+            if (array_key_exists('email',$u))
+            {
+                yii::$app->LogComponent->emailSend($u['user_name'],sprintf('Welcome email sent to %s',
+                    $u['email'])
+                ); 
+            
+                 $this->sendWelcomeEmail($u['user_name'], $u['email']); 
+            }
+        } 
+        
         return $newList; 
     }
     /* ********************************************************************** */ 
+    public function sendWelcomeEmail($firstName, $email, $subject ='Welcome to the projects database.' )
+    {
+
+            return Yii::$app->mail->compose([
+                                       'html'=>'welcome-html',
+                                       'text'=>'welcome-text',  
+                                      ],
+                                      [
+                                        'user_name'=>$firstName
+                                      ])
+             ->setFrom('noreply@cardiff.ac.uk')
+             ->setTo($email)
+             ->setSubject($subject)
+             ->send();
+    }
     private function _processNewUser()
     {
 

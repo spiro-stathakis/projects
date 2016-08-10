@@ -39,7 +39,7 @@ class m160802_093525_ref_sys_event extends XMigration
             $this->insert($this->tableName,['code'=>'null','name'=>'No value','description'=>'No value','sort_order'=>100,'status_id'=>1,'created_at'=>time(),'created_by'=>1 ]); 
             $this->insert($this->tableName,['code'=>'user_activated','name'=>'User activated','description'=>'user_activated', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>1 ]);
             $this->insert($this->tableName,['code'=>'user_deactivated','name'=>'User deactivated','description'=>'User deactivated', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>1 ]);
-
+            $this->insert($this->tableName,['code'=>'email_send','name'=>'Sent an email','description'=>'Send email', 'sort_order'=>100,'status_id'=>2,'created_at'=>time(),'created_by'=>1 ]);
 
 
     }

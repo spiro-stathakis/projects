@@ -3,7 +3,11 @@
 namespace common\models;
 
 use Yii;
-
+use common\models\User; 
+use common\models\RefStatus; 
+use common\models\RefSysEvent;  
+use common\models\Log;
+use common\components\Types; 
 /**
  * This is the model class for table "log".
  *
@@ -27,6 +31,15 @@ class Log extends \common\components\XActiveRecord
     /**
      * @inheritdoc
      */
+    
+    public function init()
+    {
+
+        $this->status_id = Types::$status['active']['id']; 
+        return parent::init(); 
+    }
+
+
     public static function tableName()
     {
         return 'log';
@@ -38,7 +51,7 @@ class Log extends \common\components\XActiveRecord
     public function rules()
     {
         return [
-            [['sys_event_id', 'user_id', 'description', 'status_id', 'created_at', 'created_by'], 'required'],
+            [['sys_event_id', 'user_id',  'status_id'], 'required'],
             [['sys_event_id', 'user_id', 'sort_order', 'status_id', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['description'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
