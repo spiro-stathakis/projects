@@ -8,6 +8,7 @@ use common\models\RefStatus;
 use common\models\RefSysEvent;  
 use common\models\Log;
 use common\components\Types; 
+use common\components\XActiveRecord; 
 /**
  * This is the model class for table "log".
  *
@@ -26,25 +27,45 @@ use common\components\Types;
  * @property RefStatus $status
  * @property RefSysEvent $sysEvent
  */
-class Log extends \common\components\XActiveRecord
+class Log extends XActiveRecord
 {
     /**
      * @inheritdoc
      */
     
+
+    
+    /* ********************************************************************************* */ 
+    /* ********************************************************************************* */ 
+    /* ********************************************************************************* */ 
+    /* ********************************************************************************* */ 
+    /* ********************************************************************************* */ 
+     public function behaviors()
+    {
+        return []; 
+    }
+    /* ******************************************************************************************************* */ 
     public function init()
     {
+        if ($this->isNewRecord)
+        {
+            $this->created_at = time(); 
+            if (yii::$app->user->isGuest)
+                $this->created_by = 1; 
+        }
 
-        $this->status_id = Types::$status['active']['id']; 
         return parent::init(); 
     }
-
+    
+    /* ********************************************************************************* */ 
+    
 
     public static function tableName()
     {
         return 'log';
     }
-
+    /* ********************************************************************************* */ 
+    
     /**
      * @inheritdoc
      */
@@ -59,7 +80,8 @@ class Log extends \common\components\XActiveRecord
             [['sys_event_id'], 'exist', 'skipOnError' => true, 'targetClass' => RefSysEvent::className(), 'targetAttribute' => ['sys_event_id' => 'id']],
         ];
     }
-
+    /* ********************************************************************************* */ 
+    
     /**
      * @inheritdoc
      */
@@ -78,7 +100,8 @@ class Log extends \common\components\XActiveRecord
             'updated_by' => Yii::t('app', 'Updated By'),
         ];
     }
-
+    /* ********************************************************************************* */ 
+    
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -86,7 +109,8 @@ class Log extends \common\components\XActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
-
+    /* ********************************************************************************* */ 
+    
     /**
      * @return \yii\db\ActiveQuery
      */

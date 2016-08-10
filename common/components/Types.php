@@ -73,7 +73,9 @@ public static $status = [
 		'null'=>['id'=>1,'code'=>'null','name'=>'no value' , 'description'=>'No value'] ,
 		'user_activated'=>['id'=>2,'code'=>'user_activated','name'=>'User activated','description'=>'User activated'],
 		'user_deactivated'=>['id'=>3,'code'=>'user_deactivated','name'=>'User deactivated','description'=>'User deactivated'],
-		'email_send'=>['id'=>4,'code'=>'Send e-mail','name'=>'Send e-mail','description'=>'Send an e-mail'],
+		'email_send'=>['id'=>4,'code'=>'email_send','name'=>'Send e-mail','description'=>'Send an e-mail'],
+		'login_success'=>['id'=>5,'code'=>'login_success','name'=>'Login succeeded','description'=>'Login succeeded'],
+		'login_fail'=>['id'=>6,'code'=>'login_fail','name'=>'Login failed','description'=>'Login failed'],
 			
 	];
 	/* ******************************************************************************************** */ 
