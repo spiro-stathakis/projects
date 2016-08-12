@@ -50,6 +50,10 @@ class LdapComponent extends \common\components\XComponent
 		} 
 
 		/* #################################################################### */
+		public function userSearch($username)
+		{
+			return $this->_getLdapDn($username);
+		}
 		/* #################################################################### */ 
 		public function groupSearch($s){
 					$statement = sprintf('(&(objectClass=group)(cn=%s))',$s);

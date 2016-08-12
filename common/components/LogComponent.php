@@ -22,7 +22,7 @@ class LogComponent extends Object
         return parent::init(); 
     }
     /* ********************************************************************** */ 
-    public function newUser($user , $description = null)
+    public function activateUser($user , $description = null)
     {
         if (($id = yii::$app->UserComponent->idFromUsername($user)) === false) 
                  throw new \yii\web\HttpException(500, sprintf('User not found %s', $user));
@@ -30,6 +30,21 @@ class LogComponent extends Object
         $logModel = new Log; 
         $logModel->user_id = $id; 
         $logModel->sys_event_id  = Types::$systemEvent['user_activated']['id']; 
+        $logModel->description = $description; 
+        $logModel->save(); 
+
+        
+    }
+    /* ********************************************************************** */ 
+    /* ********************************************************************** */ 
+    public function deactivateUser($user , $description = null)
+    {
+        if (($id = yii::$app->UserComponent->idFromUsername($user)) === false) 
+                 throw new \yii\web\HttpException(500, sprintf('User not found %s', $user));
+
+        $logModel = new Log; 
+        $logModel->user_id = $id; 
+        $logModel->sys_event_id  = Types::$systemEvent['user_deactivated']['id']; 
         $logModel->description = $description; 
         $logModel->save(); 
 

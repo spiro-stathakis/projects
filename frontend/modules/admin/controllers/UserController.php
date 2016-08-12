@@ -51,6 +51,7 @@ class UserController extends XController
 /* ********************************************************************** */ 
  public function actionImport()
  {
+    $oldUsers = yii::$app->UserComponent->disableOldAccounts(); 
     $newUsers = yii::$app->UserComponent->import(); 
     return $this->render('import' , ['newUsers'=>$newUsers]);
      

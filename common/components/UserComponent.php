@@ -36,6 +36,32 @@ class UserComponent extends Object
 
     }
     /* ********************************************************************** */ 
+    public function disableOldAccounts()
+    {
+        $newList = []; 
+        $ldap = new LdapComponent;
+        $users =  User::findAll(['status_id'=>Types::$status['active']['id']]); 
+        foreach($users as $u)
+        {
+            $search = $ldap->userSearch($u->user_name); 
+            if ($search == false)
+            {
+                $u->status_id = Types::$status['inactive']['id']; 
+                $u->save(); 
+                yii::$app->LogComponent->deactivateUser($u->user_name,sprintf('Removing user: %s %s',
+                $u->first_name,
+                $u->last_name)
+                 );
+                $newList[] = $u;  
+
+            }
+        }
+
+        return $newList; 
+    }
+
+    /* ********************************************************************** */ 
+    
     public function import()
      {
         $newList =[]; 
@@ -86,7 +112,7 @@ class UserComponent extends Object
 
         foreach($newList as $u)
         {
-            yii::$app->LogComponent->newUser($u['user_name'],sprintf('Adding user: %s %s',
+            yii::$app->LogComponent->activateUser($u['user_name'],sprintf('Adding user: %s %s',
                 $u['first_name'],
                 $u['last_name'])
             ); 
@@ -96,7 +122,7 @@ class UserComponent extends Object
                     $u['email'])
                 ); 
             
-                 $this->sendWelcomeEmail($u['user_name'], $u['email']); 
+                $this->sendWelcomeEmail($u['user_name'], $u['email']); 
             }
         } 
         
