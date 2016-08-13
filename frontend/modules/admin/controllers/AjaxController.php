@@ -94,9 +94,15 @@ class AjaxController extends XController
                 else 
                     yii::$app->AjaxResponse->message = array_values($userModel->getErrors());  
        }
-       else 
-
-                yii::$app->AjaxResponse->message = ['User already exists']; 
+       else      // user exits but is not active 
+                if ($userModel->status_id != Types::$status['active']['id'])
+                {
+                    $userModel->status_id = Types::$status['active']['id']; 
+                    $userModel->save(); 
+                    yii::$app->AjaxResponse->message = ['User reactivated'];
+                }
+                else 
+                    yii::$app->AjaxResponse->message = ['User already exists']; 
     
 
         yii::$app->AjaxResponse->sendContent();  
