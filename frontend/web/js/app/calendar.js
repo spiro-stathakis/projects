@@ -11,6 +11,7 @@ AppPackageCalendar.prototype = {
     selectedTime:0, 
     calId:0, 
     moment:moment(), 
+    currentEvent:{}, 
   /* ********************************************************** */    
     
     init:function() { //default function
@@ -41,7 +42,9 @@ AppPackageCalendar.prototype = {
             }
         }); 
         
-
+        $('#delete-button').click(function(){
+            $.app.cal.deleteEvent(); 
+        }); 
         /*** set up tree view  ******/ 
         $('#tree').treeview({
             showCheckbox:true, 
@@ -63,8 +66,34 @@ AppPackageCalendar.prototype = {
 
     }, 
   /* ********************************************************** */
-  
-    getDataForm:function(){
+  deleteEvent: function(){
+        if (! this.currentEvent.editable)
+            return false; 
+        if (confirm('Click OK if you are sure.'))  
+        {
+            var form = this.getDataForm(); 
+            form.ee_id = this.currentEvent.event_entry_id; 
+            $.ajax({
+              type: "POST",
+              url: $.app.mc.deleteEventUri,
+              data: form,
+              success: function(data,status,xhr){
+               var type= 'success'; 
+               $('#full-calendar').fullCalendar('refetchEvents');
+               $.app.cal.resetFields(); 
+               $('#eventShowModal').modal('toggle'); 
+               message = 'Event deleted'; 
+               $.bootstrapGrowl(message , {'type':type}, 1000 );
+
+              },
+              dataType: 'json'
+            });
+
+        }
+
+  },
+  /* ********************************************************** */
+  getDataForm:function(){
       return {
             '_csrf' : $.app.mc.csrfToken 
           };
@@ -211,10 +240,23 @@ AppPackageCalendar.prototype = {
               dataType: 'JSON'
             });
   },
+   /* ********************************************************** */
+  resetFields: function()
+    {
+        $('#span-event-title').html('') 
+        $('#span-event-description').html('');
+        $('#span-event-date').html(''); 
+        $('#span-event-from').html(''); 
+        $('#span-event-to').html(''); 
+
+         $('#span-event-create').html('');
+         $('#span-event-create-date').html('');
+    }, 
   /* ********************************************************** */
   eventClick:function(event, jsEvent, view)
     {
         
+        this.currentEvent = event;  
         $('#span-event-title').editable('destroy');
         $('#span-event-description').editable('destroy');
         $('#span-event-calendar').editable('destroy'); 
@@ -222,8 +264,18 @@ AppPackageCalendar.prototype = {
         $('#span-event-title').html(event.title); 
         $('#span-event-description').html(event.description);
         $('#span-event-date').html(moment(event.start).format('L')); 
+        $('#span-event-from').html(moment(event.start).format('HH:mm')); 
+        $('#span-event-to').html(moment(event.end).format('HH:mm')); 
+
+         $('#span-event-create').html(event.create_name);
+         $('#span-event-create-date').html(event.created_at);
+         
+         if (event.editable)
+            $('#delete-button').show();
+         else 
+            $('#delete-button').hide();
+          
         
-        console.info(event); 
         
         var form = this._buildUpdateEventForm(event).pk; 
            $('#span-event-title').editable({
@@ -316,6 +368,8 @@ AppPackageCalendar.prototype = {
         
         
     },
+    /* ********************************************************** */
+    
     /* ********************************************************** */
     _eventClick:function(response , newValue )
     {

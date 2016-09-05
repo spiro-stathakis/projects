@@ -63,8 +63,8 @@ BootstrapEditableAsset::register($this);
       	<span id='span-event-to'></span> 
       </div>
 </div>
-
-<div class="row">
+<p>&nbsp;</p>
+<div class="row small">
       <div class="col-sm-3 col-md-2">
       	Created by 
       </div>
@@ -72,7 +72,7 @@ BootstrapEditableAsset::register($this);
       	<span id='span-event-create'></span>
       </div>
       <div class="col-sm-3 col-md-2">
-      	Date  
+      	Created on  
       </div>
       <div class="col-sm-3 col-md-2">
       	<span id='span-event-create-date'></span>

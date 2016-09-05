@@ -13,6 +13,7 @@
       <div class="modal-footer">
         <span id="spanShowTitle" style="float:left; text-align:left"></span>
         <span id="spanShowResponse" style="float:left; text-align:left"></span>
+        <button type="button" class="btn btn-default" id="delete-button">Delete</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
        
       </div>

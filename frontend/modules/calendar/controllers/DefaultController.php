@@ -21,6 +21,7 @@ class DefaultController extends XController
             yii::$app->jsconfig->addData('myProjects', yii::$app->ProjectComponent->myProjects); 
             yii::$app->jsconfig->addData('createEventUri', Url::to('/calendar/ajax/createevent') );
             yii::$app->jsconfig->addData('updateEventUri', Url::to('/calendar/ajax/updateevent') );
+            yii::$app->jsconfig->addData('deleteEventUri', Url::to('/calendar/ajax/deleteevent') );
             yii::$app->jsconfig->addData('subscribeUri', Url::to('/calendar/ajax/subscribe') );
             yii::$app->jsconfig->addData('unsubscribeUri', Url::to('/calendar/ajax/unsubscribe') );
 

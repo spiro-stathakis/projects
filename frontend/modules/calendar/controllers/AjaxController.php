@@ -39,7 +39,8 @@ class AjaxController extends XController
                         'class' => AccessControl::className(),
                         'rules' => [
                                     ['actions' => ['createevent',
-                                                    'updateevent', 
+                                                    'updateevent',
+                                                    'deleteevent',  
                                                     'listcalendars', 
                                                     'listevents', 
                                                     'unsubscribe', 
@@ -85,6 +86,7 @@ class AjaxController extends XController
 
 
     }
+    
     /* ****************************************************************************************** */ 
     public function actionUnsubscribe()
     {
@@ -106,6 +108,20 @@ class AjaxController extends XController
             $model->display_option_id = Types::$boolean['false']['id']; 
             $model->save(); 
             $this->sendContent(['status'=>'success']); 
+
+    }
+    /* ****************************************************************************************** */ 
+    public function actionDeleteevent()
+    {
+        $request = yii::$app->request;
+        $ee_id = $request->post('ee_id'); 
+        $eventEntryRecord = yii::$app->CalendarComponent->eventEntryRecord($ee_id);  
+        if (! yii::$app->CalendarComponent->canUpdateEvent($eventEntryRecord))
+           throw new \yii\web\HttpException(403, sprintf('Event delete not authorized for use'));
+        $model = EventEntry::findOne($ee_id);
+        $model->status_id = Types::$status['inactive']['id']; 
+        $model->save(); 
+         $this->sendContent(['status'=>'success']); 
 
     }
     /* ****************************************************************************************** */ 
