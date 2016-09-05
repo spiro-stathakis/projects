@@ -248,15 +248,17 @@ AppPackageCalendar.prototype = {
         $('#span-event-date').html(''); 
         $('#span-event-from').html(''); 
         $('#span-event-to').html(''); 
-
-         $('#span-event-create').html('');
-         $('#span-event-create-date').html('');
+        $('#eventShowModalLabel').html('');
+        $('#span-event-create').html('');
+        $('#span-event-create-date').html('');
     }, 
   /* ********************************************************** */
   eventClick:function(event, jsEvent, view)
     {
         
         this.currentEvent = event;  
+        
+
         $('#span-event-title').editable('destroy');
         $('#span-event-description').editable('destroy');
         $('#span-event-calendar').editable('destroy'); 
@@ -270,7 +272,7 @@ AppPackageCalendar.prototype = {
 
          $('#span-event-create').html(event.create_name);
          $('#span-event-create-date').html(event.created_at);
-         
+         $('#eventShowModalLabel').html(event.title);
          if (event.editable)
             $('#delete-button').show();
          else 
