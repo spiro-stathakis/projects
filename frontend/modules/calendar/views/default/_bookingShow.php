@@ -15,17 +15,17 @@ BootstrapEditableAsset::register($this);
 ?>
 
 <div class="row">
-      <div class="col-sm-3 col-md-2">
-      	Title 
+      <div class="col-sm-2 col-md-1">
+      	<strong>Title</strong> 
       </div>
-      <div class="col-sm-3 col-md-2">
+      <div class="col-sm-5 col-md-4">
       	<span id='span-event-title'></span>
 
       </div>
-      <div class="col-sm-3 col-md-2">
-      	Description 
+      <div class="col-sm-2 col-md-1">
+      	<strong>Description</strong>
       </div>
-      <div class="col-sm-3 col-md-2">
+      <div class="col-sm-5 col-md-4">
       	<span id='span-event-description'></span> 
 
       </div>
@@ -33,49 +33,43 @@ BootstrapEditableAsset::register($this);
 
 
 <div class="row">
-      <div class="col-sm-3 col-md-2">
-      	Calendar 
+      <div class="col-sm-2 col-md-1">
+      	<strong>Calendar</strong> 
       </div>
-      <div class="col-sm-3 col-md-2">
+      <div class="col-sm-5 col-md-4">
       	<span id='span-event-calendar'></span>
       </div>
-      <div class="col-sm-3 col-md-2">
-      	Project 
+      <div class="col-sm-2 col-md-1">
+      	<strong>Project</strong> 
       </div>
-      <div class="col-sm-3 col-md-2">
+      <div class="col-sm-5 col-md-4">
       	<span id='span-event-project'></span> 
       </div>
 </div>
 
 <div class="row">
-      <div class="col-sm-3 col-md-2">
-      	Date 
+      <div class="col-sm-2 col-md-1">
+      	<strong>Date</strong> 
       </div>
-      <div class="col-sm-3 col-md-2">
+      <div class="col-sm-5 col-md-4">
       	<span id='span-event-date'></span>
       </div>
-      <div class="col-sm-3 col-md-2">
-      	From  
+      <div class="col-sm-2 col-md-1">
+      	<strong>From</strong>  
       </div>
-      <div class="col-sm-3 col-md-2">
+      <div class="col-sm-5 col-md-4">
       	<span id='span-event-from'></span>
-      	To 
+      	<strong>To</strong> 
       	<span id='span-event-to'></span> 
       </div>
 </div>
 <p>&nbsp;</p>
 <div class="row small">
-      <div class="col-sm-3 col-md-2">
+      <div class="col-sm-6 col-md-4">
       	Created by 
-      </div>
-      <div class="col-sm-3 col-md-2">
-      	<span id='span-event-create'></span>
-      </div>
-      <div class="col-sm-3 col-md-2">
-      	Created on  
-      </div>
-      <div class="col-sm-3 col-md-2">
-      	<span id='span-event-create-date'></span>
+      <span id='span-event-create'></span>
+      on  
+      <span id='span-event-create-date'></span>
       	
       </div>
 </div>

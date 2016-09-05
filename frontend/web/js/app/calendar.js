@@ -260,6 +260,7 @@ AppPackageCalendar.prototype = {
         $('#span-event-title').editable('destroy');
         $('#span-event-description').editable('destroy');
         $('#span-event-calendar').editable('destroy'); 
+         $('#span-event-project').editable('destroy'); 
 
         $('#span-event-title').html(event.title); 
         $('#span-event-description').html(event.description);
