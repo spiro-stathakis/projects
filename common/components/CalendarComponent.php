@@ -432,6 +432,7 @@ class CalendarComponent extends Object
             'col.title  as collection_title',
             'cal.project_option_id', 
             'cal.allow_overlap_option_id', 
+            'cal.start_time', 'cal.end_time', 
             'cal.read_only_option_id', 
             'cal.hex_code']; 
             $query   = (new \yii\db\Query())
@@ -456,6 +457,7 @@ class CalendarComponent extends Object
             'cal.allow_overlap_option_id', 
             'cal.read_only_option_id', 
             'cal.title as calendar_title',
+            'cal.start_time', 'cal.end_time', 
             'cal.hex_code', 
             'col.title  as collection_title',
             'col.public_option_id', 
@@ -505,6 +507,7 @@ class CalendarComponent extends Object
             'cal.project_option_id', 
             'cal.allow_overlap_option_id', 
             'cal.read_only_option_id', 
+            'cal.start_time', 'cal.end_time', 
             'col.public_option_id', 
             'cs.display_option_id',
             'cal.hex_code']; 

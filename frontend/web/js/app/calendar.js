@@ -11,13 +11,15 @@ AppPackageCalendar.prototype = {
     selectedTime:0, 
     calId:0, 
     moment:moment(), 
+    defaultStartTime:'09:00', 
+    defaultEndTime:'17:00', 
     currentEvent:{}, 
   /* ********************************************************** */    
     
     init:function() { //default function
        
 
-             
+        this.resetFields();      
        /*** set up calendar - project relationship ******/ 
         $('#calendar_id').change(function(){
             var cal_id=$(this).val();  
@@ -33,13 +35,25 @@ AppPackageCalendar.prototype = {
 
 
         $('#booking-all_day_option_id').change(function(){
+            
+            var b = $('#booking-all_day_option_id').val(); 
+            if (b == $.app.mc.types_boolean.false)
+              return false; 
+
             var cal_id = $('#calendar_id').val(); 
-             
             if (cal_id != 0 )
             {
               var r = $.app.cal.getCalendarRecord(cal_id); 
+              $('#start_time').val(r.start_time); 
+              $('#end_time').val(r.end_time); 
               
             }
+            else
+            {
+              $('#start_time').val($.app.cal.defaultStartTime); 
+              $('#end_time').val($.app.cal.defaultEndTime); 
+            }
+              
         }); 
         
         $('#delete-button').click(function(){
@@ -251,6 +265,8 @@ AppPackageCalendar.prototype = {
         $('#eventShowModalLabel').html('');
         $('#span-event-create').html('');
         $('#span-event-create-date').html('');
+        $('#booking-all_day_option_id').val($.app.mc.types_boolean.false); 
+        $('#calendar_id').val(0); 
     }, 
   /* ********************************************************** */
   eventClick:function(event, jsEvent, view)
