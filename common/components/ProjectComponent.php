@@ -111,7 +111,7 @@ class ProjectComponent extends Object
             return (new \yii\db\Query())
                     ->select([
                             'c.title as collection_title','c.description as collection_description',
-                            'p.id as project_id','p.title as project_title','p.code as project_code'
+                            'p.id as project_id','concat(p.code , \' \' , p.title) as project_title','p.code as project_code'
                            ])
                     ->from('collection c')
                     ->join('LEFT JOIN','project p' , 'p.collection_id=c.id')
