@@ -7,7 +7,7 @@
 
 
 
-/*
+
 $curl = Yii::$app->CurlComponent; 
 
 $curl->useAuth(true); 
@@ -33,4 +33,4 @@ foreach ($data as $s)
 	
  
 
-*/
+

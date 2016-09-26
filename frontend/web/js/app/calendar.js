@@ -442,8 +442,9 @@ AppPackageCalendar.prototype = {
     }
     if (! data.error)
     { 
-        $('#eventModal').modal('hide');   
-        $('#full-calendar').fullCalendar('renderEvent', data.message); 
+        $('#eventModal').modal('hide'); 
+        $('#full-calendar').fullCalendar('refetchEvents');  
+        //$('#full-calendar').fullCalendar('renderEvent', data.message); 
         response = 'Event updated.'; 
     } 
     $('#spanTitle').html(title);  
