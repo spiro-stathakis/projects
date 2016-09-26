@@ -230,10 +230,21 @@ AppPackageCalendar.prototype = {
   {
       var form ={}; 
       form.pk = this.getDataForm();
+      if (! event.allDay)
+      {
+          form.pk.start_time = event.start.format($.app.mc.momentUkTimeFormat); 
+          form.pk.end_time = event.end.format($.app.mc.momentUkTimeFormat); 
+      }
+      else
+      { 
+          form.pk.start_time = this.defaultStartTime; 
+          form.pk.end_time = this.defaultEndTime;  
+          form.pk.end_date = event.start.format($.app.mc.momentUkDateFormat); 
+      
+      }
+      
       form.pk.start_date = event.start.format($.app.mc.momentUkDateFormat); 
-      form.pk.start_time = event.start.format($.app.mc.momentUkTimeFormat); 
-      form.pk.end_date = event.end.format($.app.mc.momentUkDateFormat); 
-      form.pk.end_time = event.end.format($.app.mc.momentUkTimeFormat); 
+      
       form.pk.ee_id = event.event_entry_id;    
       return form; 
   }, 
