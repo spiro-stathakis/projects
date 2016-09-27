@@ -282,7 +282,11 @@ class AjaxController extends XController
             $model->create_name = $e['create_name']; 
             $model->created_at = yii::$app->DateComponent->timestampToUkDateTime($e['created_at']); 
             if ($e['all_day_option_id'] == Types::$boolean['true']['id'])
+            {
                 $model->allDay = true; 
+               
+            }
+
             else 
                 $model->allDay = false;
             //$model->backgroundcolor = $e['hex_code']; 

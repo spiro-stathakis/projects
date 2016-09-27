@@ -32,10 +32,11 @@ abstract class XActiveRecord extends \yii\db\ActiveRecord
                 ];
             }
 /* ********************************************************************************************************* */ 
-
+        /*
     	public function behaviors()
     	{
-    		return [
+    		
+            return [
     				   'timestamp'=> [
         					'class'=>TimestampBehavior::className(), 
         					'attributes'=>[
@@ -54,10 +55,10 @@ abstract class XActiveRecord extends \yii\db\ActiveRecord
         				    ],
                     ];
     			 
-
-    		
+            
+    		 
 
     	}
-
+        */
 
 }

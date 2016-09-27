@@ -493,19 +493,29 @@ AppPackageCalendar.prototype = {
   _popoverDiv:function(event)
   {
       var div = ''; 
+
       var start =moment(event.start).format('LT'); 
       var end = moment(event.end).format('LT'); 
-      var date = moment(event.start).format('LL')
+      var date = moment(event.start).format('LL'); 
+      var headerText = ''; 
+      if (event.allDay)
+        headerText = ''; 
+      else 
+        headerText = ' ' + start + ' to ' + end;
       div += '<div class="popover">'; 
       div += '<h3 class="popover-title">'; 
       div +=  date; 
-      div +=  ' ' + start + ' to ' + end; 
+      div +=  headerText;  
       div += '</h3>'; 
       div += '<div class="popover-content">'; 
       div += '<h4>' + event.title +'</h4>';
-      
-      div +=  'From: ' + start;
-      div += ' to: '+ end ; 
+      if (event.allDay)
+          div += 'All day'; 
+      else 
+      {
+        div +=  'From: ' + start;
+        div += ' to: '+ end ; 
+      }
       div += '<br />'; 
       div += event.calendar_title; 
       div += '<br/>'; 
