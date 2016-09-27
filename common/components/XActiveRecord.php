@@ -32,7 +32,7 @@ abstract class XActiveRecord extends \yii\db\ActiveRecord
                 ];
             }
 /* ********************************************************************************************************* */ 
-        /*
+        
     	public function behaviors()
     	{
     		
@@ -59,6 +59,6 @@ abstract class XActiveRecord extends \yii\db\ActiveRecord
     		 
 
     	}
-        */
+        
 
 }
