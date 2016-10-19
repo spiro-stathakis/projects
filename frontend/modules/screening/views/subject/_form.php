@@ -1,7 +1,11 @@
 <?php
 
-use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap\Html;
+
+use kartik\form\ActiveForm;
+use kartik\builder\Form;
+use kartik\switchinput\SwitchInput;
+use yii\helpers\Url; 
 
 
 
@@ -12,29 +16,93 @@ use yii\widgets\ActiveForm;
 
 <div class="subjects-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+            <?php 
+            $form = ActiveForm::begin([
+                            'type'=>ActiveForm::TYPE_VERTICAL, 
+                            'formConfig'=>['labelSpan'=>3],
+                           // 'enableAjaxValidation' => true,
+                            'id'=>'frmBookingForm', 
+                          
+                             
+                
+            ]);
 
-    <?= $form->field($model, 'first_name')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'last_name')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'dob')->textInput() ?>
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'telephone')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'address')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'sex_id')->dropDownList($model->sexOptions, []) ?>
+            
+            echo Form::widget([
+                'model'=>$model,
+                'form'=>$form,
+                'columns'=>2,
+                'attributes'=>[       // 2 column layout
+                    'first_name'=>['type'=>Form::INPUT_TEXT, 'options'=>['placeholder'=>'First name']],
+                    'dob'=>[
+                                'type'=>Form::INPUT_WIDGET, 
+                                'widgetClass'=>'\kartik\datecontrol\DateControl',
+                                
+                            ],
+                    
+                    ]
+            ]);
 
+            echo Form::widget([
+                'model'=>$model,
+                'form'=>$form,
+                'columns'=>2,
+                'attributes'=>[       // 2 column layout
+                    'last_name'=>['type'=>Form::INPUT_TEXT, 'options'=>['placeholder'=>'Last name']],
+                    'telephone'=>['type'=>Form::INPUT_TEXT, 'options'=>['placeholder'=>'Telephone']],
+                    
+                    ]
+            ]);
 
-    <?= $form->field($model, 'gp_opt_id')->dropDownList($model->booleanOptions, []) ?>
+             echo Form::widget([
+                'model'=>$model,
+                'form'=>$form,
+                'columns'=>3,
+                'attributes'=>[       // 2 column layout
+                    'email'=>['type'=>Form::INPUT_TEXT, 'options'=>['placeholder'=>'Email']],
+                    
+                    'address'=>['type'=>Form::INPUT_TEXTAREA, 
+                                    'options'=>['placeholder'=>'Address...'],
+                                    'columnOptions'=>['colspan'=>2],
+                                ]
+                   
+                    ]
+            ]);
+            
+            echo Form::widget([
+                'model'=>$model,
+                'form'=>$form,
+                'columns'=>3,
+                'attributes'=>[    
+                    
+                    'gp_opt_id'=>[  'type'=>Form::INPUT_DROPDOWN_LIST, 
+                                    'items'=>['0'=>''] +$model->booleanOptions, 
+                                        'options'=>['id'=>'gp_opt_id','placeholder'=>'GP details','style'=>'width:100px'], 
+                                        
+                                ], 
+                    'email_opt_id'=>['type'=>Form::INPUT_DROPDOWN_LIST, 
+                                        'items'=>['0'=>''] + $model->booleanOptions,
+                                        'options'=>['id'=>'email_opt_id','placeholder'=>'Email opt','style'=>'width:100px'],    
+                                ],
+                            
+                    'sex_id'=>['type'=>Form::INPUT_DROPDOWN_LIST, 
+                                        'items'=>['0'=>''] +$model->booleanOptions,
+                                        'options'=>['id'=>'sex_id','placeholder'=>'Sex opt','style'=>'width:100px'],    
+                            
+                            ],
 
-    <?= $form->field($model, 'email_opt_id')->dropDownList($model->booleanOptions, []) ?>
+                    ]
+            ]);
 
-    <?= $form->field($model, 'sex_id')->dropDownList($model->sexOptions, []) ?>
 
    
+   ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
-    <?php ActiveForm::end(); ?>
+    <input type="hidden" name="_csrf" value="<?=Yii::$app->request->getCsrfToken()?>" />
+<?php \kartik\form\ActiveForm::end(); ?>
 
 </div>

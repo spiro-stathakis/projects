@@ -22,7 +22,8 @@ calendarRecord: Retrieves a single calendar record
 	private $_collectionMembership; 
 	private $_collectionUserData; 
     private $_theCollections; 
-    private $_theCollectionList; 
+     private $_allCollections; 
+   
     private $_thePublicCollections; 
 
 	
@@ -64,6 +65,15 @@ calendarRecord: Retrieves a single calendar record
         return $return; 
 
 
+    }
+    
+    /* ******************************************************************************************************* */ 
+    public function getAllCollections()
+    {
+        if ($this->_allCollections === null)
+            $this->_allCollections = $this->_getAllCollections();
+       
+       return $this->_allCollections;    
     }
     /* ******************************************************************************************************* */ 
     public function getTheCollections()
@@ -200,6 +210,25 @@ calendarRecord: Retrieves a single calendar record
                     ->all();
     }
     /* ******************************************************************************************************* */ 
+    private function _getAllCollections()
+    {
+         return  (new \yii\db\Query())
+                    ->select(['c.id as collection_id','c.title as collection_title' , 'c.description as collection_description',
+                        'rct.name as collection_type_name',  
+                        'rct.id as collection_type_id'
+                       ])
+                    ->from('collection c')
+                    ->join('INNER JOIN','ref_collection_type rct', 'c.collection_type_id=rct.id')
+                    ->where('c.status_id=:status_active')
+                    ->addParams([':status_active'=>Types::$status['active']['id'], 
+                                 
+                                 
+                        ])
+                    ->all();
+
+    }
+    /* ******************************************************************************************************* */ 
+    
     private function _getTheCollections()
     {
            return  (new \yii\db\Query())

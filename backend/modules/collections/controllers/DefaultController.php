@@ -51,11 +51,11 @@ class DefaultController  extends \common\components\XController
     public function actionIndex()
     {
     	$memberProvider  =  new ArrayDataProvider([
-    			'allModels' =>yii::$app->CollectionComponent->theCollections,
+    			'allModels' =>yii::$app->CollectionComponent->allCollections,
     			'pagination'=>false, 
     	]);
     	$managerProvider  =  new ArrayDataProvider([
-    			'allModels' =>yii::$app->CollectionComponent->theCollections,
+    			'allModels' =>yii::$app->CollectionComponent->allCollections,
     			'pagination'=>false, 
     	]);
 
