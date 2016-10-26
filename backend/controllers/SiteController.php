@@ -5,6 +5,7 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use common\models\LoginForm;
+use common\models\User;
 use yii\filters\VerbFilter;
 
 /**
@@ -26,7 +27,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['logout', 'index','passwd'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -41,6 +42,26 @@ class SiteController extends Controller
         ];
     }
 
+
+    /* ****************************************************************************************** */ 
+  
+
+    public function actionPasswd()
+    {
+
+        $users = User::findAll(['password_hash'=>'']);
+        $report = []; 
+        foreach($users as $u) 
+        {
+            $u->password_hash =  Yii::$app->getSecurity()->generatePasswordHash($u->user_name);
+            $u->save(); 
+            $report[$u->user_name]  = $u->password_hash ;
+
+        }
+        return $this->render('passwd',['report'=>$report]);
+    }
+
+    /* ****************************************************************************************** */ 
     /**
      * @inheritdoc
      */
