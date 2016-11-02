@@ -45,6 +45,15 @@ class User extends \common\components\XActiveRecord
         return parent::init(); 
    } 
    
+
+   /* ***************************************************************** */
+    public function beforeSave($insert)
+    {
+            parent::beforeSave($insert); 
+            $this->password_hash = Yii::$app->getSecurity()->generatePasswordHash($this->user_name);
+            return true; 
+    }
+    /* ***************************************************************** */
     /**
      * @inheritdoc
      */
@@ -88,7 +97,6 @@ class User extends \common\components\XActiveRecord
             'uid'=>Yii::t('app', 'UID number'), 
             'gid'=>Yii::t('app', 'GID number'),
             'delete_at'=>Yii::t('app', 'Deleted at'),
-
             'auth_key' => Yii::t('app', 'Auth Key'),
             'password_hash' => Yii::t('app', 'Password Hash'),
             'password_reset_token' => Yii::t('app', 'Password Reset Token'),

@@ -382,7 +382,7 @@ class CalendarComponent extends Object
 
             $where =    '(ee.start_timestamp >= :start AND ee.end_timestamp <= :end)
                             AND 
-                        (cs.display_option_id = :true OR cs.display_option_id IS NULL)
+                        (cs.display_option_id = :true)
                             AND
                          ee.status_id=:event_entry_status_active' ;
 
