@@ -261,7 +261,7 @@ class AjaxController extends XController
 
         foreach ( $list as $e)
         {
-            if yii::$app->CalendarComponent->isSubscribed($e['calendar_id'])
+            if (yii::$app->CalendarComponent->isSubscribed($e['calendar_id']))
             {
                 $model = new CalEvent(); 
                 
