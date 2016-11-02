@@ -89,7 +89,8 @@ class DefaultController extends XController
                 if (! in_array($calendar['calendar_id'],$found ))
                 {
                     if (array_key_exists( $calendar['calendar_id'], yii::$app->CalendarComponent->myCalendarList))
-                        $checked = true; 
+                        if (yii::$app->CalendarComponent->isSubscribed($calendar['calendar_id']))
+                            $checked = true; 
                         
                         $nodes[] = [
                             'text'=>$calendar['calendar_title'], 

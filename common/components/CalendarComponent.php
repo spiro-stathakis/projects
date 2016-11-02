@@ -25,7 +25,7 @@ class CalendarComponent extends Object
     private $_myCalendarList; 
     private $_theCalendarList; 
     private $_allCalendars; 
-    
+    private $_mySubscriptions; 
 	/* ******************************************************************************************************* */ 
     /* ******************************************************************************************************* */ 
     /* ******************************************************************************************************* */ 
@@ -204,7 +204,7 @@ class CalendarComponent extends Object
         {
             $this->_myCalendarList = [];   
             foreach($this->myCalendars as $rec)
-                if ($rec['display_option_id'] == Types::$boolean['true']['id'] || $rec['display_option_id'] == null )
+                if ($rec['display_option_id'] == Types::$boolean['true']['id'])
                     $this->_myCalendarList[$rec['calendar_id']] = $rec['calendar_title'];
         }
         return $this->_myCalendarList; 
@@ -300,8 +300,50 @@ class CalendarComponent extends Object
         return $this->_eventEntryRecord($event_entry_id);
     }
     
+    
     /* ******************************************************************************************************* */ 
-   
+    public function isSubscribed($cal_id)
+    {
+        $found = false; 
+        foreach($this->mySubscriptions as $cal)
+            if ($cal['cal_id'] === $cal_id ) 
+                $found = true; 
+        return $found; 
+
+    }
+    /* ******************************************************************************************************* */ 
+    public function getMySubscriptions()
+    {
+        if ($this->_mySubscriptions === null )
+            $this->_mySubscriptions = $this->_mySubscriptions(); 
+        return $this->_mySubscriptions; 
+    }
+
+    /* ******************************************************************************************************* */ 
+    private function _mySubscriptions()
+    {
+        $data   = (new \yii\db\Query())
+                ->select(['cs.calendar_id as cal_id','c.title as cal_title'])
+                ->from('calendar_subscription cs')
+                ->join('INNER JOIN','calendar c' , 'cs.calendar_id=c.id')
+                ->where(
+                        '(c.status_id = :active)
+                        AND 
+                        (cs.display_option_id=:true)
+                        AND
+                        (cs.user_id=:user_id)
+                        ')
+
+                 ->addParams([':active'=>Types::$status['active']['id'], 
+                                ':true'=>Types::$boolean['true']['id'], 
+                                ':user_id'=>\Yii::$app->user->identity->id 
+                            ])
+                ->all();
+
+         return  $data; 
+    }
+    /* ******************************************************************************************************* */ 
+    
     /* ******************************************************************************************************* */ 
     
     /*                                          PRIVATE FUNCTIONS                                              */ 
@@ -384,7 +426,7 @@ class CalendarComponent extends Object
                             AND 
                         (cs.display_option_id = :true)
                             AND
-                         ee.status_id=:event_entry_status_active' ;
+                         (ee.status_id=:event_entry_status_active)' ;
 
             if ($calendar_id !== null)
             {

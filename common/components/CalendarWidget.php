@@ -43,14 +43,18 @@ class CalendarWidget extends Widget{
                 'timeFormat'=>'H(:mm)', // uppercase H for 24-hour clock
                 'aspectRatio'=>1.4, 
                 'id'=>'full-calendar', 
-                
+                'schedulerLicenseKey'=>'CC-Attribution-NonCommercial-NoDerivatives'
+                    
             ] , 
         
    
 
 
+       
+        
+    
          'clientOptions'=>[ 
-
+                       'eventRender'=>new JsExpression("function(event,element){ $.app.cal.eventRender(event,element,this)}"),
                         'weekends' => true,
                         'firstHour'=>date('H'), 
         				'defaultView' => 'agendaWeek',
