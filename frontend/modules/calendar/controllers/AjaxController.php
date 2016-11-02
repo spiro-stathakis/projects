@@ -261,40 +261,42 @@ class AjaxController extends XController
 
         foreach ( $list as $e)
         {
-            $model = new CalEvent(); 
-            
-            $model->editable = $model->startEditable = $model->durationEditable = yii::$app->CalendarComponent->canUpdateEvent($e); 
-            $model->id = $e['event_entry_id']; 
-            $model->cal_id = $e['calendar_id']; 
-            $model->calendar_title = $e['calendar_title'];
-            $model->event_entry_description = $e['event_entry_description'];
-            $model->project_collection_title = $e['project_collection_title'];
-            $model->event_entry_id = $e['event_entry_id']; 
-            $model->created_by = $e['created_by']; 
-            $model->project_id = $e['project_id']; 
-            if (strlen($e['event_entry_title']) > 0)
-                $model->title =  $e['event_entry_title']; 
-            else 
-                $model->title =  $e['event_title'];
-
-            $model->start = yii::$app->DateComponent->timestampToIsoDateTime($e['start_timestamp']);
-            $model->end =  yii::$app->DateComponent->timestampToIsoDateTime($e['end_timestamp']);
-            $model->create_name = $e['create_name']; 
-            $model->created_at = yii::$app->DateComponent->timestampToUkDateTime($e['created_at']); 
-            if ($e['all_day_option_id'] == Types::$boolean['true']['id'])
+            if yii::$app->CalendarComponent->isSubscribed($e['calendar_id'])
             {
-                $model->allDay = true; 
-               
+                $model = new CalEvent(); 
+                
+                $model->editable = $model->startEditable = $model->durationEditable = yii::$app->CalendarComponent->canUpdateEvent($e); 
+                $model->id = $e['event_entry_id']; 
+                $model->cal_id = $e['calendar_id']; 
+                $model->calendar_title = $e['calendar_title'];
+                $model->event_entry_description = $e['event_entry_description'];
+                $model->project_collection_title = $e['project_collection_title'];
+                $model->event_entry_id = $e['event_entry_id']; 
+                $model->created_by = $e['created_by']; 
+                $model->project_id = $e['project_id']; 
+                if (strlen($e['event_entry_title']) > 0)
+                    $model->title =  $e['event_entry_title']; 
+                else 
+                    $model->title =  $e['event_title'];
+
+                $model->start = yii::$app->DateComponent->timestampToIsoDateTime($e['start_timestamp']);
+                $model->end =  yii::$app->DateComponent->timestampToIsoDateTime($e['end_timestamp']);
+                $model->create_name = $e['create_name']; 
+                $model->created_at = yii::$app->DateComponent->timestampToUkDateTime($e['created_at']); 
+                if ($e['all_day_option_id'] == Types::$boolean['true']['id'])
+                {
+                    $model->allDay = true; 
+                   
+                }
+
+                else 
+                    $model->allDay = false;
+                //$model->backgroundcolor = $e['hex_code']; 
+                $model->className = sprintf('calendar-%s' , $e['calendar_id']); 
+                
+
+                $events[]  = $model ;         
             }
-
-            else 
-                $model->allDay = false;
-            //$model->backgroundcolor = $e['hex_code']; 
-            $model->className = sprintf('calendar-%s' , $e['calendar_id']); 
-            
-
-            $events[]  = $model ;         
-
         }  
 
         $this->sendContent($events);
