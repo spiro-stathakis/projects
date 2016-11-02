@@ -54,7 +54,7 @@ class CalendarWidget extends Widget{
         
     
          'clientOptions'=>[ 
-                       'eventRender'=>new JsExpression("function(event,element){ $.app.cal.eventRender(event,element,this)}"),
+                      // 'eventRender'=>new JsExpression("function(event,element){ $.app.cal.eventRender(event,element,this)}"),
                         'weekends' => true,
                         'firstHour'=>date('H'), 
         				'defaultView' => 'agendaWeek',
