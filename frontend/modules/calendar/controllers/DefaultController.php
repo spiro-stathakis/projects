@@ -65,11 +65,13 @@ class DefaultController extends XController
     {
         $tree = []; 
         $found = []; 
-        foreach(yii::$app->CollectionComponent->theCollections as $collection)
+        foreach(yii::$app->CollectionComponent->allCollections as $collection)
         {
-           if (! in_array($collection['collection_id'] , $found ))
-                $tree[] = $this->_getTreeSection($collection);
-           $found[] = $collection['collection_id']; 
+            if ($collection['collection_type_id'] != Types::$collection_type['project']['id'])
+                if (! in_array($collection['collection_id'] , $found ))
+                        $tree[] = $this->_getTreeSection($collection);
+           
+                $found[] = $collection['collection_id']; 
         }
         
         return $tree; 
@@ -81,7 +83,7 @@ class DefaultController extends XController
         $checked = false; 
         $nodes = []; 
         $found = []; 
-        foreach(yii::$app->CalendarComponent->myCalendars as $calendar)
+        foreach(yii::$app->CalendarComponent->allCalendars as $calendar)
         {
             $checked = false; 
             if ($calendar['collection_id'] == $collection['collection_id'])
