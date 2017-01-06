@@ -3,6 +3,8 @@
 use kartik\grid\GridView; 
 use yii\helpers\Html; 
 use yii\helpers\Url; 
+use rmrevin\yii\fontawesome\FA;
+rmrevin\yii\fontawesome\AssetBundle::register($this);
 ?> 
 
 
@@ -17,12 +19,9 @@ use yii\helpers\Url;
                <a href="<?=Url::to(['/collections/manage/create']);?>" class="btn btn-success btn-lg">
                         <span class="glyphicon glyphicon-groups"></span> New collection
                 </a>
-                
             </div>
-            
-
     </div>  
-            <div class="col-sm-6-offset col-sm-offset-2 col-md-7 col-md-offset-2 main">
+            <div class="col-sm-6 col-sm-offset-2 col-md-7 col-md-offset-2 main">
                  <div></div>
                     <?php  
                     if ($managerProvider->getCount() > 0):
@@ -39,7 +38,13 @@ use yii\helpers\Url;
                                 ['attribute' => 'collection_type_name', 'header'=>'Type'] ,
                                 ['header'=>'Options' , 'format'=>'raw', 
                                             'value'=>function($model){
-                                                    return Html::a('manage' , ['manage','id'=>$model['collection_id']]); 
+                                                    return sprintf('%s %s&nbsp;&nbsp;&nbsp;%s %s',
+                                                    FA::icon('cog'),
+                                                    Html::a('settings' , ['manage/update','id'=>$model['collection_id']]),
+                                                    FA::icon('users'),
+                                                    Html::a('members' , ['manage/members','id'=>$model['collection_id']])
+                                                    
+                                                        ); 
                                                     
                                             }
                             ] ,

@@ -3,12 +3,15 @@
 namespace app\modules\collections\controllers;
 
 use Yii;
+use common\components\Types;
 use common\models\Collection;
 use common\models\CollectionSearch;
+use common\models\UserCollection; 
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\AccessControl;
-use common\components\Types;
+use yii\data\ArrayDataProvider; 
+use yii\helpers\Url; 
 
 /**
  * CollectionController implements the CRUD actions for Collection model.
@@ -33,6 +36,7 @@ class ManageController extends Controller
                                     ['actions' => ['update'], 'allow' => true, 'roles' => ['editCalendar'],], 
                                     ['actions' => ['view'], 'allow' => true, 'roles' => ['editCalendar'],], 
                                     ['actions' => ['index'], 'allow' => true, 'roles' => ['@'],], 
+                                    ['actions' => ['members'], 'allow' => true, 'roles' => ['@'],], 
                                 ],
                         ],
         ];
@@ -56,7 +60,7 @@ class ManageController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-/* ********************************************************************** */ 
+    /* ********************************************************************** */ 
     /**
      * Displays a single Collection model.
      * @param integer $id
@@ -68,7 +72,8 @@ class ManageController extends Controller
             'model' => $this->findModel($id),
         ]);
     }
-
+    /* ********************************************************************** */ 
+    
     /**
      * Creates a new Collection model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -102,17 +107,44 @@ class ManageController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        if (yii::$app->CollectionComponent->isManager($id) === false) 
+                 throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access collection.'));
+            
+        $collectionModel = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($collectionModel->load(Yii::$app->request->post()) && $collectionModel->save()) {
+            return $this->redirect(['/collections']);
         } else {
             return $this->render('update', [
-                'model' => $model,
+                'collectionModel' => $collectionModel,
             ]);
         }
     }
     /* ************************************************************************************************ */ 
+    public function actionMembers($id)
+    {
+          \yii::$app->jsconfig->addData('searchUri', Url::to(['ajax/searchusers'])); 
+          \yii::$app->jsconfig->addData('memberTargetId', '#member-select'); 
+          \yii::$app->jsconfig->addData('managerTargetId', '#manager-select'); 
+          \yii::$app->jsconfig->addData('collectionId', $id); 
+          \yii::$app->jsconfig->addData('addUri', Url::to(['ajax/adduser'])); 
+          \yii::$app->jsconfig->addData('removeUri', Url::to(['ajax/removeuser'])); 
+          \yii::$app->jsconfig->addData('memberType', Types::$member_type['member']['id']); 
+          \yii::$app->jsconfig->addData('managerType', Types::$member_type['manager']['id']); 
+            
+
+          if (yii::$app->CollectionComponent->isManager($id) === false) 
+                 throw new \yii\web\HttpException(403, yii::t('app', 'No permission to access collection.'));
+            
+          $collectionModel = Collection::findOne($id); 
+          if ($collectionModel === null)
+             throw new \yii\web\HttpException(404, yii::t('app', 'Cannot find collection.')); 
+
+
+        return $this->render('members' , ['collectionModel'=>$collectionModel]); 
+    }
+    /* ************************************************************************************************ */ 
+    
     /**
      * Deletes an existing Collection model.
      * If deletion is successful, the browser will be redirected to the 'index' page.

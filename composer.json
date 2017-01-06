@@ -36,9 +36,9 @@
         "kartik-v/yii2-widget-datetimepicker": "@dev",
         "kartik-v/yii2-widget-select2": "@dev",
         "kartik-v/yii2-editable": "*",
-	   "fxp/composer-asset-plugin": "~1.1",
-       "yiisoft/yii2-swiftmailer": "~2.0.0",
-       "setasign/setapdf-signer": "2.3.2.768", 
+        "rmrevin/yii2-fontawesome": "~2.17",
+        "fxp/composer-asset-plugin": "~1.1",
+        "setasign/setapdf-signer": "2.3.2.768", 
         "setasign/fpdi-fpdf": "1.6.1"
     },
      "repositories": [{
@@ -46,7 +46,6 @@
             "url": "https://www.setasign.com/downloads/"
     }], 
     "require-dev": {
-        "yiisoft/yii2-codeception": "*",
         "yiisoft/yii2-debug": "*",
         "yiisoft/yii2-faker": "*"
     },
