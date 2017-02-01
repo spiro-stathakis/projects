@@ -107,6 +107,9 @@ return [
             'class'=>'common\components\ProjectComponent', 
         ], 
          
+        'InvoiceComponent'=> [
+            'class'=>'common\components\InvoiceComponent', 
+        ],  
         'LogComponent'=> [
             'class'=>'common\components\LogComponent', 
         ],  

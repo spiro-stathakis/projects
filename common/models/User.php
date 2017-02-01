@@ -49,9 +49,12 @@ class User extends \common\components\XActiveRecord
    /* ***************************************************************** */
     public function beforeSave($insert)
     {
-            parent::beforeSave($insert); 
-            $this->password_hash = Yii::$app->getSecurity()->generatePasswordHash($this->user_name);
-            return true; 
+            return parent::beforeSave($insert);
+            if ($insert)
+                $this->password_hash = Yii::$app->getSecurity()->generatePasswordHash($this->user_name);
+            
+           return  true; 
+            
     }
     /* ***************************************************************** */
     /**

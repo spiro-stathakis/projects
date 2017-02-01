@@ -16,12 +16,15 @@ use yii\web\AssetBundle;
 class AppJsAsset extends AssetBundle
 {
     public $sourcePath = '@common/web';
-    public $css = [];
+    public $css = [
+    //'css/sb-admin.css'
+    ];
     public $js = [
         'js/app/boot.js'
     ];
     public $depends = [
         'common\packages\MomentJsAsset',
-        'yii\web\JqueryAsset'
+        'yii\web\JqueryAsset',
+        'rmrevin\yii\fontawesome\AssetBundle',
     ];
 }

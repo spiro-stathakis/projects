@@ -46,6 +46,9 @@ class Project extends \common\components\XActiveRecord
     /**
      * @inheritdoc
      */
+    
+    public $pi_first_name; 
+    public $pi_last_name; 
     public static function tableName()
     {
         return 'project';

@@ -4,7 +4,7 @@ namespace frontend\packages;
 
 use yii\web\AssetBundle;
 
-class BootstrapDatePickerAsset  extends AssetBundle 
+class AdminDashboardAsset  extends AssetBundle 
 {
 	
 	public $basePath = '@webroot';
@@ -13,14 +13,12 @@ class BootstrapDatePickerAsset  extends AssetBundle
 		
 	]; 
 	public $js = [
-		'js/app/bootstrap-datepicker.js',
-		
+		'js/app/adminDashboard.js'
 	]; 
 	public $depends =[
 		'yii\web\YiiAsset', 
-		'yii\bootstrap\BootstrapAsset',
 		'common\packages\AppJsAsset',
-		
+		'frontend\packages\BootstrapGrowlAsset',
 	]; 
 
 

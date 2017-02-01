@@ -3,14 +3,14 @@ namespace common\components;
 use Yii; 
 use yii\base\Object;
 use common\components\Types; 
-use yii\bootstrap\Html;
+//use yii\bootstrap\Html;
 
 
-class ProjectComponent extends Object
+class InvoiceComponent extends Object
 {
 
-	private $_myProjects; 
-    private $_allProjects;  
+	private $_myInvoices; 
+    private $_allInvoices;  
 	private $_userId; 
 	
 	/* ******************************************************************************************************* */ 
@@ -28,19 +28,29 @@ class ProjectComponent extends Object
     /* ******************************************************************************************************* */ 
     
     /* ******************************************************************************************************* */ 
-    public function getMyProjects()
+    public function getAllInvoices()
 	{
-        if ($this->_myProjects === null)
+        if ($this->_allInvoices === null)
         {
-              if (Yii::$app->user->can('core_staff_role'))
-                    $this->_myProjects = $this->allProjects; 
-              else 
-                    $this->_myProjects = $this->_myProjects();  
+              if (Yii::$app->user->can('admin_role'))
+              {
+                    
+                    $invList = $this->_allInvoices(); 
+                    $entryList = $this->_allInvoiceEntries(); 
+                    foreach ($invList as $inv)
+                    {
+                        $arr = array_merge( $inv , ['items'=>$this->_extractEntries($inv['invoice_id'],$entryList)]);  
+                        $this->_allInvoices[] = $arr; 
+                    }
+              }
+                
         }
-        return $this->_myProjects;
+        return $this->_allInvoices; 
     }
 	/* ******************************************************************************************************* */ 
-    public function canUse($project_id)
+
+    /* ******************************************************************************************************* */ 
+    public function canUse($invoice_id)
     {
 
             if (Yii::$app->user->can('core_staff_role'))
@@ -61,91 +71,61 @@ class ProjectComponent extends Object
 
     }
     /* ******************************************************************************************************* */ 
-    public function getMyProjectCollectionList()
-    {
-        $list = []; $out = []; 
-        if (Yii::$app->user->can('core_staff_role'))
-            $list = $this->allProjects; 
-        else 
-            $list = $this->myProjects; 
-        foreach ($list as $project) 
-            $out[$project['project_id']] = $project['project_title']; 
-
-        return $out; 
-        
-    }
+    
     /* ******************************************************************************************************* */ 
     
-    public function getMyProjectList()
-    {
-        $list = []; $out = []; 
-        if (Yii::$app->user->can('core_staff_role'))
-            $list = $this->allProjects; 
-        else 
-            $list = $this->myProjects; 
-
-        
-        if (count($list) > 0)
-            foreach ($list as $project) 
-                $out[$project['project_id']] = $project['project_title']; 
-
-        return $out; 
-        
-    }
+   
     /* ******************************************************************************************************* */ 
-    public function getAllProjects()
-    {
-        if ($this->_allProjects === null)
-            $this->_allProjects =  $this->_allProjects(); 
-
-        return $this->_allProjects; 
-    }
+    
     /* ******************************************************************************************************* */ 
     /* private functions */ 
     /* ******************************************************************************************************* */ 
    /* ******************************************************************************************************* */ 
+    private function _extractEntries($invoice_id,&$list)
+    {
+            $return = []; 
+            foreach($list as $l)
+                if ($l['invoice_id'] == $invoice_id)
+                    $return[] = $l;
+            return $return;  
+    }
+    /* ******************************************************************************************************* */ 
    
-   private  function _allProjects() 
+   private  function _allInvoiceEntries() 
     {
 
             return (new \yii\db\Query())
                     ->select([
-                            'c.title as collection_title','c.description as collection_description',
-                            'p.id as project_id','concat(\'(\', p.code , \') \' , p.title) as project_title','p.code as project_code','p.created_at as created_at'
+                            'ie.invoice_id', 'ie.resource_id', 'ie.resource_other', 'ie.unit_cost','ie.qty' ,           
+                            'ie.total_cost'
                            ])
-                    ->from('collection c')
-                    ->join('LEFT JOIN','project p' , 'p.collection_id=c.id')
-                    ->where('c.collection_type_id=:project_collection', 
-                                [':project_collection'=>Types::$collection_type['project']['id']]
-                            )
-                    ->orderBy('p.created_at DESC')
+                    ->from('invoice_entry ie')
+                    ->orderBy('ie.created_at DESC')
+                    ->all();
+
+         
+
+    }
+    /* ******************************************************************************************************* */ 
+   
+   private  function _allInvoices() 
+    {
+
+            return (new \yii\db\Query())
+                    ->select([
+                            'i.id as invoice_id', 'i.invoice_number','i.project_id', 'i.publish_status_id', 
+                                'i.vat_status_id','i.amount','p.code'
+                           ])
+                    ->from('invoice i')
+                    ->join('INNER JOIN','project p', 'p.id=i.project_id')
+                    ->orderBy('i.created_at DESC')
                     ->all();
 
          
 
     }
    /* ******************************************************************************************************* */ 
-     private  function _myProjects() 
-    {
-
-            return (new \yii\db\Query())
-                    ->select([
-                            'c.title as collection_title','c.description as collection_description',
-                            'p.id as project_id','p.title as project_title','p.code as project_code', 
-                            'uc.member_type_id','p.created_at'
-                             ])
-                    ->from('collection c')
-                    ->join('LEFT JOIN','user_collection uc' , 'uc.collection_id=c.id')
-                    ->join('INNER JOIN','project p' , 'p.collection_id=c.id')
-                    ->where('uc.status_id=:status_active AND uc.user_id=:user_id')
-                    ->addParams([':status_active'=>Types::$status['active']['id'], 
-                                 ':user_id'=>$this->_userId 
-                        ])
-                    ->all();
-
-         
-
-    }
+     
     /* ******************************************************************************************************* */ 
     /* ******************************************************************************************************* */ 
     /* ******************************************************************************************************* */ 

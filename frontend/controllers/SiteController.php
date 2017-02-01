@@ -55,7 +55,7 @@ class SiteController extends XController
              
         ];
     }
-
+    /* *********************************************************************************************** */ 
     /**
      * @inheritdoc
      */
@@ -71,7 +71,7 @@ class SiteController extends XController
             ],
         ];
     }
-
+      /* *********************************************************************************************** */ 
     /**
      * Displays homepage.
      *
@@ -81,7 +81,7 @@ class SiteController extends XController
     {
         return $this->render('index');
     }
-
+      /* *********************************************************************************************** */ 
     /**
      * Logs in a user.
      *
@@ -96,14 +96,17 @@ class SiteController extends XController
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) 
         {    
-            return $this->goBack();
+            return $this->redirect('/dashboard');
         } else {
             return $this->render('login', [
                 'model' => $model,
             ]);
         }
     }
-
+    /* *********************************************************************************************** */ 
+    
+        
+    /* *********************************************************************************************** */ 
     /**
      * Logs out the current user.
      *
