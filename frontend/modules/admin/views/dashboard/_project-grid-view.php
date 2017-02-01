@@ -29,7 +29,7 @@
         'heading'=>'<h3 class="panel-title"><i class="glyphicon glyphicon-project"></i> Projects</h3>',
         'type'=>'success',
         'before'=>Html::a('<i class="glyphicon glyphicon-plus"></i> Create Country', ['create'], ['class' => 'btn btn-success']),
-        'after'=>Html::a('<i class="glyphicon glyphicon-repeat"></i> Reset Grid', ['index'], ['class' => 'btn btn-info']),
+        //'after'=>Html::a('<i class="glyphicon glyphicon-repeat"></i> Reset Grid', ['index'], ['class' => 'btn btn-info']),
         'footer'=>false
     ],
     /*

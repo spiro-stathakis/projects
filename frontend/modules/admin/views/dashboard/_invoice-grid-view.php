@@ -2,7 +2,11 @@
 <?php use kartik\grid\GridView; ?> 
 <?php use  yii\helpers\Html;?> 
 
-<?php Pjax::begin(['id'=>'pjax-invoice']);?>
+<?php Pjax::begin(['id'=>'invoice-pjax' ,
+                  'timeout' => false, 
+                  'enablePushState' => false, 
+                  'clientOptions' => ['method' => 'POST']
+                  ]);?>
 
 <?=GridView::widget([
     'id'=>'invoice-grid-view',
@@ -31,7 +35,7 @@
     'toolbar' =>  [
         ['content'=>
             Html::button('<i class="glyphicon glyphicon-plus"></i>', 
-                                ['type'=>'button', 'title'=>Yii::t('app', 'Add Invoice'), 'class'=>'btn btn-info', 
+                                ['type'=>'button', 'title'=>Yii::t('app', 'Add Invoice'), 'class'=>'btn btn-primary', 
                                     'onclick'=>'alert("This will launch the book creation form.\n\nDisabled for this demo!");'
                                  ]) 
                                 . ' '.

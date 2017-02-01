@@ -1,6 +1,6 @@
 <?php 
-namespace frontend\controllers;
-//use Yii; 
+
+namespace app\modules\admin\controllers;
 
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -51,7 +51,7 @@ class DashboardController extends XController
 	{
 
 
-        $projectSearch = new \common\models\ProjectSearch();  
+        $projectSearch = new \app\modules\admin\models\ProjectSearch();  
         $projectDataProvider = $projectSearch->search(Yii::$app->request->queryParams);
 
         $invoiceSearch = new \common\models\InvoiceSearch(); 
